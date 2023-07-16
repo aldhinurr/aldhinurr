@@ -1,0 +1,12 @@
+{
+  "blade.format.enable": true,
+  "bladeFormatter.format.indentSize": 4,
+  "bladeFormatter.format.wrapAttributes": "auto",
+  "bladeFormatter.format.wrapLineLength": 120,
+  "bladeFormatter.format.noMultipleEmptyLines": false,
+  "bladeFormatter.format.useTabs": false,
+  "bladeFormatter.format.sortTailwindcssClasses": true,
+  "bladeFormatter.format.sortHtmlAttributes": "none",
+  "bladeFormatter.format.noPhpSyntaxCheck": false,
+  "editor.formatOnSave": true
+}
