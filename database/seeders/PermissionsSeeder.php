@@ -29,7 +29,9 @@ class PermissionsSeeder extends Seeder
     {
         $data = [];
         // list of model permission
-        $model = ['anggaran', 'layanan', 'layanan_gambar', 'user', 'role', 'permission'];
+        $model = [
+            'layanan', 'layanan_gambar', 'facility', 'user', 'role', 'permission',
+        ];
 
         foreach ($model as $value) {
             foreach ($this->crudActions($value) as $action) {

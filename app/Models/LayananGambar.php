@@ -12,7 +12,6 @@ class LayananGambar extends Model
     use HasFactory, HasRoles;
     protected $guarded = ['id'];
 
-
     /**
      * Get the layanan that owns the LayananGambar
      *

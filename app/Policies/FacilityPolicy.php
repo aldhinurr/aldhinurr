@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\GambarLayanan;
+use App\Models\Facility;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class GambarLayananPolicy
+class FacilityPolicy
 {
     use HandlesAuthorization;
 
@@ -25,10 +25,10 @@ class GambarLayananPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\GambarLayanan  $gambarLayanan
+     * @param  \App\Models\Facility  $facility
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, GambarLayanan $gambarLayanan)
+    public function view(User $user, Facility $facility)
     {
         //
     }
@@ -48,10 +48,10 @@ class GambarLayananPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\GambarLayanan  $gambarLayanan
+     * @param  \App\Models\Facility  $facility
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, GambarLayanan $gambarLayanan)
+    public function update(User $user, Facility $facility)
     {
         //
     }
@@ -60,10 +60,10 @@ class GambarLayananPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\GambarLayanan  $gambarLayanan
+     * @param  \App\Models\Facility  $facility
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, GambarLayanan $gambarLayanan)
+    public function delete(User $user, Facility $facility)
     {
         //
     }
@@ -72,10 +72,10 @@ class GambarLayananPolicy
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\GambarLayanan  $gambarLayanan
+     * @param  \App\Models\Facility  $facility
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, GambarLayanan $gambarLayanan)
+    public function restore(User $user, Facility $facility)
     {
         //
     }
@@ -84,10 +84,10 @@ class GambarLayananPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\GambarLayanan  $gambarLayanan
+     * @param  \App\Models\Facility  $facility
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, GambarLayanan $gambarLayanan)
+    public function forceDelete(User $user, Facility $facility)
     {
         //
     }

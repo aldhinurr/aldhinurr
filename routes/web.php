@@ -10,6 +10,7 @@ use App\Http\Controllers\Logs\SystemLogsController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\AnggaranController;
+use App\Http\Controllers\FacilityController;
 use App\Http\Controllers\LayananController;
 use App\Http\Controllers\LayananGambarController;
 use Illuminate\Support\Facades\Route;
@@ -56,7 +57,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/create', [AnggaranController::class, 'create'])->name('anggaran.create');
     });
 
-    // Layanan pagesac
+    // Layanan pages
     Route::prefix('layanan')->group(function () {
         Route::get('', [LayananController::class, 'index'])->name('layanan.index');
         Route::get('/create', [LayananController::class, 'create'])->name('layanan.create');
@@ -67,6 +68,17 @@ Route::middleware('auth')->group(function () {
         Route::delete('/{layanan:id}/delete', [LayananController::class, 'destroy'])->name('layanan.delete');
         Route::post('/gambar/upload', [LayananGambarController::class, 'upload'])->name('layanan-gambar.upload');
         Route::post('/gambar/delete', [LayananGambarController::class, 'delete'])->name('layanan-gambar.delete');
+    });
+
+    // Facilities pages
+    Route::prefix('facility')->group(function () {
+        Route::get('', [FacilityController::class, 'index'])->name('facility.index');
+        Route::get('/create', [FacilityController::class, 'create'])->name('facility.create');
+        Route::post('/store', [FacilityController::class, 'store'])->name('facility.store');
+        Route::get('/{facility:id}/detail', [FacilityController::class, 'show'])->name('facility.show');
+        Route::get('/{facility:id}/edit', [FacilityController::class, 'edit'])->name('facility.edit');
+        Route::put('/{facility:id}/update', [FacilityController::class, 'update'])->name('facility.update');
+        Route::delete('/{facility:id}/delete', [FacilityController::class, 'destroy'])->name('facility.delete');
     });
 
     // Account pages

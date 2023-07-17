@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGambarLayanansTable extends Migration
+class CreateFacilitiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,17 @@ class CreateGambarLayanansTable extends Migration
      */
     public function up()
     {
-        Schema::create('gambar_layanans', function (Blueprint $table) {
+        Schema::create('facilities', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('layanan_id');
-            $table->longText('picture')->nullable(false);
+            $table->string('name')->nullable(false);
+            $table->string('icon', 50)->nullable(false);
+            $table->string('satuan', 20)->nullable(false);
             $table->enum('status', array("AKTIF", "TIDAK AKTIF", "DIHAPUS"));
             $table->string('created_by', 50)->nullable();
             $table->string('updated_by', 50)->nullable();
             $table->string('deleted_by', 50)->nullable();
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();
-            $table->index('layanan_id');
-            $table->foreign('layanan_id')->references('id')->on('layanans')->onDelete('cascade');
         });
     }
 
@@ -35,10 +34,6 @@ class CreateGambarLayanansTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('gambar_layanans', function (Blueprint $table) {
-            $table->dropForeign('gambar_layanans_layanan_id_foreign');
-            $table->dropIndex('gambar_layanans_layanan_id_index');
-            $table->dropColumn('layanan_id');
-        });
+        Schema::dropIfExists('facilities');
     }
 }

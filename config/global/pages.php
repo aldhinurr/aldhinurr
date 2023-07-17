@@ -274,4 +274,21 @@ return array(
             ),
         ),
     ),
+
+    'facility'  => array(
+        "*" => array(
+            'title'  => 'Fasilitas',
+            'view'   => 'facility',
+            'assets' => array(
+                'custom' => array(
+                    'css' => array(
+                        'plugins/custom/datatables/datatables.bundle.css',
+                    ),
+                    'js'  => array(
+                        'plugins/custom/datatables/datatables.bundle.js',
+                    ),
+                ),
+            ),
+        ),
+    ),
 );

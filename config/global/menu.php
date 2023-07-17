@@ -206,6 +206,19 @@ return array(
             'role' => ["admin", "superadmin"],
         ),
 
+        array(
+            'title' => 'Fasilitas',
+            'path'  => 'facility',
+            'icon'  => theme()->getSvgIcon("demo1/media/icons/duotune/general/gen016.svg", "svg-icon-2"),
+            'role' => ["admin", "superadmin"],
+        ),
+
+
+        //// User
+        array(
+            'classes' => array('content' => 'pt-8 pb-2'),
+            'content' => '<span class="menu-section text-muted text-uppercase fs-8 ls-1">User</span>',
+        ),
 
         // Account
         array(

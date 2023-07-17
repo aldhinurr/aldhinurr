@@ -22,4 +22,14 @@ class Layanan extends Model
     {
         return $this->HasMany(LayananGambar::class);
     }
+
+    /**
+     * User relation to service facility model
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function service_facilities(): HasMany
+    {
+        return $this->HasMany(ServiceFacility::class);
+    }
 }

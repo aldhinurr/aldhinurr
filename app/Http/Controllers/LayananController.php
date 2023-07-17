@@ -76,6 +76,9 @@ class LayananController extends Controller
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollBack();
+            return response()->json([
+                'message' => $th->getMessage()
+            ], 500);
         }
 
         return response()->json(['success' => $imageName]);
@@ -134,50 +137,61 @@ class LayananController extends Controller
     public function update(UpdateLayananRequest $request, Layanan $layanan)
     {
         $this->authorize("update layanan");
-        // update data layanan
-        $validated = $request->validate($request->rules());
-        $validated['updated_by'] = auth()->user()->email;
-        $layanan->update($validated);
+        Db::beginTransaction();
 
-        // update gambar layanan
-        $oldImages = LayananGambar::whereBelongsTo($layanan)->get();
-        $fileExist = array();
-        $newImages = $validated['layanan_gambar'];
-        foreach ($newImages as $newImage => $file) {
-            // check existing file remove
-            if (!is_object($file)) {
-                $decodeFile = json_decode($file);
-                array_push($fileExist, $decodeFile->name);
-                continue;
-            }
+        try {
+            // update data layanan
+            $validated = $request->validate($request->rules());
+            $validated['updated_by'] = auth()->user()->email;
+            $layanan->update($validated);
 
-            // do upload and save new image to db
-            $imageName = time() . strtolower(Str::random(10)) . '.' . $file->extension();
-            $file->move(public_path('media/images/layanan'), $imageName);
-
-            LayananGambar::create([
-                'layanan_id' => $layanan->id,
-                'picture' => 'media/images/layanan/' . $imageName,
-                'status' => 'AKTIF',
-                'created_by' => auth()->user()->email,
-            ]);
-        }
-
-        // delete removed gambar
-        foreach ($oldImages as $old => $oldFile) {
-            $file_path = explode("/", $oldFile['picture']);
-            $filename = end($file_path);
-
-            if (!in_array($filename, $fileExist)) {
-                // delete file from server
-                $path = public_path() . $oldFile['picture'];
-                if (file_exists($path)) {
-                    unlink($path);
+            // update gambar layanan
+            $oldImages = LayananGambar::whereBelongsTo($layanan)->get();
+            $fileExist = array();
+            $newImages = $validated['layanan_gambar'];
+            foreach ($newImages as $newImage => $file) {
+                // check existing file remove
+                if (!is_object($file)) {
+                    $decodeFile = json_decode($file);
+                    array_push($fileExist, $decodeFile->name);
+                    continue;
                 }
 
-                // delete from db
-                $oldFile->delete();
+                // do upload and save new image to db
+                $imageName = time() . strtolower(Str::random(10)) . '.' . $file->extension();
+                $file->move(public_path('media/images/layanan'), $imageName);
+
+                LayananGambar::create([
+                    'layanan_id' => $layanan->id,
+                    'picture' => 'media/images/layanan/' . $imageName,
+                    'status' => 'AKTIF',
+                    'created_by' => auth()->user()->email,
+                ]);
             }
+
+            // delete removed gambar
+            foreach ($oldImages as $old => $oldFile) {
+                $file_path = explode("/", $oldFile['picture']);
+                $filename = end($file_path);
+
+                if (!in_array($filename, $fileExist)) {
+                    // delete file from server
+                    $path = public_path() . $oldFile['picture'];
+                    if (file_exists($path)) {
+                        unlink($path);
+                    }
+
+                    // delete from db
+                    $oldFile->delete();
+                }
+            }
+
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return response()->json([
+                'message' => $th->getMessage()
+            ], 500);
         }
     }
 
@@ -189,10 +203,20 @@ class LayananController extends Controller
      */
     public function destroy(Layanan $layanan)
     {
-        // update data to deleted
-        $validated['status'] = "DIHAPUS";
-        $validated['deleted_at'] = date('Y-m-d H:i:s');
-        $validated['deleted_by'] = auth()->user()->email;
-        $layanan->update($validated);
+        DB::beginTransaction();
+        try {
+            // update data to deleted
+            $validated['status'] = "DIHAPUS";
+            $validated['deleted_at'] = date('Y-m-d H:i:s');
+            $validated['deleted_by'] = auth()->user()->email;
+            $layanan->update($validated);
+
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return response()->json([
+                'message' => $th->getMessage()
+            ], 500);
+        }
     }
 }
