@@ -62,11 +62,11 @@ class LayananController extends Controller
                 foreach ($validated['layanan_gambar'] as $layanan_gambar => $image) {
                     // do upload and save to db
                     $imageName = time() . strtolower(Str::random(10)) . '.' . $image->extension();
-                    $image->move(public_path('images/layanan'), $imageName);
+                    $image->move(public_path('media/images/layanan'), $imageName);
 
                     LayananGambar::create([
                         'layanan_id' => $layanan->id,
-                        'picture' => 'images/layanan/' . $imageName,
+                        'picture' => 'media/images/layanan/' . $imageName,
                         'status' => 'AKTIF',
                         'created_by' => auth()->user()->email,
                     ]);
@@ -118,7 +118,7 @@ class LayananController extends Controller
             array_push($files, $obj);
         }
 
-        return view('pages.layanan.create', [
+        return view('pages.layanan.edit', [
             'layanan' => $layanan,
             'layanan_gambars' => $files
         ]);
@@ -153,11 +153,11 @@ class LayananController extends Controller
 
             // do upload and save new image to db
             $imageName = time() . strtolower(Str::random(10)) . '.' . $file->extension();
-            $file->move(public_path('images/layanan'), $imageName);
+            $file->move(public_path('media/images/layanan'), $imageName);
 
             LayananGambar::create([
                 'layanan_id' => $layanan->id,
-                'picture' => 'images/layanan/' . $imageName,
+                'picture' => 'media/images/layanan/' . $imageName,
                 'status' => 'AKTIF',
                 'created_by' => auth()->user()->email,
             ]);
@@ -189,6 +189,10 @@ class LayananController extends Controller
      */
     public function destroy(Layanan $layanan)
     {
-        //
+        // update data to deleted
+        $validated['status'] = "DIHAPUS";
+        $validated['deleted_at'] = date('Y-m-d H:i:s');
+        $validated['deleted_by'] = auth()->user()->email;
+        $layanan->update($validated);
     }
 }

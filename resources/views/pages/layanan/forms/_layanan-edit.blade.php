@@ -5,7 +5,7 @@
     data-bs-target="#kt_layanan_layanan_create" aria-expanded="true" aria-controls="kt_layanan_layanan_create">
     <!--begin::Card title-->
     <div class="card-title m-0">
-      <h3 class="fw-bolder m-0">{{ __('New Layanan') }}</h3>
+      <h3 class="fw-bolder m-0">{{ __('Edit Layanan') }}</h3>
     </div>
     <!--end::Card title-->
   </div>
@@ -14,9 +14,10 @@
   <!--begin::Content-->
   <div id="kt_layanan_layanan_create" class="show collapse">
     <!--begin::Form-->
-    <form id="kt_layanan_layanan_create_form" class="form" method="POST" action="{{ route('layanan.store') }}"
-      enctype="multipart/form-data">
+    <form id="kt_layanan_layanan_create_form" class="form" method="POST"
+      action="{{ route('layanan.update', $layanan->id) }}" enctype="multipart/form-data">
       @csrf
+      @method('PUT')
       <!--begin::Card body-->
       <div class="card-body border-top p-9">
         <!--begin::Input group-->
@@ -33,10 +34,10 @@
               data-placeholder="{{ __('Pilih Jenis Layanan...') }}"
               class="form-select form-select-solid form-select-lg fw-bold">
               <option value="">{{ __('Pilih Jenis...') }}</option>
-              <option value="RUANG">
+              <option value="RUANG" {{ 'RUANG' == old('type', $layanan->type ?? '') ? 'selected' : '' }}>
                 {{ __('Ruang') }}
               </option>
-              <option value="KENDARAAN">
+              <option value="KENDARAAN" {{ 'KENDARAAN' == old('type', $layanan->type ?? '') ? 'selected' : '' }}>
                 {{ __('Kendaraan') }}
               </option>
             </select>
@@ -54,7 +55,7 @@
           <!--begin::Col-->
           <div class="col-lg-8 fv-row">
             <input type="text" name="name" class="form-control form-control-lg form-control-solid"
-              placeholder="Nama Layanan" />
+              placeholder="Nama Layanan" value="{{ old('name', $layanan->name ?? '') }}" />
           </div>
           <!--end::Col-->
         </div>
@@ -85,7 +86,7 @@
 
           <!--begin::Col-->
           <div class="col-lg-8 fv-row">
-            <textarea id="address" name="address" class="form-control form-control-lg form-control-solid"></textarea>
+            <textarea id="address" name="address" class="form-control form-control-lg form-control-solid">{{ old('address', $layanan->address ?? '') }}</textarea>
           </div>
           <!--end::Col-->
         </div>
@@ -105,16 +106,17 @@
               data-placeholder="{{ __('Pilih Lokasi Layanan...') }}"
               class="form-select form-select-solid form-select-lg fw-bold">
               <option value="">{{ __('Pilih Lokasi Layanan...') }}</option>
-              <option value="GANESHA">
+              <option value="GANESHA" {{ 'GANESHA' == old('location', $layanan->location ?? '') ? 'selected' : '' }}>
                 {{ __('GANESHA') }}
               </option>
-              <option value="SARAGA">
+              <option value="SARAGA" {{ 'SARAGA' == old('location', $layanan->location ?? '') ? 'selected' : '' }}>
                 {{ __('SARAGA') }}
               </option>
-              <option value="JATINANGOR">
+              <option value="JATINANGOR"
+                {{ 'JATINANGOR' == old('location', $layanan->location ?? '') ? 'selected' : '' }}>
                 {{ __('JATINANGOR') }}
               </option>
-              <option value="CIREBON">
+              <option value="CIREBON" {{ 'CIREBON' == old('location', $layanan->location ?? '') ? 'selected' : '' }}>
                 {{ __('CIREBON') }}
               </option>
             </select>
@@ -138,7 +140,8 @@
               <!--begin::Col-->
               <div class="col-lg-6 fv-row">
                 <input type="text" id="price" name="price"
-                  class="form-control form-control-lg form-control-solid mb-lg-0 mb-3" placeholder="Harga" />
+                  class="form-control form-control-lg form-control-solid mb-lg-0 mb-3" placeholder="Harga"
+                  value="{{ old('price', $layanan->price ?? '') }}" />
               </div>
               <!--end::Col-->
 
@@ -153,10 +156,10 @@
                 <select name="price_for" aria-label="{{ __('Pilih Harga Per') }}" data-control="select2"
                   data-placeholder="{{ __('Pilih Harga Per...') }}"
                   class="form-select form-select-solid form-select-lg fw-bold">
-                  <option value="JAM">
+                  <option value="JAM" {{ 'JAM' == old('price_for', $layanan->price_for ?? '') ? 'selected' : '' }}>
                     {{ __('Jam') }}
                   </option>
-                  <option value="HARI">
+                  <option value="HARI" {{ 'HARI' == old('price_for', $layanan->price_for ?? '') ? 'selected' : '' }}>
                     {{ __('Hari') }}
                   </option>
                 </select>
@@ -207,7 +210,8 @@
             <div class="d-flex align-items-center mt-3">
               <!--begin::Option-->
               <label class="form-check form-check-inline form-check-solid me-5">
-                <input class="form-check-input" name="status" type="radio" value="AKTIF" checked />
+                <input class="form-check-input" name="status" type="radio" value="AKTIF"
+                  {{ 'AKTIF' == old('status', $layanan->status ?? '') ? 'checked' : '' }} />
                 <span class="fw-bold fs-6 ps-2">
                   {{ __('AKTIF') }}
                 </span>
@@ -216,7 +220,8 @@
 
               <!--begin::Option-->
               <label class="form-check form-check-inline form-check-solid">
-                <input class="form-check-input" name="status" type="radio" value="TIDAK AKTIF" />
+                <input class="form-check-input" name="status" type="radio" value="TIDAK AKTIF"
+                  {{ 'TIDAK AKTIF' == old('status', $layanan->status ?? '') ? 'checked' : '' }} />
                 <span class="fw-bold fs-6 ps-2">
                   {{ __('TIDAK AKTIF') }}
                 </span>
@@ -225,7 +230,8 @@
 
               <!--begin::Option-->
               <label class="form-check form-check-inline form-check-solid">
-                <input class="form-check-input" name="status" type="radio" value="RUSAK" />
+                <input class="form-check-input" name="status" type="radio" value="RUSAK"
+                  {{ 'RUSAK' == old('status', $layanan->status ?? '') ? 'checked' : '' }} />
                 <span class="fw-bold fs-6 ps-2">
                   {{ __('RUSAK') }}
                 </span>
@@ -234,7 +240,8 @@
 
               <!--begin::Option-->
               <label class="form-check form-check-inline form-check-solid">
-                <input class="form-check-input" name="status" type="radio" value="TIDAK BISA DISEWA" />
+                <input class="form-check-input" name="status" type="radio" value="TIDAK BISA DISEWA"
+                  {{ 'TIDAK BISA DISEWA' == old('status', $layanan->status ?? '') ? 'checked' : '' }} />
                 <span class="fw-bold fs-6 ps-2">
                   {{ __('TIDAK DISEWA') }}
                 </span>

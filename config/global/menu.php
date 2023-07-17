@@ -200,13 +200,6 @@ return array(
         ),
 
         array(
-            'title' => 'Anggaran',
-            'path'  => 'anggaran',
-            'icon'  => theme()->getSvgIcon("demo1/media/icons/duotune/finance/fin001.svg", "svg-icon-2"),
-            'role' => ["admin", "superadmin"],
-        ),
-
-        array(
             'title' => 'Layanan',
             'path'  => 'layanan',
             'icon'  => theme()->getSvgIcon("demo1/media/icons/duotune/general/gen001.svg", "svg-icon-2"),
@@ -238,76 +231,8 @@ return array(
                         'path'   => 'account/settings',
                         'bullet' => '<span class="bullet bullet-dot"></span>',
                     ),
-                    array(
-                        'title'      => 'Security',
-                        'path'       => '#',
-                        'bullet'     => '<span class="bullet bullet-dot"></span>',
-                        'attributes' => array(
-                            'link' => array(
-                                "title"             => "Coming soon",
-                                "data-bs-toggle"    => "tooltip",
-                                "data-bs-trigger"   => "hover",
-                                "data-bs-dismiss"   => "click",
-                                "data-bs-placement" => "right",
-                            ),
-                        ),
-                    ),
                 ),
             ),
-        ),
-
-        // System
-        array(
-            'title'      => 'System',
-            'icon'       => array(
-                'svg'  => theme()->getSvgIcon("demo1/media/icons/duotune/general/gen025.svg", "svg-icon-2"),
-                'font' => '<i class="bi bi-layers fs-3"></i>',
-            ),
-            'classes'    => array('item' => 'menu-accordion'),
-            'attributes' => array(
-                "data-kt-menu-trigger" => "click",
-            ),
-            'sub'        => array(
-                'class' => 'menu-sub-accordion menu-active-bg',
-                'items' => array(
-                    array(
-                        'title'      => 'Settings',
-                        'path'       => '#',
-                        'bullet'     => '<span class="bullet bullet-dot"></span>',
-                        'attributes' => array(
-                            'link' => array(
-                                "title"             => "Coming soon",
-                                "data-bs-toggle"    => "tooltip",
-                                "data-bs-trigger"   => "hover",
-                                "data-bs-dismiss"   => "click",
-                                "data-bs-placement" => "right",
-                            ),
-                        ),
-                    ),
-                    array(
-                        'title'  => 'Audit Log',
-                        'path'   => 'log/audit',
-                        'bullet' => '<span class="bullet bullet-dot"></span>',
-                    ),
-                    array(
-                        'title'  => 'System Log',
-                        'path'   => 'log/system',
-                        'bullet' => '<span class="bullet bullet-dot"></span>',
-                    ),
-                ),
-            ),
-        ),
-
-        // Separator
-        array(
-            'content' => '<div class="separator mx-1 my-4"></div>',
-        ),
-
-        // Changelog
-        array(
-            'title' => 'Changelog v' . theme()->getVersion(),
-            'icon'  => theme()->getSvgIcon("demo1/media/icons/duotune/general/gen005.svg", "svg-icon-2"),
-            'path'  => 'documentation/getting-started/changelog',
         ),
     ),
 

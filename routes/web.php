@@ -64,6 +64,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/{layanan:id}/detail', [LayananController::class, 'show'])->name('layanan.show');
         Route::get('/{layanan:id}/edit', [LayananController::class, 'edit'])->name('layanan.edit');
         Route::put('/{layanan:id}/update', [LayananController::class, 'update'])->name('layanan.update');
+        Route::delete('/{layanan:id}/delete', [LayananController::class, 'destroy'])->name('layanan.delete');
         Route::post('/gambar/upload', [LayananGambarController::class, 'upload'])->name('layanan-gambar.upload');
         Route::post('/gambar/delete', [LayananGambarController::class, 'delete'])->name('layanan-gambar.delete');
     });

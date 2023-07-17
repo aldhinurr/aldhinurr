@@ -92,6 +92,7 @@
         "wnumb": "^1.2.0"
     },
     "devDependencies": {
+        "@shufo/prettier-plugin-blade": "^1.9.2",
         "alpinejs": "^2.7.3",
         "autoprefixer": "^10.1.0",
         "axios": "^0.21.1",
@@ -99,6 +100,7 @@
         "lodash": "^4.17.19",
         "postcss": "^8.3.6",
         "postcss-import": "^14.0.2",
+        "prettier": "^3.0.0",
         "replace-in-file-webpack-plugin": "^1.0.6",
         "resolve-url-loader": "^3.1.4",
         "rtlcss": "^3.1.2",

@@ -25,7 +25,7 @@ class LayananDataTable extends DataTable
                 return number_format($model->price, 2);
             })
             ->addColumn('action', function (Layanan $model) {
-                return view('pages.layanan.list._action-menu', compact('model'));
+                return view('pages.layanan._action-menu', compact('model'));
             })
             ->skipTotalRecords();
     }
@@ -52,9 +52,9 @@ class LayananDataTable extends DataTable
             ->setTableId('layanan-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
-            ->orderBy(1)
+            ->orderBy(7, 'asc')
             ->parameters([
-                "drawCallback" => "function() { KTMenu.createInstances(); }",
+                "drawCallback" => "function() { handleDeleteRows(); KTMenu.createInstances(); }"
             ]);
     }
 
@@ -72,7 +72,7 @@ class LayananDataTable extends DataTable
             Column::make('address')->title("Alamat"),
             Column::make('location')->title("Lokasi"),
             Column::make('price')->title("Harga"),
-            Column::make('price_for')->title("Harga Per"),
+            Column::make('price_for')->title("Per"),
             Column::make('status')->title("Status"),
             Column::computed('action')
                 ->exportable(false)

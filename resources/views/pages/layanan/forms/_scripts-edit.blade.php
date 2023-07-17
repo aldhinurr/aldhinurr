@@ -31,7 +31,7 @@
                 }
               }
             },
-            address: {
+            alamat: {
               validators: {
                 notEmpty: {
                   message: 'Alamat belum diisi'
@@ -70,14 +70,14 @@
         validation.revalidateField('type');
       });
 
-      $(form.querySelector('[name="price_for"]')).on('change', function() {
+      $(form.querySelector('[name="language"]')).on('change', function() {
         // Revalidate the color field when an option is chosen
-        validation.revalidateField('price_for');
+        validation.revalidateField('language');
       });
 
-      $(form.querySelector('[name="location"]')).on('change', function() {
+      $(form.querySelector('[name="timezone"]')).on('change', function() {
         // Revalidate the color field when an option is chosen
-        validation.revalidateField('location');
+        validation.revalidateField('timezone');
       });
     }
 
@@ -90,6 +90,7 @@
         .create(document.querySelector('#editor_description'))
         .then(newEditor => {
           editor = newEditor;
+          editor.setData("{!! old('description', $layanan->description ?? '') !!}");
         })
         .catch(error => {
           console.error(error);
@@ -148,6 +149,22 @@
         error: function(file, response) {
           return false;
         },
+        init: function() {
+          myDropzone = this;
+          var files = <?= json_encode($gambars, JSON_PRETTY_PRINT) ?>;
+          files.map((file) => {
+            myDropzone.files.push(file);
+            // myDropzone.options.addedfile.call(myDropzone, file);
+            // myDropzone.options.thumbnail.call(myDropzone, file, file['path']);
+            myDropzone.displayExistingFile(file, file['path'], null, null, true);
+            myDropzone.emit("complete", file);
+          })
+
+          this.on("addedfile", file => {
+            myDropzone.emit("complete", file);
+            console.log("A file has been added");
+          });
+        },
       });
 
       submitButton.addEventListener('click', function(e) {
@@ -159,7 +176,11 @@
 
         // assign multiple file
         for (let index = 0; index < myDropzone.files.length; index++) {
-          data.append('layanan_gambar[]', myDropzone.files[index]);
+          var file = myDropzone.files[index];
+          if (!file.type) {
+            file = JSON.stringify(file);
+          }
+          data.append('layanan_gambar[]', file);
         }
 
         // Validate form

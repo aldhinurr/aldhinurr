@@ -72,35 +72,6 @@ return array(
         ),
     ),
 
-    'log' => array(
-        'audit'  => array(
-            'title'  => 'Audit Log',
-            'assets' => array(
-                'custom' => array(
-                    'css' => array(
-                        'plugins/custom/datatables/datatables.bundle.css',
-                    ),
-                    'js'  => array(
-                        'plugins/custom/datatables/datatables.bundle.js',
-                    ),
-                ),
-            ),
-        ),
-        'system' => array(
-            'title'  => 'System Log',
-            'assets' => array(
-                'custom' => array(
-                    'css' => array(
-                        'plugins/custom/datatables/datatables.bundle.css',
-                    ),
-                    'js'  => array(
-                        'plugins/custom/datatables/datatables.bundle.js',
-                    ),
-                ),
-            ),
-        ),
-    ),
-
     'account' => array(
         'overview' => array(
             'title'  => 'Account Overview',
@@ -283,20 +254,6 @@ return array(
         ),
     ),
 
-    'anggaran'  => array(
-        'title'  => 'Anggaran',
-        'assets' => array(
-            'custom' => array(
-                'css' => array(
-                    'plugins/custom/datatables/datatables.bundle.css',
-                ),
-                'js'  => array(
-                    'plugins/custom/datatables/datatables.bundle.js',
-                ),
-            ),
-        ),
-    ),
-
     'layanan'  => array(
         "*" => array(
             'title'  => 'Layanan',
@@ -304,27 +261,14 @@ return array(
             'assets' => array(
                 'custom' => array(
                     'css' => array(
+                        'plugins/global/plugins.bundle.css',
                         'plugins/custom/datatables/datatables.bundle.css',
                     ),
                     'js'  => array(
-                        'plugins/custom/datatables/datatables.bundle.js',
-                        'plugins/custom/fslightbox/fslightbox.bundle.js',
-                        'plugins/custom/ckeditor/ckeditor-classic.bundle.js',
-                    ),
-                ),
-            ),
-        ),
-
-        "create" => array(
-            'title'  => 'New Layanan',
-            'view'   => 'layanan/create',
-            'assets' => array(
-                'custom' => array(
-                    'js'  => array(
                         'plugins/global/plugins.bundle.js',
-                    ),
-                    'css'  => array(
-                        'plugins/global/plugins.bundle.css',
+                        'plugins/custom/datatables/datatables.bundle.js',
+                        'plugins/custom/ckeditor/ckeditor-classic.bundle.js',
+                        'plugins/custom/fslightbox/fslightbox.bundle.js',
                     ),
                 ),
             ),
