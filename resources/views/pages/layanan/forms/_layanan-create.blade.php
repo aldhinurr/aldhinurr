@@ -1,7 +1,8 @@
 <!--begin::Basic info-->
 <div class="card {{ $class }}">
   <!--begin::Card header-->
-  <div class="card-header rotate cursor-pointer border-0" role="button" data-bs-toggle="collapse" data-bs-target="#kt_layanan_layanan_create" aria-expanded="true" aria-controls="kt_layanan_layanan_create">
+  <div class="card-header rotate cursor-pointer border-0" role="button" data-bs-toggle="collapse"
+    data-bs-target="#kt_layanan_layanan_create" aria-expanded="true" aria-controls="kt_layanan_layanan_create">
     <!--begin::Card title-->
     <div class="card-title m-0">
       <h3 class="fw-bolder m-0">{{ __('New Layanan') }}</h3>
@@ -13,7 +14,8 @@
   <!--begin::Content-->
   <div id="kt_layanan_layanan_create" class="show collapse">
     <!--begin::Form-->
-    <form id="kt_layanan_layanan_create_form" class="form" method="POST" action="{{ route('layanan.store') }}" enctype="multipart/form-data">
+    <form id="kt_layanan_layanan_create_form" class="form" method="POST" action="{{ route('layanan.store') }}"
+      enctype="multipart/form-data">
       @csrf
       <!--begin::Card body-->
       <div class="card-body border-top p-9">
@@ -27,7 +29,9 @@
 
           <!--begin::Col-->
           <div class="col-lg-4 fv-row">
-            <select name="type" aria-label="{{ __('Pilih Jenis Layanan') }}" data-control="select2" data-placeholder="{{ __('Pilih Jenis Layanan...') }}" class="form-select form-select-solid form-select-lg fw-bold">
+            <select name="type" aria-label="{{ __('Pilih Jenis Layanan') }}" data-control="select2"
+              data-placeholder="{{ __('Pilih Jenis Layanan...') }}"
+              class="form-select form-select-solid form-select-lg fw-bold">
               <option value="">{{ __('Pilih Jenis...') }}</option>
               <option value="RUANG">
                 {{ __('Ruang') }}
@@ -49,7 +53,8 @@
 
           <!--begin::Col-->
           <div class="col-lg-8 fv-row">
-            <input type="text" name="name" class="form-control form-control-lg form-control-solid" placeholder="Nama Layanan" />
+            <input type="text" name="name" class="form-control form-control-lg form-control-solid"
+              placeholder="Nama Layanan" />
           </div>
           <!--end::Col-->
         </div>
@@ -81,7 +86,9 @@
 
           <!--begin::Col-->
           <div class="col-lg-4 fv-row">
-            <select name="location" aria-label="{{ __('Pilih Lokasi') }}" data-control="select2" data-placeholder="{{ __('Pilih Lokasi Layanan...') }}" class="form-select form-select-solid form-select-lg fw-bold">
+            <select name="location" aria-label="{{ __('Pilih Lokasi') }}" data-control="select2"
+              data-placeholder="{{ __('Pilih Lokasi Layanan...') }}"
+              class="form-select form-select-solid form-select-lg fw-bold">
               <option value="">{{ __('Pilih Lokasi Layanan...') }}</option>
               <option value="GANESHA">
                 {{ __('GANESHA') }}
@@ -115,7 +122,8 @@
             <div class="row">
               <!--begin::Col-->
               <div class="col-lg-6 fv-row">
-                <input type="text" id="price" name="price" class="form-control form-control-lg form-control-solid mb-lg-0 mb-3" placeholder="Harga" />
+                <input type="text" id="price" name="price"
+                  class="form-control form-control-lg form-control-solid mb-lg-0 mb-3" placeholder="Harga" />
               </div>
               <!--end::Col-->
 
@@ -127,7 +135,9 @@
 
               <!--begin::Col-->
               <div class="col-lg-5 fv-row">
-                <select name="price_for" aria-label="{{ __('Pilih Harga Per') }}" data-control="select2" data-placeholder="{{ __('Pilih Harga Per...') }}" class="form-select form-select-solid form-select-lg fw-bold">
+                <select name="price_for" aria-label="{{ __('Pilih Harga Per') }}" data-control="select2"
+                  data-placeholder="{{ __('Pilih Harga Per...') }}"
+                  class="form-select form-select-solid form-select-lg fw-bold">
                   <option value="JAM">
                     {{ __('Jam') }}
                   </option>
@@ -156,32 +166,6 @@
             <textarea id="editor_description" name="editor_description" class="form-control form-control-lg form-control-solid"></textarea>
           </div>
           <!--end::Col-->
-        </div>
-        <!--end::Input group-->
-
-        <!--begin::Input group-->
-        <div class="row mb-6">
-          <!--begin::Label-->
-          <label class="col-lg-4 col-form-label fw-bold fs-6">
-            <span class="required">{{ __('Gambar') }}</span>
-          </label>
-          <!--end::Label-->
-
-          <div class="col-lg-8 fv-row">
-            <input type="file" name="layanan_gambar" id="layanan_gambar" multiple hidden>
-            <!--begin::Dropzone-->
-            <div class="dropzone" id="layanan_gambar_upload">
-              <!--begin::Message-->
-              <div class="dz-message needsclick">
-                <div class="ms-4">
-                  <h3 class="fs-5 fw-bold mb-1 text-gray-900">Drop files here or click to upload.
-                  </h3>
-                </div>
-              </div>
-            </div>
-            <!--end::Dropzone-->
-            <span class="fs-7 fw-semibold text-gray-400">Max Upload 10 gambar, Ukuran per gambar max 10MB </span>
-          </div>
         </div>
         <!--end::Input group-->
 
@@ -232,6 +216,90 @@
               <!--end::Option-->
             </div>
             <!--end::Options-->
+          </div>
+          <!--end::Col-->
+        </div>
+        <!--end::Input group-->
+
+        <div class="separator my-10"></div>
+
+        <!--begin::Input group-->
+        <div class="row mb-6">
+          <!--begin::Label-->
+          <label class="col-lg-4 col-form-label fw-bold fs-6">
+            <span class="required">{{ __('Gambar') }}</span>
+          </label>
+          <!--end::Label-->
+
+          <div class="col-lg-8 fv-row">
+            <input type="file" name="layanan_gambar" id="layanan_gambar" multiple hidden>
+            <!--begin::Dropzone-->
+            <div class="dropzone" id="layanan_gambar_upload">
+              <!--begin::Message-->
+              <div class="dz-message needsclick">
+                <div class="ms-4">
+                  <h3 class="fs-5 fw-bold mb-1 text-gray-900">Drop files here or click to upload.
+                  </h3>
+                </div>
+              </div>
+            </div>
+            <!--end::Dropzone-->
+            <span class="fs-7 fw-semibold text-gray-400">Max Upload 10 gambar, Ukuran per gambar max 10MB </span>
+          </div>
+        </div>
+        <!--end::Input group-->
+
+        <div class="separator my-10"></div>
+
+        <!--begin::Input group-->
+        <div class="row mb-6">
+          <!--begin::Label-->
+          <label class="col-lg-4 col-form-label fw-bold fs-6">
+            <span class="required">{{ __('Fasilitas') }}</span>
+          </label>
+          <!--end::Label-->
+
+          <!--begin::Col-->
+          <div class="col-lg-8 fv-row">
+            <!--begin::Repeater-->
+            <div id="facility">
+              <!--begin::Form group-->
+              <div class="form-group">
+                <div data-repeater-list="facility">
+                  <div data-repeater-item>
+                    <div class="form-group row mb-5">
+                      <div class="col-md-6">
+                        <label class="form-label">Pilih Fasilitas:</label>
+                        <select class="form-select" name="facility_id" data-kt-repeater="select2"
+                          data-placeholder="Silahkan Pilih Fasilitas">
+                        </select>
+                      </div>
+                      <div class="col-md-2">
+                        <label class="form-label">Qty:</label>
+                        <input type="text" name="quantity" class="form-control mb-2 mb-md-0"
+                          placeholder="Jumlah" />
+                      </div>
+                      <div class="col-md-2">
+                        <a href="javascript:;" data-repeater-delete
+                          class="btn btn-flex btn-sm btn-light-danger mt-3 mt-md-9">
+                          Hapus
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--end::Form group-->
+
+              <!--begin::Form group-->
+              <div class="form-group">
+                <a href="javascript:;" data-repeater-create class="btn btn-flex btn-light-primary">
+                  Tambah
+                </a>
+              </div>
+              <!--end::Form group-->
+            </div>
+            <!--end::Repeater-->
           </div>
           <!--end::Col-->
         </div>

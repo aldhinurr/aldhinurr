@@ -7,6 +7,7 @@ use App\Models\Layanan;
 use App\Http\Requests\StoreLayananRequest;
 use App\Http\Requests\UpdateLayananRequest;
 use App\Models\LayananGambar;
+use App\Models\ServiceFacility;
 use DB;
 use Str;
 
@@ -48,7 +49,6 @@ class LayananController extends Controller
     public function store(StoreLayananRequest $request)
     {
         $this->authorize("create layanan");
-
         DB::beginTransaction();
         try {
             $validated = $request->validate($request->rules());
@@ -57,8 +57,8 @@ class LayananController extends Controller
             // create layanan
             $layanan = Layanan::create($validated);
 
-            // upload dan simpan gambar layanan
             if ($layanan) {
+                // upload dan simpan gambar layanan
                 foreach ($validated['layanan_gambar'] as $layanan_gambar => $image) {
                     // do upload and save to db
                     $imageName = time() . strtolower(Str::random(10)) . '.' . $image->extension();
@@ -71,6 +71,19 @@ class LayananController extends Controller
                         'created_by' => auth()->user()->email,
                     ]);
                 }
+
+                // save Fasilitas Layanan
+                $facility = json_decode($validated['facility']);
+                foreach ($facility->facility as $key => $facility) {
+                    ServiceFacility::create([
+                        'layanan_id' => $layanan->id,
+                        'facility_id' => $facility->facility_id,
+                        'quantity' => $facility->quantity,
+                        'status' => 'AKTIF',
+                        'created_by' => auth()->user()->email,
+                        'updated_by' => auth()->user()->email,
+                    ]);
+                }
             }
 
             DB::commit();
@@ -80,8 +93,6 @@ class LayananController extends Controller
                 'message' => $th->getMessage()
             ], 500);
         }
-
-        return response()->json(['success' => $imageName]);
     }
 
     /**
@@ -95,7 +106,8 @@ class LayananController extends Controller
         $this->authorize("read layanan");
         return view('pages.layanan.details', [
             'layanan' => $layanan,
-            'layanan_gambars' => LayananGambar::whereBelongsTo($layanan)->get()
+            'layanan_gambars' => LayananGambar::whereBelongsTo($layanan)->get(),
+            'facilities' => ServiceFacility::whereBelongsTo($layanan)->get()
         ]);
     }
 
@@ -138,7 +150,6 @@ class LayananController extends Controller
     {
         $this->authorize("update layanan");
         Db::beginTransaction();
-
         try {
             // update data layanan
             $validated = $request->validate($request->rules());

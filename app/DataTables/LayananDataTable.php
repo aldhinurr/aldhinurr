@@ -52,7 +52,7 @@ class LayananDataTable extends DataTable
             ->setTableId('layanan-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
-            ->orderBy(7, 'asc')
+            ->orderBy(1, 'desc')
             ->parameters([
                 "drawCallback" => "function() { handleDeleteRows(); KTMenu.createInstances(); }"
             ]);
@@ -67,6 +67,7 @@ class LayananDataTable extends DataTable
     {
         return [
             Column::make('id')->title('#ID')->hidden(),
+            Column::make('created_at')->title("Dibuat")->hidden(),
             Column::make('type')->title("Jenis"),
             Column::make('name')->title("Nama"),
             Column::make('address')->title("Alamat"),

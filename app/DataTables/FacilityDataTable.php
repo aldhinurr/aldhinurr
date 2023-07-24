@@ -21,8 +21,11 @@ class FacilityDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
+            ->editColumn('icon', function (Facility $model) {
+                return view('pages.facility.columns._icon-column', compact('model'));
+            })
             ->addColumn('action', function (Facility $model) {
-                return view('pages.facility._action-menu', compact('model'));
+                return view('pages.facility.columns._action-menu', compact('model'));
             })
             ->skipTotalRecords();
     }
@@ -49,9 +52,9 @@ class FacilityDataTable extends DataTable
             ->setTableId('facility-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
-            ->orderBy(1, 'asc')
+            ->orderBy(1, 'desc')
             ->parameters([
-                "drawCallback" => "function() { handleDeleteRows(); KTMenu.createInstances(); }"
+                'drawCallback' => 'function() { handleDeleteRows(); KTMenu.createInstances(); }',
             ]);
     }
 
@@ -63,11 +66,16 @@ class FacilityDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            Column::make('id')->title('#ID')->hidden(),
-            Column::make('name')->title("Nama"),
-            Column::make('satuan')->title("Satuan"),
-            Column::make('icon')->title("Icon"),
-            Column::make('status')->title("Status"),
+            Column::make('id')
+                ->title('#ID')
+                ->hidden(),
+            Column::make('created_at')
+                ->title('#Dibuat')
+                ->hidden(),
+            Column::make('name')->title('Nama'),
+            Column::make('satuan')->title('Satuan'),
+            Column::make('icon')->title('Icon'),
+            Column::make('status')->title('Status'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

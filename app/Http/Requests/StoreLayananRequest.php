@@ -32,7 +32,8 @@ class StoreLayananRequest extends FormRequest
             "price" => "required",
             "price_for" => "required|in:JAM,HARI",
             "status" => "required|in:AKTIF,TIDAK AKTIF,RUSAK,TIDAK BISA DISEWA,DIHAPUS",
-            "layanan_gambar" => "required|array"
+            "layanan_gambar" => "required|array",
+            "facility" => "required"
         ];
     }
 }

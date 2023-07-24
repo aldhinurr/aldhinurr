@@ -10,6 +10,7 @@
     var editor;
     var description;
     var layananGambar;
+    var formRepeater;
 
     // Private functions
     var initValidation = function() {
@@ -52,6 +53,13 @@
                 }
               }
             },
+            facility: {
+              validators: {
+                notEmpty: {
+                  message: 'Silahkan pilih Fasilitas'
+                }
+              }
+            },
           },
           plugins: {
             trigger: new FormValidation.plugins.Trigger(),
@@ -82,6 +90,7 @@
     }
 
     var handleForm = function() {
+
       Inputmask("Rp. 999.999.999", {
         "numericInput": true
       }).mask("#price");
@@ -94,7 +103,6 @@
         .catch(error => {
           console.error(error);
         });
-
 
       myDropzone = new Dropzone("#layanan_gambar_upload", {
         url: "{{ route('layanan-gambar.upload') }}", // Set the url for your upload script location
@@ -150,6 +158,69 @@
         },
       });
 
+      $('#facility').repeater({
+        initEmpty: false,
+
+        defaultValues: {
+          'text-input': 'foo'
+        },
+
+        show: function() {
+          $(this).slideDown();
+
+          // Re-init select2
+          $(this).find('[data-kt-repeater="select2"]').select2({
+            ajax: {
+              url: "{{ route('facility.getFacilities') }}",
+              type: "post",
+              dataType: 'json',
+              delay: 250,
+              data: function(params) {
+                return {
+                  _token: '{{ csrf_token() }}',
+                  search: params.term // search term
+                };
+              },
+              processResults: function(response) {
+                return {
+                  results: response
+                };
+              },
+              cache: true
+            }
+          });
+
+        },
+
+        hide: function(deleteElement) {
+          $(this).slideUp(deleteElement);
+        },
+
+        ready: function() {
+          // Init select2
+          $('[data-kt-repeater="select2"]').select2({
+            ajax: {
+              url: "{{ route('facility.getFacilities') }}",
+              type: "post",
+              dataType: 'json',
+              delay: 250,
+              data: function(params) {
+                return {
+                  _token: '{{ csrf_token() }}',
+                  search: params.term // search term
+                };
+              },
+              processResults: function(response) {
+                return {
+                  results: response
+                };
+              },
+              cache: true
+            }
+          });
+        }
+      });
+
       submitButton.addEventListener('click', function(e) {
         e.preventDefault();
 
@@ -161,6 +232,9 @@
         for (let index = 0; index < myDropzone.files.length; index++) {
           data.append('layanan_gambar[]', myDropzone.files[index]);
         }
+
+        // assign value fasilitas
+        data.append('facility', JSON.stringify($('#facility').repeaterVal()));
 
         // Validate form
         validation.validate().then(function(status) {

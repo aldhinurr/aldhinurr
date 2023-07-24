@@ -269,6 +269,7 @@ return array(
                         'plugins/custom/datatables/datatables.bundle.js',
                         'plugins/custom/ckeditor/ckeditor-classic.bundle.js',
                         'plugins/custom/fslightbox/fslightbox.bundle.js',
+                        "plugins/custom/formrepeater/formrepeater.bundle.js"
                     ),
                 ),
             ),
@@ -279,6 +280,23 @@ return array(
         "*" => array(
             'title'  => 'Fasilitas',
             'view'   => 'facility',
+            'assets' => array(
+                'custom' => array(
+                    'css' => array(
+                        'plugins/custom/datatables/datatables.bundle.css',
+                    ),
+                    'js'  => array(
+                        'plugins/custom/datatables/datatables.bundle.js',
+                    ),
+                ),
+            ),
+        ),
+    ),
+
+    'reservation'  => array(
+        "*" => array(
+            'title'  => 'Sewa',
+            'view'   => 'reservation',
             'assets' => array(
                 'custom' => array(
                     'css' => array(

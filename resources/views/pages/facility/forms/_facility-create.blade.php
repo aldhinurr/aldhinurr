@@ -1,7 +1,8 @@
 <!--begin::Basic info-->
 <div class="card {{ $class }}">
   <!--begin::Card header-->
-  <div class="card-header rotate cursor-pointer border-0" role="button" data-bs-toggle="collapse" data-bs-target="#kt_facility_create" aria-expanded="true" aria-controls="kt_facility_create">
+  <div class="card-header rotate cursor-pointer border-0" role="button" data-bs-toggle="collapse"
+    data-bs-target="#kt_facility_create" aria-expanded="true" aria-controls="kt_facility_create">
     <!--begin::Card title-->
     <div class="card-title m-0">
       <h3 class="fw-bolder m-0">{{ __('New Fasilitas') }}</h3>
@@ -13,7 +14,8 @@
   <!--begin::Content-->
   <div id="kt_facility_create" class="show collapse">
     <!--begin::Form-->
-    <form id="kt_facility_create_form" class="form" method="POST" action="{{ route('facility.store') }}" enctype="multipart/form-data">
+    <form id="kt_facility_create_form" class="form" method="POST" action="{{ route('facility.store') }}"
+      enctype="multipart/form-data">
       @csrf
       <!--begin::Card body-->
       <div class="card-body border-top p-9">
@@ -26,7 +28,8 @@
 
           <!--begin::Col-->
           <div class="col-lg-8 fv-row">
-            <input type="text" name="name" class="form-control form-control-lg form-control-solid" placeholder="Nama Fasilitas" />
+            <input type="text" name="name" class="form-control form-control-lg form-control-solid"
+              placeholder="Nama Fasilitas" />
           </div>
           <!--end::Col-->
         </div>
@@ -42,7 +45,9 @@
 
           <!--begin::Col-->
           <div class="col-lg-4 fv-row">
-            <select name="satuan" aria-label="{{ __('Pilih Satuan') }}" data-control="select2" data-placeholder="{{ __('Pilih Satuan...') }}" class="form-select form-select-solid form-select-lg fw-bold">
+            <select name="satuan" aria-label="{{ __('Pilih Satuan') }}" data-control="select2"
+              data-placeholder="{{ __('Pilih Satuan...') }}"
+              class="form-select form-select-solid form-select-lg fw-bold">
               <option value="">{{ __('Pilih Satuan...') }}</option>
               <option value="UNIT">
                 {{ __('UNIT') }}
@@ -66,11 +71,14 @@
 
           <!--begin::Col-->
           <div class="col-lg-4 fv-row">
-            <!-- <input type="text" name="icon" class="form-control form-control-lg form-control-solid" placeholder="Nama Icon" /> -->
-            <select id="icon" name="icon" aria-label="{{ __('Pilih Icon') }}" data-control="select2" data-placeholder="{{ __('Pilih Icon...') }}" class="form-select form-select-solid form-select-lg fw-bold">
-              <option value="">{{ __('Pilih Icon...') }}</option>
+            {{-- <input type="text" name="icon" class="form-control form-control-lg form-control-solid" placeholder="Nama Icon" /> --}}
+            <select id="icon" name="icon" aria-label="{{ __('Pilih Icon') }}" data-control="select2"
+              data-placeholder="{{ __('Pilih Icon...') }}"
+              class="form-select form-select-solid form-select-lg fw-bold">
               @foreach ($icons as $icon)
-              <option value="{{ $icon['name'] }}" data-kt-select2-icon="{{ $icon['icon'] }}"> {{$icon['name']}} </option>
+                <option value="{{ $icon['name'] }}" data-kt-select2-icon="{{ $icon['icon'] }}">
+                  {{ $icon['name'] }}
+                </option>
               @endforeach
             </select>
           </div>

@@ -20,7 +20,7 @@ class CreateLayanansTable extends Migration
             $table->longText('description')->nullable();
             $table->longText('address')->nullable();
             $table->enum('location', array("GANESHA", "SARAGA", "JATINANGOR", "CIREBON"))->nullable();
-            $table->float('price');
+            $table->float('price', 36, 2);
             $table->enum('price_for', array("JAM", "HARI"));
             $table->enum('status', array("AKTIF", "TIDAK AKTIF", "RUSAK", "TIDAK BISA DISEWA", "DIHAPUS"));
             $table->string('created_by', 50)->nullable();

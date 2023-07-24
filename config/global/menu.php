@@ -213,6 +213,13 @@ return array(
             'role' => ["admin", "superadmin"],
         ),
 
+        array(
+            'title' => 'Sewa',
+            'path'  => 'reservation',
+            'icon'  => theme()->getSvgIcon("demo1/media/icons/duotune/general/gen014.svg", "svg-icon-2"),
+            'role' => ["admin", "superadmin"],
+        ),
+
 
         //// User
         array(

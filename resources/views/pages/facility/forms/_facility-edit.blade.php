@@ -67,10 +67,10 @@
 
           <!--begin::Col-->
           <div class="col-lg-4 fv-row">
-            {{-- <input type="text" name="icon" class="form-control form-control-lg form-control-solid" placeholder="Nama Icon" value="{{ old('icon', $facility->icon ?? '') }}"  /> --}}
-            <select name="icon" aria-label="{{ __('Pilih Icon') }}" data-control="select2" data-placeholder="{{ __('Pilih Icon...') }}" class="form-select form-select-solid form-select-lg fw-bold">
+            <input type="text" name="icon" class="form-control form-control-lg form-control-solid" placeholder="Nama Icon" value="{{ old('icon', $facility->icon ?? '') }}"  />
+            {{-- <select name="icon" aria-label="{{ __('Pilih Icon') }}" data-control="select2" data-placeholder="{{ __('Pilih Icon...') }}" class="form-select form-select-solid form-select-lg fw-bold">
               <option value="">{{ __('Pilih Icon...') }}</option>
-            </select>
+            </select> --}}
           </div>
           <!--end::Col-->
         </div>

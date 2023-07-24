@@ -7,6 +7,7 @@ use App\Models\Facility;
 use App\Http\Requests\StoreFacilityRequest;
 use App\Http\Requests\UpdateFacilityRequest;
 use DB;
+use Illuminate\Http\Request;
 
 class FacilityController extends Controller
 {
@@ -38,7 +39,7 @@ class FacilityController extends Controller
         // load icons
         foreach (scandir(resource_path('assets/core/media/icons/lineawesome')) as $key => $icon) {
             if (!in_array($icon, [".", ".."])) {
-                $obj['name'] = explode(".", $icon)[0];
+                $obj['name'] = str_replace('-solid', '', explode(".", $icon)[0]);
                 $obj['icon'] = 'demo1/media/icons/lineawesome/' . $icon;
                 $icons[] = $obj;
             }
@@ -143,5 +144,25 @@ class FacilityController extends Controller
         $validated['deleted_at'] = date('Y-m-d H:i:s');
         $validated['deleted_by'] = auth()->user()->email;
         $facility->update($validated);
+    }
+
+    public function getFacilities(Request $request)
+    {
+        $search = $request->search;
+
+        if ($search == '') {
+            $facilities = Facility::orderby('name', 'asc')->select('id', 'name')->where('status', 'AKTIF')->limit(5)->get();
+        } else {
+            $facilities = Facility::orderby('name', 'asc')->select('id', 'name')->where('status', 'AKTIF')->where('name', 'like', '%' . $search . '%')->limit(5)->get();
+        }
+
+        $response = array();
+        foreach ($facilities as $facility) {
+            $response[] = array(
+                "id" => $facility->id,
+                "text" => $facility->name
+            );
+        }
+        return response()->json($response);
     }
 }

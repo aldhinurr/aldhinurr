@@ -13,6 +13,9 @@ use App\Http\Controllers\AnggaranController;
 use App\Http\Controllers\FacilityController;
 use App\Http\Controllers\LayananController;
 use App\Http\Controllers\LayananGambarController;
+use App\Http\Controllers\ReportServiceController;
+use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\WebsiteController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 
@@ -28,6 +31,26 @@ use Illuminate\Support\Str;
 |
 */
 
+
+// web
+Route::prefix('website')->group(function () {
+    Route::get('', [WebsiteController::class, 'index'])->name('website.index');
+    Route::get('/rooms', [WebsiteController::class, 'rooms'])->name('website.rooms');
+    Route::get('/rooms/{layanan:id}/detail', [WebsiteController::class, 'show_room'])->name('website.room.show');
+    Route::get('/cars', [WebsiteController::class, 'cars'])->name('website.cars');
+    Route::get('/report', [WebsiteController::class, 'report'])->name('website.report');
+    Route::get('/facilities', [WebsiteController::class, 'facilities'])->name('website.facilities');
+
+    Route::post('/reservation', [ReservationController::class, 'store'])->name('website.reservation');
+    Route::get('/reservation/{reservation:id}/detail', [ReservationController::class, 'detail'])->name('website.reservation.show');
+    Route::post('/reservation/{reservation:id}/receipt/upload', [ReservationController::class, 'upload_receipt'])->name('website.reservation.receipt.upload');
+
+    Route::post('/report/store', [ReportServiceController::class, 'store'])->name('website.report.store');
+    Route::get('/report/{reportService:id}/detail', [ReportServiceController::class, 'detail'])->name('website.report.show');
+});
+
+
+// admin
 Route::get('/', function () {
     return redirect('index');
 });
@@ -79,6 +102,15 @@ Route::middleware('auth')->group(function () {
         Route::get('/{facility:id}/edit', [FacilityController::class, 'edit'])->name('facility.edit');
         Route::put('/{facility:id}/update', [FacilityController::class, 'update'])->name('facility.update');
         Route::delete('/{facility:id}/delete', [FacilityController::class, 'destroy'])->name('facility.delete');
+        Route::post('/getFacilities', [FacilityController::class, 'getFacilities'])->name('facility.getFacilities');
+    });
+
+    // reservation pages
+    Route::prefix('reservation')->group(function () {
+        Route::get('', [ReservationController::class, 'index'])->name('reservation.index');
+        Route::get('/{reservation:id}/detail', [ReservationController::class, 'show'])->name('reservation.show');
+        Route::post('/{reservation:id}/approve', [ReservationController::class, 'approve'])->name('reservation.approve');
+        Route::post('/{reservation:id}/reject', [ReservationController::class, 'reject'])->name('reservation.reject');
     });
 
     // Account pages

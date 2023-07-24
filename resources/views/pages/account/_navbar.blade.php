@@ -1,9 +1,9 @@
 @php
-    $nav = array(
-        array('title' => 'Overview', 'view' => 'account/overview'),
-        array('title' => 'Settings', 'view' => 'account/settings'),
-        array('title' => 'Security', 'view' => ''),
-    );
+$nav = array(
+array('title' => 'Overview', 'view' => 'account/overview'),
+array('title' => 'Settings', 'view' => 'account/settings'),
+array('title' => 'Security', 'view' => ''),
+);
 @endphp
 
 <!--begin::Navbar-->
@@ -13,8 +13,8 @@
         <div class="d-flex flex-wrap flex-sm-nowrap mb-3">
             <!--begin: Pic-->
             <div class="me-7 mb-4">
-                <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
-                    <img src="{{ auth()->user()->avatar_url }}" alt="image"/>
+                <div class="symbol symbol-200px symbol-lg-360px symbol-fixed position-relative">
+                    <img src="{{ auth()->user()->avatar_url }}" alt="image" />
                     <div class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-white h-20px w-20px"></div>
                 </div>
             </div>
@@ -155,14 +155,14 @@
         <!--begin::Navs-->
         <div class="d-flex overflow-auto h-55px">
             <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bolder flex-nowrap">
-            @foreach($nav as $each)
+                @foreach($nav as $each)
                 <!--begin::Nav item-->
-                    <li class="nav-item">
-                        <a class="nav-link text-active-primary me-6 {{ theme()->getPagePath() === $each['view'] ? 'active' : '' }}" href="{{ $each['view'] ? theme()->getPageUrl($each['view']) : '#' }}">
-                            {{ $each['title'] }}
-                        </a>
-                    </li>
-                    <!--end::Nav item-->
+                <li class="nav-item">
+                    <a class="nav-link text-active-primary me-6 {{ theme()->getPagePath() === $each['view'] ? 'active' : '' }}" href="{{ $each['view'] ? theme()->getPageUrl($each['view']) : '#' }}">
+                        {{ $each['title'] }}
+                    </a>
+                </li>
+                <!--end::Nav item-->
                 @endforeach
             </ul>
         </div>
