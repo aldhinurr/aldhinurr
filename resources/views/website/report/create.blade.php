@@ -2,8 +2,8 @@
 
 @section('content')
   <!-- ================================
-                                                                                              START FORM AREA
-                                                                                          ================================= -->
+                                                                                                                START FORM AREA
+                                                                                                            ================================= -->
   <section class="listing-form section--padding">
     <div class="container">
       <div class="row">
@@ -21,13 +21,23 @@
               </div>
               <form method="post" class="row" id="form-report" enctype="multipart/form-data">
                 @csrf
+                <div class="col-lg-12">
+                  <div class="input-box">
+                    <label class="label-text">Tanggal</label>
+                    <div class="form-group">
+                      <span class="title">{{ date('d-m-Y') }}</span>
+                    </div>
+                  </div>
+                </div><!-- end col-lg-6 -->
                 <div class="col-lg-6">
                   <div class="input-box">
                     <label class="label-text">Jenis Laporan</label>
                     <div class="form-group select-contain w-100">
                       <select id="jenis" name="jenis" class="select-contain-select">
                         <option value="">--Jenis Laporan--</option>
-                        <option value="KERUSAKAN" selected>Laporan Kerusakan</option>
+                        <option value="Laporan Kerusakan">Laporan Kerusakan</option>
+                        <option value="Laporan Kebersihan">Laporan Kebersihan</option>
+                        <option value="Laporan Keamanan<">Laporan Keamanan</option>
                       </select>
                     </div>
                   </div>
@@ -35,7 +45,7 @@
                 <div class="col-lg-12">
                   <div class="input-box">
                     <label class="label-text mb-0 line-height-20">Keterangan</label>
-                    <p class="font-size-13 mb-3 line-height-20">Maksimal 400 karakter</p>
+                    <p class="font-size-13 mb-3 line-height-20">Maksimal 200 karakter</p>
                     <div class="form-group">
                       <span class="la la-pencil form-icon"></span>
                       <textarea class="message-control form-control" id="keterangan" name="keterangan"
@@ -68,8 +78,8 @@
     </div><!-- end container -->
   </section><!-- end listing-form -->
   <!-- ================================
-                                                                                              END FORM AREA
-                                                                                          ================================= -->
+                                                                                                                END FORM AREA
+                                                                                                            ================================= -->
 @endsection
 
 @section('scripts')

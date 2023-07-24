@@ -25,7 +25,7 @@ class StoreReportServiceRequest extends FormRequest
     {
         return [
             'jenis' => 'required',
-            'keterangan' => 'required|string|max:400',
+            'keterangan' => 'required|string|max:200',
             'files' => 'required',
         ];
     }

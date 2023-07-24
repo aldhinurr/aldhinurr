@@ -46,7 +46,6 @@ class ReportServiceController extends Controller
             $now = new DateTime("now", new DateTimeZone('Asia/Jakarta'));
 
             $validated = $request->validate($request->rules());
-            $validated['jenis'] = "PERBAIKAN CEPAT";
             $validated['status'] = "MENUNGGU";
             $validated['created_by'] = "customer@email.com";
             $validated['created_at'] = $now;
