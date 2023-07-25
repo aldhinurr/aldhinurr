@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Facility;
 use App\Models\Layanan;
+use App\Models\Reservation;
 use DB;
 use Illuminate\Http\Request;
 
@@ -41,6 +42,27 @@ class WebsiteController extends Controller
         }
 
         return view('website.rooms.index', compact('rooms'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function status(Request $request)
+    {
+        $sewa = Reservation::with("layanan")->paginate(1);
+        if ($request->ajax()) {
+            $sewa = Reservation::query()
+                ->when($request->type, function ($q) use ($request) {
+                    $q->with(["layanan" => function ($query) use ($request) {
+                        $query->where('type', $request->type);
+                    }]);
+                })->paginate(1);
+            return view('website.status._data', compact('sewa'))->render();
+        }
+
+        return view('website.status.index', compact('sewa'));
     }
 
     /**
@@ -128,6 +150,7 @@ class WebsiteController extends Controller
      */
     public function report()
     {
+
         return view('website.report.create');
     }
 

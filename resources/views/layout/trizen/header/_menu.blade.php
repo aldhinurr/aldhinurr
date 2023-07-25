@@ -28,7 +28,7 @@
                   </ul>
                 </li>
                 <li>
-                  <a href="{{ route('website.index') }}">Status</a>
+                  <a href="{{ route('website.status') }}">Status</a>
                 </li>
               </ul>
             </nav>

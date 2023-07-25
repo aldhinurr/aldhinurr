@@ -39,6 +39,7 @@ Route::prefix('website')->group(function () {
     Route::get('/rooms/{layanan:id}/detail', [WebsiteController::class, 'show_room'])->name('website.room.show');
     Route::get('/cars', [WebsiteController::class, 'cars'])->name('website.cars');
     Route::get('/report', [WebsiteController::class, 'report'])->name('website.report');
+    Route::get('/status', [WebsiteController::class, 'status'])->name('website.status');
     Route::get('/facilities', [WebsiteController::class, 'facilities'])->name('website.facilities');
 
     Route::post('/reservation', [ReservationController::class, 'store'])->name('website.reservation');
