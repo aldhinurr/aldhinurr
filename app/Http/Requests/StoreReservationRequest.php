@@ -27,10 +27,10 @@ class StoreReservationRequest extends FormRequest
             'layanan_id' => 'required',
             'start_date' => 'required',
             'end_date' => 'required',
-            'fee' => 'required|numeric|min:1',
+            'fee' => 'required|numeric|min:0',
             'fee_for' => 'required',
             'extra_fee' => 'required|numeric|min:0',
-            'total' => 'required|numeric|min:1',
+            'total' => 'required|numeric|min:0',
         ];
     }
 }

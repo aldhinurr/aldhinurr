@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Facility;
 use App\Models\Layanan;
+use App\Models\ReportService;
 use App\Models\Reservation;
 use DB;
 use Illuminate\Http\Request;
@@ -17,10 +18,25 @@ class WebsiteController extends Controller
      */
     public function index()
     {
-        $rooms = Layanan::with(['layanan_gambars'])
-            ->where('type', 'RUANG')->where('status', 'AKTIF')->limit(6)->get();
-        $cars = Layanan::where('type', 'Kendaraan')->where('status', 'AKTIF')->limit(6)->get();
+        $layanan = new Layanan;
+        $report = new ReportService;
+
+        // Ruangan
+        $count_rooms = $layanan->get_count_data('RUANG');
+        $rooms = $layanan->get_home_data('RUANG', 6);
+
+        // Kendaraan
+        $count_cars = $layanan->get_count_data('KENDARAAN');
+        $cars = $layanan->get_home_data('KENDARAAN', 6);
+
+        // Laporan
+        $count_reports = $report->get_count_data('SELESAI');
+
+
         return view('website.index', [
+            'count_rooms' => $count_rooms,
+            'count_cars' => $count_cars,
+            'count_reports' => $count_reports,
             'rooms' => $rooms,
             'cars' => $cars,
         ]);
@@ -33,10 +49,11 @@ class WebsiteController extends Controller
      */
     public function rooms(Request $request)
     {
-        $rooms = Layanan::with(['layanan_gambars'])
-            ->where('type', 'RUANG')->where('status', 'AKTIF')->paginate(18);
+        $layanan = new Layanan;
+        $rooms = $layanan->get_page_data('RUANG', 6, $request);
 
         if ($request->ajax()) {
+            $rooms = $layanan->get_page_data('RUANG', 6, $request);
             $view = view('website.rooms._data', compact('rooms'))->render();
             return response()->json(['html' => $view]);
         }
@@ -53,11 +70,10 @@ class WebsiteController extends Controller
     {
         $sewa = Reservation::with("layanan")->paginate(1);
         if ($request->ajax()) {
-            $sewa = Reservation::query()
+            $sewa = Reservation::select('*')
+                ->join('layanans', 'layanans.id', '=', 'reservations.layanan_id')
                 ->when($request->type, function ($q) use ($request) {
-                    $q->with(["layanan" => function ($query) use ($request) {
-                        $query->where('type', $request->type);
-                    }]);
+                    $q->where('layanans.type', $request->type);
                 })->paginate(1);
             return view('website.status._data', compact('sewa'))->render();
         }

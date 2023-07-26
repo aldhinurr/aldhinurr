@@ -237,6 +237,17 @@
 
 @section('scripts')
   <script>
+    // $(window).on('hashchange', function() {
+    //   if (window.location.hash) {
+    //     var page = window.location.hash.replace('#', '');
+    //     if (page == Number.NaN || page <= 0) {
+    //       return false;
+    //     } else {
+    //       fetch_data(page);
+    //     }
+    //   }
+    // });
+
     $(document).ready(function() {
       const fetch_data = (page, type, seach_term) => {
         if (type === undefined) {

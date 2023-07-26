@@ -2,8 +2,8 @@
 
 @section('content')
   <!-- ================================
-                                                                                START ABOUT AREA
-                                                                            ================================= -->
+                                                                                                                                                                                                                                                      START ABOUT AREA
+                                                                                                                                                                                                                                                  ================================= -->
   <section class="about-area section--padding overflow-hidden">
     <div class="container">
       <div class="row">
@@ -43,12 +43,12 @@
     <!-- end container -->
   </section>
   <!-- ================================
-                                                                                END ABOUT AREA
-                                                                            ================================= -->
+                                                                                                                                                                                                                                                      END ABOUT AREA
+                                                                                                                                                                                                                                                  ================================= -->
 
   <!-- ================================
-                                                                            START GALLERY AREA
-                                                                        ================================= -->
+                                                                                                                                                                                                                                                  START GALLERY AREA
+                                                                                                                                                                                                                                              ================================= -->
   <section class="gallery-area section-padding">
     <div class="container">
       <div class="full-width-slider padding-top-30px carousel-action">
@@ -86,12 +86,12 @@
     </div>
   </section><!-- end gallery-area -->
   <!-- ================================
-                                                                            END GALLERY AREA
-                                                                        ================================= -->
+                                                                                                                                                                                                                                                  END GALLERY AREA
+                                                                                                                                                                                                                                              ================================= -->
 
   <!-- ================================
-                                                                            START INFO AREA
-                                                                        ================================= -->
+                                                                                                                                                                                                                                                  START INFO AREA
+                                                                                                                                                                                                                                              ================================= -->
   <section class="info-area padding-bottom-20px">
     <div class="container">
       <div class="row padding-top-50px justify-content-md-center">
@@ -102,7 +102,7 @@
             </div>
             <!-- end info-icon-->
             <div class="info-content text-center">
-              <h4 class="info__title" style="font-size: 45px;">12</h4>
+              <h4 class="info__title" style="font-size: 45px;">{{ $count_rooms }}</h4>
               <h3 class="info__title">Ruang</h3>
             </div>
             <!-- end info-content -->
@@ -117,7 +117,7 @@
             </div>
             <!-- end info-icon-->
             <div class="info-content text-center">
-              <h4 class="info__title" style="font-size: 45px;">48</h4>
+              <h4 class="info__title" style="font-size: 45px;">{{ $count_cars }}</h4>
               <h3 class="info__title">Kendaraan</h3>
             </div>
             <!-- end info-content -->
@@ -132,7 +132,7 @@
             </div>
             <!-- end info-icon-->
             <div class="info-content text-center">
-              <h4 class="info__title" style="font-size: 45px;">60</h4>
+              <h4 class="info__title" style="font-size: 45px;">{{ $count_reports }}</h4>
               <h3 class="info__title">Laporan Tertangani</h3>
               </p>
             </div>
@@ -148,14 +148,14 @@
   </section>
   <!-- end info-area -->
   <!-- ================================
-                                                                            END INFO AREA
-                                                                        ================================= -->
+                                                                                                                                                                                                                                                  END INFO AREA
+                                                                                                                                                                                                                                              ================================= -->
 
   <div class="section-block"></div>
 
   <!-- ================================
-                                                                            START INFO AREA
-                                                                        ================================= -->
+                                                                                                                                                                                                                                                  START INFO AREA
+                                                                                                                                                                                                                                              ================================= -->
   <section class="info-area padding-top-30px padding-bottom-70px">
     <div class="container">
       <div class="row align-items-center">
@@ -232,13 +232,13 @@
   </section>
   <!-- end info-area -->
   <!-- ================================
-                                                                            END INFO AREA
-                                                                        ================================= -->
+                                                                                                                                                                                                                                                  END INFO AREA
+                                                                                                                                                                                                                                              ================================= -->
 
   <!-- ================================
-                                                                                START HOTEL AREA
-                                                                            ================================= -->
-  <section class="hotel-area section-bg padding-top-50px padding-bottom-50px overflow-hidden">
+                                                                                                                                                                                                                                                      START HOTEL AREA
+                                                                                                                                                                                                                                                  ================================= -->
+  <section class="hotel-area section-bg padding-top-40px padding-bottom-30px overflow-hidden">
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
@@ -252,18 +252,18 @@
         <!-- end col-lg-12 -->
       </div>
       <!-- end row -->
-      <div class="row padding-top-50px">
+      <div class="row padding-top-20px">
         <div class="col-lg-12">
           <div class="hotel-card-wrap">
             <div class="hotel-card-carousel-2 carousel-action">
               @foreach ($rooms as $room)
                 <div class="card-item">
-                  <div class="card-img">
+                  <div class="card-img-top overflow-hidden" style="height: 247px; width: auto;">
                     <a href="{{ route('website.room.show', $room->id) }}" class="d-block">
                       @if ($room->layanan_gambars->first())
                         <img src="{{ asset($room->layanan_gambars[0]['picture']) }}" alt="hotel-img" />
                       @else
-                        <img src="https://source.unsplash.com/600x400?rooms" alt="hotel-img" />
+                        <img src="https://source.unsplash.com/600x400?building" alt="hotel-img" />
                       @endif
                     </a>
                   </div>
@@ -274,11 +274,22 @@
                     <p class="card-meta">{{ $room->address }}</p>
                     <div class="card-price d-flex align-items-center justify-content-between">
                       <p>
-                        <span class="price__num">Rp. {{ $room->price }}</span>
+                        <span class="price__num">
+                          @if ($room->price == 0)
+                            Gratis
+                          @else
+                            Rp. {{ number_format($room->price, 0) }}
+                          @endif
+                        </span>
                         <span class="price__text">Per {{ $room->price_for }}</span>
                       </p>
-                      <a href="{{ route('website.rooms') }}" class="btn-text">See details<i
-                          class="la la-angle-right"></i></a>
+                      @if ($room->is_sewa == 1)
+                        <span class="price__text">Sedang Disewa</span>
+                      @else
+                        <a href="{{ route('website.room.show', $room->id) }}" class="btn-text">
+                          See details<i class="la la-angle-right"></i>
+                        </a>
+                      @endif
                     </div>
                   </div>
                 </div>
@@ -291,22 +302,22 @@
         <!-- end col-lg-12 -->
       </div>
       <!-- end row -->
-
       <div class="btn-box pt-3 text-center">
-        <a href="about.html" class="theme-btn">See More <i class="la la-arrow-right ml-1"></i></a>
+        <a href="{{ route('website.rooms') }}" class="theme-btn">Lihat Ruangan Lainnya <i
+            class="la la-arrow-right ml-1"></i></a>
       </div>
     </div>
     <!-- end container-fluid -->
   </section>
   <!-- end hotel-area -->
   <!-- ================================
-                                                                                END HOTEL AREA
-                                                                            ================================= -->
+                                                                                                                                                                                                                                                      END HOTEL AREA
+                                                                                                                                                                                                                                                  ================================= -->
 
   <!-- ================================
-                                                                            START CAR AREA
-                                                                        ================================= -->
-  <section class="car-area section-padding">
+                                                                                                                                                                                                                                                  START CAR AREA
+                                                                                                                                                                                                                                              ================================= -->
+  <section class="car-area section-padding padding-bottom-30px overflow-hidden">
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
@@ -318,12 +329,12 @@
         <!-- end col-lg-12 -->
       </div>
       <!-- end row -->
-      <div class="row padding-top-50px">
+      <div class="row padding-top-20px">
         <div class="col-lg-12">
           <div class="car-carousel carousel-action">
             @foreach ($cars as $car)
               <div class="card-item car-card mb-0 border">
-                <div class="card-img">
+                <div class="card-img-top overflow-hidden" style="height: 247px; width: auto;">
                   <a href="#" class="d-block">
                     <img src="https://source.unsplash.com/600x400?cars" alt="car-img" />
                   </a>
@@ -347,9 +358,14 @@
                   </div>
                   <div class="card-price d-flex align-items-center justify-content-between">
                     <p>
-                      <span class="price__from">From</span>
-                      <span class="price__num">Rp. {{ $car->price }}</span>
-                      <span class="price__text">Per {{ $car->price_for }}</span>
+                      <span class="price__num">
+                        @if ($room->price == 0)
+                          Gratis
+                        @else
+                          Rp. {{ number_format($room->price, 0) }}
+                        @endif
+                      </span>
+                      <span class="price__text">Per {{ $room->price_for }}</span>
                     </p>
                     <a href="#" class="btn-text">See details<i class="la la-angle-right"></i></a>
                   </div>
@@ -363,84 +379,90 @@
         <!-- end col-lg-12 -->
       </div>
       <!-- end row -->
-
       <div class="btn-box pt-3 text-center">
-        <a href="about.html" class="theme-btn">See More <i class="la la-arrow-right ml-1"></i></a>
+        <a href="about.html" class="theme-btn">Lihat Kendaraan Lainnya <i class="la la-arrow-right ml-1"></i></a>
       </div>
     </div>
     <!-- end container -->
   </section>
   <!-- end car-area -->
   <!-- ================================
-                                                                            END CAR AREA
-                                                                        ================================= -->
+                                                                                                                                                                                                                                                  END CAR AREA
+                                                                                                                                                                                                                                              ================================= -->
 
   <div class="section-block"></div>
 
   <!-- ================================
-                                                                            START INFO AREA
-                                                                        ================================= -->
-  <section class="info-area padding-bottom-30px">
+                                                                                                                                                                                                                                                  START INFO AREA
+                                                                                                                                                                                                                                              ================================= -->
+  <section class="info-area padding-top-70px padding-bottom-70px">
     <div class="container">
-      <div class="row padding-top-50px">
-        <div class="col-lg-4 responsive-column">
-          <div class="icon-box icon-layout-3 d-flex">
-            <div class="info-icon flex-shrink-0">
-              <i class="la la-file-text"></i>
-            </div>
-            <!-- end info-icon-->
-            <div class="info-content">
-              <h4 class="info__title">2,000+ Local Guides</h4>
-              <p class="info__desc">
-                Lorem ipsum dolor sit amet, consectetur adipisicing
-              </p>
-            </div>
-            <!-- end info-content -->
+      <div class="row align-items-center">
+        <div class="col-lg-8">
+          <div class="section-heading">
+            <h2 class="sec__title">Laporan</h2>
           </div>
-          <!-- end icon-box -->
+          <!-- end section-heading -->
         </div>
-        <!-- end col-lg-4 -->
-        <div class="col-lg-4 responsive-column">
+        <!-- end col-lg-8 -->
+      </div>
+      <!-- end row -->
+      <div class="row padding-top-30px justify-content-md-center">
+        <div class="col-lg-3 responsive-column">
           <div class="icon-box icon-layout-3 d-flex">
             <div class="info-icon flex-shrink-0">
               <i class="la la-bullhorn"></i>
             </div>
             <!-- end info-icon-->
-            <div class="info-content">
-              <h4 class="info__title">Handcrafted Experiences</h4>
-              <p class="info__desc">
-                Lorem ipsum dolor sit amet, consectetur adipisicing
-              </p>
+            <div class="info-content mt-2">
+              <h2 class="sec__title text-dark">{{ $count_rooms }}</h2>
+              <h6 class="info__title">Kerusakan</h6>
             </div>
             <!-- end info-content -->
           </div>
           <!-- end icon-box -->
         </div>
-        <!-- end col-lg-4 -->
-        <div class="col-lg-4 responsive-column">
+        <!-- end col-lg-3 -->
+        <div class="col-lg-3 responsive-column">
           <div class="icon-box icon-layout-3 d-flex">
             <div class="info-icon flex-shrink-0">
-              <i class="la la-users"></i>
+              <i class="la la-recycle"></i>
             </div>
             <!-- end info-icon-->
-            <div class="info-content">
-              <h4 class="info__title">95% Happy Travelers</h4>
-              <p class="info__desc">
-                Lorem ipsum dolor sit amet, consectetur adipisicing
-              </p>
+            <div class="info-content mt-2">
+              <h2 class="sec__title text-dark">{{ $count_rooms }}</h2>
+              <h6 class="info__title">Proses</h6>
             </div>
             <!-- end info-content -->
           </div>
           <!-- end icon-box -->
         </div>
-        <!-- end col-lg-4 -->
+        <!-- end col-lg-3 -->
+        <div class="col-lg-3 responsive-column">
+          <div class="icon-box icon-layout-3 d-flex">
+            <div class="info-icon flex-shrink-0">
+              <i class="la la-file-text"></i>
+            </div>
+            <!-- end info-icon-->
+            <div class="info-content mt-2">
+              <h2 class="sec__title text-dark">{{ $count_rooms }}</h2>
+              <h6 class="info__title">Tertangani</h6>
+            </div>
+            <!-- end info-content -->
+          </div>
+          <!-- end icon-box -->
+        </div>
+        <!-- end col-lg-3 -->
       </div>
       <!-- end row -->
+      <div class="btn-box pt-4 text-center">
+        <a href="about.html" class="theme-btn">Lihat Laporan <i class="la la-arrow-right ml-1"></i></a>
+      </div>
     </div>
     <!-- end container -->
   </section>
   <!-- end info-area -->
   <!-- ================================
-                                                                            END INFO AREA
-                                                                        ================================= -->
+                                                                                                                                                                                                                                                  END INFO AREA
+                                                                                                                                                                                                                                              ================================= -->
 @endsection

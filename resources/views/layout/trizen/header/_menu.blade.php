@@ -30,6 +30,9 @@
                 <li>
                   <a href="{{ route('website.status') }}">Status</a>
                 </li>
+                <li>
+                  <a href="https://asrama.itb.ac.id" target="_blank">Asrama</a>
+                </li>
               </ul>
             </nav>
           </div>

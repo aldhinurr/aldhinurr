@@ -22,4 +22,9 @@ class ReportService extends Model
     {
         return $this->HasMany(ReportServiceImage::class);
     }
+
+    public function get_count_data($status)
+    {
+        return Layanan::where('status', $status)->count();
+    }
 }
