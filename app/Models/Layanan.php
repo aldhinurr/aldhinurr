@@ -87,7 +87,7 @@ class Layanan extends Model
         }
 
         return Layanan::with(['layanan_gambars'])
-            ->select('layanans.*', DB::raw("coalesce(jml_sewa, 0) as jml_sewa"), DB::raw("coalesce(is_sewa, 0) as is_sewa"))
+            ->select('layanans.*', DB::raw("coalesce(b.jml_sewa, 0) as jml_sewa")) //, DB::raw("coalesce(c.sewa, 0) as sewa"))
             ->distinct()
             ->leftJoin(
                 DB::raw(
@@ -100,18 +100,17 @@ class Layanan extends Model
                     $join->on('b.layanan_id', "=", "layanans.id");
                 }
             )
-            ->leftJoin(
-                DB::raw(
-                    "(select count(r.id) is_sewa, layanan_id 
-                    from reservations r 
-                    where r.status = '$r_status'
-                    and r.end_date >= $dateNow 
-                    group by r.layanan_id) c"
-                ),
-                function ($join) {
-                    $join->on('c.layanan_id', "=", "layanans.id");
-                }
-            )
+            // ->leftJoin(
+            //     DB::raw(
+            //         "(select 1 as sewa, layanan_id 
+            //         from reservations r 
+            //         where r.status = '$r_status'
+            //         and r.end_date >= $dateNow) c"
+            //     ),
+            //     function ($join) {
+            //         $join->on('c.layanan_id', "=", "layanans.id");
+            //     }
+            // )
             ->where('type', $type)->where('status', 'AKTIF')
             ->when($params->location != null, function ($q) use ($params) {
                 $q->where('location', $params->location);

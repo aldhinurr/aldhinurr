@@ -6,6 +6,8 @@ use App\Models\Facility;
 use App\Models\Layanan;
 use App\Models\ReportService;
 use App\Models\Reservation;
+use DateTime;
+use DateTimeZone;
 use DB;
 use Illuminate\Http\Request;
 
@@ -50,15 +52,35 @@ class WebsiteController extends Controller
     public function rooms(Request $request)
     {
         $layanan = new Layanan;
-        $rooms = $layanan->get_page_data('RUANG', 6, $request);
+        $rooms = $layanan->get_page_data('RUANG', 18, $request);
+
+        // is_sewa
+        $now = new DateTime("now", new DateTimeZone('Asia/Jakarta'));
+        $dateNow = $now->format('Y-m-d');
+        if ($request->start_date) {
+            $start_date = strtotime(str_replace("/", "-", $request->start_date));
+            $dateNow = date('Y-m-d', $start_date);
+        }
+
+        $sewa = Reservation::select('layanan_id')
+            ->where('status', 'DISETUJUI')
+            ->where('end_date', '>=', $dateNow)
+            ->get();
+
+        $is_sewa = array();
+        if (count($sewa) > 0) {
+            foreach ($sewa as $s => $val) {
+                array_push($is_sewa, $val->layanan_id);
+            }
+        }
 
         if ($request->ajax()) {
-            $rooms = $layanan->get_page_data('RUANG', 6, $request);
-            $view = view('website.rooms._data', compact('rooms'))->render();
+            $rooms = $layanan->get_page_data('RUANG', 18, $request);
+            $view = view('website.rooms._data', compact('rooms', 'is_sewa'))->render();
             return response()->json(['html' => $view]);
         }
 
-        return view('website.rooms.index', compact('rooms'));
+        return view('website.rooms.index', compact('rooms', 'is_sewa'));
     }
 
     /**
