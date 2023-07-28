@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <title>e-Facility ITB</title>
   <!-- Favicon -->
-  <link rel="icon" href="{{ asset('efacility/images/favicon.jpeg') }}" />
+  <link rel="icon" href="{{ asset('efacility/images/favicon.png') }}" />
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
