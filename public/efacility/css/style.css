@@ -3382,7 +3382,7 @@ body {
     header
  ====================================================*/
 .header-top-bar {
-  background-color: #fff;
+  background-color: #243238;
   padding-top: 5px;
   padding-bottom: 5px;
   border-bottom: 1px solid rgba(128, 137, 150, 0.1);
@@ -3446,7 +3446,7 @@ body {
   padding-right: 13px;
   margin-bottom: 5px;
   display: inline-block;
-  color: #0d233e;
+  color: #B5BBBE;
   text-transform: inherit;
   font-size: 14px;
 }
@@ -3457,7 +3457,7 @@ body {
   margin-right: 3px;
 }
 .header-top-content .list-items li a {
-  color: #0d233e;
+  color: #B5BBBE;
 }
 .header-top-content .list-items li a:before {
   display: none;
@@ -3557,7 +3557,7 @@ body {
 
 /*===== header-menu-wrapper ========*/
 .header-menu-wrapper {
-  background-color: #fff;
+  background-color: #005AAB;
   z-index: 1024;
 }
 @media (max-width: 1366px) {
@@ -3884,7 +3884,7 @@ body {
   height: 35px;
   text-align: center;
   line-height: 35px;
-  color: #0d233e;
+  color: #FFFFFF;
   cursor: pointer;
   transition: all 0.3s;
   display: none;
@@ -3931,7 +3931,7 @@ body {
   background-color: rgba(128, 137, 150, 0.1);
 }
 .main-menu-content ul li a {
-  color: #0d233e;
+  color: #FFFFFF;
   display: block;
   transition: all 0.3s;
   position: relative;
@@ -3955,7 +3955,7 @@ body {
 }
 .main-menu-content ul li a .la-angle-down {
   font-size: 12px;
-  color: #5d646d;
+  color: #FFFFFF;
 }
 @media only screen and (min-width: 768px) and (max-width: 991px) {
   .main-menu-content ul li a .la-angle-down {
@@ -3973,7 +3973,7 @@ body {
   }
 }
 .main-menu-content ul li a:hover {
-  color: #287dfa;
+  color: #FFA804;
 }
 .main-menu-content ul li .dropdown-menu-item {
   text-align: left;
@@ -6448,7 +6448,7 @@ body {
   font-weight: 700;
   font-size: 20px;
   color: #0d233e;
-  width: 68px;
+  width: 100px;
 }
 
 /* join-us-box */

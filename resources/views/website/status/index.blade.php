@@ -1,4 +1,4 @@
-@extends('layout.trizen.master')
+@extends('layout.efacility.master')
 
 @section('content')
   <section class="card-area section--padding">

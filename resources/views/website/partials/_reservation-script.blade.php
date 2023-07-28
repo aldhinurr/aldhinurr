@@ -3,6 +3,7 @@
   var totalFee;
   var addFee = 0;
   var total = 0;
+  var is_sewa = 0;
 
   (function($) {
     "use strict";
@@ -13,7 +14,6 @@
 
     var handleForm = function() {
       $('#start_date').on('apply.daterangepicker', (e, picker) => {
-        console.log(picker);
         var start = moment(picker.startDate.format('YYYY-MM-DD'));
         var end = moment($('#end_date').val(), 'DD/MM/YYYY');
         var duration = moment.duration(end.diff(start));
@@ -26,6 +26,7 @@
 
         $('#duration').val(days);
         sumFeeReservation();
+        checkReservation();
       });
 
       $('#end_date').on('apply.daterangepicker', (e, picker) => {
@@ -67,10 +68,6 @@
         },
       });
 
-      function remove(id) {
-        alert(id);
-      }
-
       fasilitasButton.addEventListener("click", function(e) {
         e.preventDefault();
 
@@ -95,6 +92,14 @@
 
       submitButton.addEventListener('click', function(e) {
         e.preventDefault();
+
+        // validate is_sewa        
+        if (is_sewa > 0) {
+          $('.alert').html('Ruangan sedang disewa, silahkan pilih tanggal lain.').fadeIn().delay(3000)
+            .fadeOut();
+          return
+        }
+
 
         var data = {}
         data["layanan_id"] = "{{ $data->id }}";
@@ -158,8 +163,40 @@
       fasilitasButton = document.getElementById('add-fasilitas');
 
       handleForm();
+      checkReservation();
+
     });
   })(jQuery);
+
+  function checkReservation() {
+    var endpoint = "{{ route('website.reservation.check') }}"
+    var layanan = "{{ $data->id }}"
+    var date = $('#start_date').val()
+    var availableInfo = $('#is_available');
+
+    // Send ajax request
+    $.ajax({
+      url: endpoint + "?layanan=" + layanan + "&date=" + date,
+      type: 'GET',
+      success: function(response) {
+        is_sewa = response;
+        availableInfo.empty();
+        if (response > 0) {
+          availableInfo.html(`<span class="badge badge-secondary text-white">Sedang Disewa</span>`)
+        } else {
+          availableInfo.html(`<span class="badge badge-success text-white">Tersedia</span>`)
+        }
+      },
+      error: function(xhr, ajaxOptions, thrownError) {
+        var contentType = xhr.getResponseHeader("Content-Type");
+        if (xhr.status === 200 && contentType.toLowerCase().indexOf("text/html") >= 0) {
+          window.location.reload();
+        } else {
+          alert(xhr.responseText)
+        };
+      }
+    })
+  }
 
   function sumFeeReservation() {
     var duration = $('#duration').val();

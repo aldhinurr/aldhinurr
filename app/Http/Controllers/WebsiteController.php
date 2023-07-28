@@ -90,7 +90,7 @@ class WebsiteController extends Controller
      */
     public function status(Request $request)
     {
-        $sewa = Reservation::with("layanan")->paginate(1);
+        $sewa = Reservation::with("layanan")->paginate(10);
         if ($request->ajax()) {
             $sewa = Reservation::select('*')
                 ->join('layanans', 'layanans.id', '=', 'reservations.layanan_id')
@@ -113,9 +113,9 @@ class WebsiteController extends Controller
     {
         $layanan_gambars = $layanan->layanan_gambars()->get();
         $service_facilities = $layanan->service_facilities()->with('facility')->get();
-        $other_rooms = Layanan::with(['layanan_gambars'])
-            ->where('type', 'RUANG')->where('status', 'AKTIF')
-            ->inRandomOrder()->limit(5)->get();
+
+        $layananModel = new Layanan;
+        $other_rooms = $layananModel->get_other_data('RUANG', 6, $layanan->id);
 
         return view('website.rooms.details', [
             'data' => $layanan,

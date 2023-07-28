@@ -1,9 +1,9 @@
-@extends('layout.trizen.master')
+@extends('layout.efacility.master')
 
 @section('content')
   <!-- ================================
-                                                                                                                START FORM AREA
-                                                                                                            ================================= -->
+                                                                                                                    START FORM AREA
+                                                                                                                ================================= -->
   <section class="listing-form section--padding">
     <div class="container">
       <div class="row">
@@ -78,12 +78,12 @@
     </div><!-- end container -->
   </section><!-- end listing-form -->
   <!-- ================================
-                                                                                                                END FORM AREA
-                                                                                                            ================================= -->
+                                                                                                                    END FORM AREA
+                                                                                                                ================================= -->
 @endsection
 
 @section('scripts')
-  <script src="{{ asset('trizen/js/jquery.multi-file.min.js') }}"></script>
+  <script src="{{ asset('efacility/js/jquery.multi-file.min.js') }}"></script>
   <script>
     var submitButton = document.getElementById('submitButton');
     submitButton.addEventListener('click', function(e) {

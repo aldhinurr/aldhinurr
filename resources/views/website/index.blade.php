@@ -1,39 +1,33 @@
-@extends('layout.trizen.master')
+@extends('layout.efacility.master')
 
 @section('content')
   <!-- ================================
-                                                                                                                                                                                                                                                      START ABOUT AREA
-                                                                                                                                                                                                                                                  ================================= -->
+                                                                                                                                                                                                                                                                                  START ABOUT AREA
+                                                                                                                                                                                                                                                                              ================================= -->
   <section class="about-area section--padding overflow-hidden">
     <div class="container">
       <div class="row">
         <div class="col-lg-6">
           <div class="image-box about-img-box">
-            <img src="https://source.unsplash.com/600x400?artline" alt="about-img" class="img__item img__item-1" />
+            <img src="{{ asset('efacility/images/img-facility.png') }}" alt="about-img" class="img__item img__item-1" />
           </div>
         </div>
         <!-- end col-lg-6 -->
         <div class="col-lg-6">
           <div class="about-content pr-5">
             <div class="section-heading">
-              <h4 class="font-size-16 pb-2">Our Story</h4>
-              <h2 class="sec__title">Atmosphere and Design</h2>
-              <p class="sec__desc pt-4 pb-2">
-                It is a long established fact that a reader will be distracted
-                by the readable content of a page when looking at its layout.
-                The point of using Lorem Ipsum is that it has a more-or-less
-                normal distribution of letters
+              <h2 class="sec__title">E-Facility</h2>
+              <p class="sec__desc pt-4">
+                Sewa ruang untuk kegiatan seminar dan konferensi.
               </p>
               <p class="sec__desc">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. A
-                accusamus amet consectetur ipsa officia. Doloremque error
-                porro sit soluta totam! A iste nobis vel voluptatem!
+                Sewa kendaraan untuk kebutuhan perjalan dinas.
+              </p>
+              <p class="sec__desc">
+                Laporan untuk kerusakan, kebersihan, dan keamanan.
               </p>
             </div>
             <!-- end section-heading -->
-            <div class="btn-box pt-4">
-              <a href="about.html" class="theme-btn">Read More <i class="la la-arrow-right ml-1"></i></a>
-            </div>
           </div>
         </div>
         <!-- end col-lg-6 -->
@@ -43,55 +37,43 @@
     <!-- end container -->
   </section>
   <!-- ================================
-                                                                                                                                                                                                                                                      END ABOUT AREA
-                                                                                                                                                                                                                                                  ================================= -->
+                                                                                                                                                                                                                                                                                  END ABOUT AREA
+                                                                                                                                                                                                                                                                              ================================= -->
 
   <!-- ================================
-                                                                                                                                                                                                                                                  START GALLERY AREA
-                                                                                                                                                                                                                                              ================================= -->
+                                                                                                                                                                                                                                                                              START GALLERY AREA
+                                                                                                                                                                                                                                                                          ================================= -->
   <section class="gallery-area section-padding">
     <div class="container">
       <div class="full-width-slider padding-top-30px carousel-action">
         <div class="full-width-slide-item">
-          <a class="d-block" data-fancybox="gallery" href="https://source.unsplash.com/1200x800?building"
+          <a class="d-block" data-fancybox="gallery" href="{{ asset('efacility/images/image-slider-1.jfif') }}"
             data-caption="Showing image 1">
-            <img src="https://source.unsplash.com/1200x800?university">
+            <img src="{{ asset('efacility/images/image-slider-1.jfif') }}">
           </a>
         </div><!-- end full-width-slide-item -->
         <div class="full-width-slide-item">
-          <a class="d-block" data-fancybox="gallery" href="https://source.unsplash.com/1200x800?event"
+          <a class="d-block" data-fancybox="gallery" href="{{ asset('efacility/images/image-slider-2.jfif') }}"
             data-caption="Showing image 2">
-            <img src="https://source.unsplash.com/1200x800?event">
+            <img src="{{ asset('efacility/images/image-slider-2.jfif') }}">
           </a>
         </div><!-- end full-width-slide-item -->
         <div class="full-width-slide-item">
-          <a class="d-block" data-fancybox="gallery" href="https://source.unsplash.com/1200x800?study"
+          <a class="d-block" data-fancybox="gallery" href="{{ asset('efacility/images/image-slider-3.jfif') }}"
             data-caption="Showing image 3">
-            <img src="https://source.unsplash.com/1200x800?study">
-          </a>
-        </div><!-- end full-width-slide-item -->
-        <div class="full-width-slide-item">
-          <a class="d-block" data-fancybox="gallery" href="https://source.unsplash.com/1200x800?technology"
-            data-caption="Showing image 4">
-            <img src="https://source.unsplash.com/1200x800?technology">
-          </a>
-        </div><!-- end full-width-slide-item -->
-        <div class="full-width-slide-item">
-          <a class="d-block" data-fancybox="gallery" href="https://source.unsplash.com/1200x800?ITB"
-            data-caption="Showing image 5">
-            <img src="https://source.unsplash.com/1200x800?ITB">
+            <img src="{{ asset('efacility/images/image-slider-3.jfif') }}">
           </a>
         </div><!-- end full-width-slide-item -->
       </div><!-- end full-width-slider -->
     </div>
   </section><!-- end gallery-area -->
   <!-- ================================
-                                                                                                                                                                                                                                                  END GALLERY AREA
-                                                                                                                                                                                                                                              ================================= -->
+                                                                                                                                                                                                                                                                              END GALLERY AREA
+                                                                                                                                                                                                                                                                          ================================= -->
 
   <!-- ================================
-                                                                                                                                                                                                                                                  START INFO AREA
-                                                                                                                                                                                                                                              ================================= -->
+                                                                                                                                                                                                                                                                              START INFO AREA
+                                                                                                                                                                                                                                                                          ================================= -->
   <section class="info-area padding-bottom-20px">
     <div class="container">
       <div class="row padding-top-50px justify-content-md-center">
@@ -148,14 +130,14 @@
   </section>
   <!-- end info-area -->
   <!-- ================================
-                                                                                                                                                                                                                                                  END INFO AREA
-                                                                                                                                                                                                                                              ================================= -->
+                                                                                                                                                                                                                                                                              END INFO AREA
+                                                                                                                                                                                                                                                                          ================================= -->
 
   <div class="section-block"></div>
 
   <!-- ================================
-                                                                                                                                                                                                                                                  START INFO AREA
-                                                                                                                                                                                                                                              ================================= -->
+                                                                                                                                                                                                                                                                              START INFO AREA
+                                                                                                                                                                                                                                                                          ================================= -->
   <section class="info-area padding-top-30px padding-bottom-70px">
     <div class="container">
       <div class="row align-items-center">
@@ -232,12 +214,12 @@
   </section>
   <!-- end info-area -->
   <!-- ================================
-                                                                                                                                                                                                                                                  END INFO AREA
-                                                                                                                                                                                                                                              ================================= -->
+                                                                                                                                                                                                                                                                              END INFO AREA
+                                                                                                                                                                                                                                                                          ================================= -->
 
   <!-- ================================
-                                                                                                                                                                                                                                                      START HOTEL AREA
-                                                                                                                                                                                                                                                  ================================= -->
+                                                                                                                                                                                                                                                                                  START HOTEL AREA
+                                                                                                                                                                                                                                                                              ================================= -->
   <section class="hotel-area section-bg padding-top-40px padding-bottom-30px overflow-hidden">
     <div class="container">
       <div class="row">
@@ -311,12 +293,12 @@
   </section>
   <!-- end hotel-area -->
   <!-- ================================
-                                                                                                                                                                                                                                                      END HOTEL AREA
-                                                                                                                                                                                                                                                  ================================= -->
+                                                                                                                                                                                                                                                                                  END HOTEL AREA
+                                                                                                                                                                                                                                                                              ================================= -->
 
   <!-- ================================
-                                                                                                                                                                                                                                                  START CAR AREA
-                                                                                                                                                                                                                                              ================================= -->
+                                                                                                                                                                                                                                                                              START CAR AREA
+                                                                                                                                                                                                                                                                          ================================= -->
   <section class="car-area section-padding padding-bottom-30px overflow-hidden">
     <div class="container">
       <div class="row">
@@ -387,14 +369,14 @@
   </section>
   <!-- end car-area -->
   <!-- ================================
-                                                                                                                                                                                                                                                  END CAR AREA
-                                                                                                                                                                                                                                              ================================= -->
+                                                                                                                                                                                                                                                                              END CAR AREA
+                                                                                                                                                                                                                                                                          ================================= -->
 
   <div class="section-block"></div>
 
   <!-- ================================
-                                                                                                                                                                                                                                                  START INFO AREA
-                                                                                                                                                                                                                                              ================================= -->
+                                                                                                                                                                                                                                                                              START INFO AREA
+                                                                                                                                                                                                                                                                          ================================= -->
   <section class="info-area padding-top-70px padding-bottom-70px">
     <div class="container">
       <div class="row align-items-center">
@@ -463,6 +445,6 @@
   </section>
   <!-- end info-area -->
   <!-- ================================
-                                                                                                                                                                                                                                                  END INFO AREA
-                                                                                                                                                                                                                                              ================================= -->
+                                                                                                                                                                                                                                                                              END INFO AREA
+                                                                                                                                                                                                                                                                          ================================= -->
 @endsection

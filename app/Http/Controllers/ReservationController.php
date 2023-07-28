@@ -124,6 +124,20 @@ class ReservationController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Reservation  $reservation
+     * @return \Illuminate\Http\Response
+     */
+    public function check(Request $request)
+    {
+        $date = strtotime(str_replace("/", "-", $request->date));
+
+        return Reservation::where('layanan_id', $request->layanan)
+            ->where('end_date', '>=', date('Y-m-d', $date))->count();
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Reservation  $reservation

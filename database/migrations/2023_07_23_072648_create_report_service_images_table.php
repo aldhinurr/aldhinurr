@@ -24,7 +24,7 @@ class CreateReportServiceImagesTable extends Migration
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();
             $table->index('report_service_id');
-            $table->foreign('report_service_id')->references('id')->on('report_serviceS')->onDelete('cascade');
+            $table->foreign('report_service_id')->references('id')->on('report_services')->onDelete('cascade');
         });
     }
 

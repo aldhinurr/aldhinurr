@@ -24,7 +24,7 @@ class RolesSeeder extends Seeder
                 'name' => $value['name'],
             ]);
 
-            if ($value['name'] == 'superadmin') {
+            if (in_array($value['name'], ['superadmin', 'admin'])) {
                 foreach ($permission_list as $p) {
                     $role->givePermissionTo($p['name']);
                 }
@@ -37,9 +37,7 @@ class RolesSeeder extends Seeder
         return [
             ['name' => 'superadmin'],
             ['name' => 'admin'],
-            ['name' => 'staff'],
-            ['name' => 'bendahara'],
-            ['name' => 'manager'],
+            ['name' => 'user'],
         ];
     }
 }

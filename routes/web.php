@@ -31,30 +31,22 @@ use Illuminate\Support\Str;
 |
 */
 
-
 // web
-Route::prefix('website')->group(function () {
-    Route::get('', [WebsiteController::class, 'index'])->name('website.index');
-    Route::get('/rooms', [WebsiteController::class, 'rooms'])->name('website.rooms');
-    Route::get('/rooms/{layanan:id}/detail', [WebsiteController::class, 'show_room'])->name('website.room.show');
-    Route::get('/cars', [WebsiteController::class, 'cars'])->name('website.cars');
-    Route::get('/report', [WebsiteController::class, 'report'])->name('website.report');
-    Route::get('/status', [WebsiteController::class, 'status'])->name('website.status');
-    Route::get('/facilities', [WebsiteController::class, 'facilities'])->name('website.facilities');
+Route::get('/', [WebsiteController::class, 'index'])->name('website.index');
+Route::get('/rooms', [WebsiteController::class, 'rooms'])->name('website.rooms');
+Route::get('/rooms/{layanan:id}/detail', [WebsiteController::class, 'show_room'])->name('website.room.show');
+Route::get('/cars', [WebsiteController::class, 'cars'])->name('website.cars');
+Route::get('/report', [WebsiteController::class, 'report'])->name('website.report');
+Route::get('/status', [WebsiteController::class, 'status'])->name('website.status');
+Route::get('/facilities', [WebsiteController::class, 'facilities'])->name('website.facilities');
 
-    Route::post('/reservation', [ReservationController::class, 'store'])->name('website.reservation');
-    Route::get('/reservation/{reservation:id}/detail', [ReservationController::class, 'detail'])->name('website.reservation.show');
-    Route::post('/reservation/{reservation:id}/receipt/upload', [ReservationController::class, 'upload_receipt'])->name('website.reservation.receipt.upload');
+Route::post('/reservation', [ReservationController::class, 'store'])->name('website.reservation');
+Route::get('/reservation/{reservation:id}/detail', [ReservationController::class, 'detail'])->name('website.reservation.show');
+Route::post('/reservation/{reservation:id}/receipt/upload', [ReservationController::class, 'upload_receipt'])->name('website.reservation.receipt.upload');
+Route::get('/reservation/check', [ReservationController::class, 'check'])->name('website.reservation.check');
 
-    Route::post('/report/store', [ReportServiceController::class, 'store'])->name('website.report.store');
-    Route::get('/report/{reportService:id}/detail', [ReportServiceController::class, 'detail'])->name('website.report.show');
-});
-
-
-// admin
-Route::get('/', function () {
-    return redirect('index');
-});
+Route::post('/report/store', [ReportServiceController::class, 'store'])->name('website.report.store');
+Route::get('/report/{reportService:id}/detail', [ReportServiceController::class, 'detail'])->name('website.report.show');
 
 $menu = theme()->getMenu();
 array_walk($menu, function ($val) {
@@ -68,64 +60,59 @@ array_walk($menu, function ($val) {
     }
 });
 
-// Documentations pages
-Route::prefix('documentation')->group(function () {
-    Route::get('getting-started/references', [ReferencesController::class, 'index']);
-    Route::get('getting-started/changelog', [PagesController::class, 'index']);
-});
-
+// admin
 Route::middleware('auth')->group(function () {
-    // Anggaran pages
-    Route::prefix('anggaran')->group(function () {
-        Route::get('', [AnggaranController::class, 'index'])->name('anggaran.index');
-        Route::get('/create', [AnggaranController::class, 'create'])->name('anggaran.create');
-    });
+    Route::prefix('admin')->group(function () {
+        Route::get('', function () {
+            return view('pages.index');
+        })->name('admin.index');
 
-    // Layanan pages
-    Route::prefix('layanan')->group(function () {
-        Route::get('', [LayananController::class, 'index'])->name('layanan.index');
-        Route::get('/create', [LayananController::class, 'create'])->name('layanan.create');
-        Route::post('/store', [LayananController::class, 'store'])->name('layanan.store');
-        Route::get('/{layanan:id}/detail', [LayananController::class, 'show'])->name('layanan.show');
-        Route::get('/{layanan:id}/edit', [LayananController::class, 'edit'])->name('layanan.edit');
-        Route::put('/{layanan:id}/update', [LayananController::class, 'update'])->name('layanan.update');
-        Route::delete('/{layanan:id}/delete', [LayananController::class, 'destroy'])->name('layanan.delete');
-        Route::post('/gambar/upload', [LayananGambarController::class, 'upload'])->name('layanan-gambar.upload');
-        Route::post('/gambar/delete', [LayananGambarController::class, 'delete'])->name('layanan-gambar.delete');
-    });
+        // Layanan pages
+        Route::prefix('layanan')->group(function () {
+            Route::get('', [LayananController::class, 'index'])->name('layanan.index');
+            Route::get('/create', [LayananController::class, 'create'])->name('layanan.create');
+            Route::post('/store', [LayananController::class, 'store'])->name('layanan.store');
+            Route::get('/{layanan:id}/detail', [LayananController::class, 'show'])->name('layanan.show');
+            Route::get('/{layanan:id}/edit', [LayananController::class, 'edit'])->name('layanan.edit');
+            Route::put('/{layanan:id}/update', [LayananController::class, 'update'])->name('layanan.update');
+            Route::delete('/{layanan:id}/delete', [LayananController::class, 'destroy'])->name('layanan.delete');
+            Route::post('/gambar/upload', [LayananGambarController::class, 'upload'])->name('layanan-gambar.upload');
+            Route::post('/gambar/delete', [LayananGambarController::class, 'delete'])->name('layanan-gambar.delete');
+        });
 
-    // Facilities pages
-    Route::prefix('facility')->group(function () {
-        Route::get('', [FacilityController::class, 'index'])->name('facility.index');
-        Route::get('/create', [FacilityController::class, 'create'])->name('facility.create');
-        Route::post('/store', [FacilityController::class, 'store'])->name('facility.store');
-        Route::get('/{facility:id}/detail', [FacilityController::class, 'show'])->name('facility.show');
-        Route::get('/{facility:id}/edit', [FacilityController::class, 'edit'])->name('facility.edit');
-        Route::put('/{facility:id}/update', [FacilityController::class, 'update'])->name('facility.update');
-        Route::delete('/{facility:id}/delete', [FacilityController::class, 'destroy'])->name('facility.delete');
-        Route::post('/getFacilities', [FacilityController::class, 'getFacilities'])->name('facility.getFacilities');
-    });
+        // Facilities pages
+        Route::prefix('facility')->group(function () {
+            Route::get('', [FacilityController::class, 'index'])->name('facility.index');
+            Route::get('/create', [FacilityController::class, 'create'])->name('facility.create');
+            Route::post('/store', [FacilityController::class, 'store'])->name('facility.store');
+            Route::get('/{facility:id}/detail', [FacilityController::class, 'show'])->name('facility.show');
+            Route::get('/{facility:id}/edit', [FacilityController::class, 'edit'])->name('facility.edit');
+            Route::put('/{facility:id}/update', [FacilityController::class, 'update'])->name('facility.update');
+            Route::delete('/{facility:id}/delete', [FacilityController::class, 'destroy'])->name('facility.delete');
+            Route::post('/getFacilities', [FacilityController::class, 'getFacilities'])->name('facility.getFacilities');
+        });
 
-    // reservation pages
-    Route::prefix('reservation')->group(function () {
-        Route::get('', [ReservationController::class, 'index'])->name('reservation.index');
-        Route::get('/{reservation:id}/detail', [ReservationController::class, 'show'])->name('reservation.show');
-        Route::post('/{reservation:id}/approve', [ReservationController::class, 'approve'])->name('reservation.approve');
-        Route::post('/{reservation:id}/reject', [ReservationController::class, 'reject'])->name('reservation.reject');
-    });
+        // reservation pages
+        Route::prefix('reservation')->group(function () {
+            Route::get('', [ReservationController::class, 'index'])->name('reservation.index');
+            Route::get('/{reservation:id}/detail', [ReservationController::class, 'show'])->name('reservation.show');
+            Route::post('/{reservation:id}/approve', [ReservationController::class, 'approve'])->name('reservation.approve');
+            Route::post('/{reservation:id}/reject', [ReservationController::class, 'reject'])->name('reservation.reject');
+        });
 
-    // Account pages
-    Route::prefix('account')->group(function () {
-        Route::get('settings', [SettingsController::class, 'index'])->name('settings.index');
-        Route::put('settings', [SettingsController::class, 'update'])->name('settings.update');
-        Route::put('settings/email', [SettingsController::class, 'changeEmail'])->name('settings.changeEmail');
-        Route::put('settings/password', [SettingsController::class, 'changePassword'])->name('settings.changePassword');
-    });
+        // Account pages
+        Route::prefix('account')->group(function () {
+            Route::get('settings', [SettingsController::class, 'index'])->name('settings.index');
+            Route::put('settings', [SettingsController::class, 'update'])->name('settings.update');
+            Route::put('settings/email', [SettingsController::class, 'changeEmail'])->name('settings.changeEmail');
+            Route::put('settings/password', [SettingsController::class, 'changePassword'])->name('settings.changePassword');
+        });
 
-    // Logs pages
-    Route::prefix('log')->name('log.')->group(function () {
-        Route::resource('system', SystemLogsController::class)->only(['index', 'destroy']);
-        Route::resource('audit', AuditLogsController::class)->only(['index', 'destroy']);
+        // Logs pages
+        Route::prefix('log')->name('log.')->group(function () {
+            Route::resource('system', SystemLogsController::class)->only(['index', 'destroy']);
+            Route::resource('audit', AuditLogsController::class)->only(['index', 'destroy']);
+        });
     });
 });
 

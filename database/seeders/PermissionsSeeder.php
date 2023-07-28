@@ -30,7 +30,7 @@ class PermissionsSeeder extends Seeder
         $data = [];
         // list of model permission
         $model = [
-            'layanan', 'layanan_gambar', 'facility', 'user', 'role', 'permission',
+            'layanan', 'layanan_gambar', 'facility', 'user', 'role', 'permission', 'reservation',
         ];
 
         foreach ($model as $value) {

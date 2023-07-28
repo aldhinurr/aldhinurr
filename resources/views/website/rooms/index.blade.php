@@ -1,9 +1,9 @@
-@extends('layout.trizen.master')
+@extends('layout.efacility.master')
 
 @section('content')
   <!-- ================================
-                                                                                                                                                                                                                                                  START BREADCRUMB AREA
-                                                                                                                                                                                                                                              ================================= -->
+                                                                                                                                                                                                                                                    START BREADCRUMB AREA
+                                                                                                                                                                                                                                                ================================= -->
   <section class="check-availability-area section-bg section-padding">
     <div class="breadcrumb-wrap">
       <div class="container">
@@ -74,12 +74,12 @@
     </div><!-- end breadcrumb-wrap -->
   </section><!-- end breadcrumb-area -->
   <!-- ================================
-                                                                                                                                                                                                                                                END BREADCRUMB AREA
-                                                                                                                                                                                                                                              ================================= -->
+                                                                                                                                                                                                                                                  END BREADCRUMB AREA
+                                                                                                                                                                                                                                                ================================= -->
 
   <!-- ================================
-                                                                                                                                                                                                                                                START CARD AREA
-                                                                                                                                                                                                                                              ================================= -->
+                                                                                                                                                                                                                                                  START CARD AREA
+                                                                                                                                                                                                                                                ================================= -->
   <section class="card-area section--padding">
     <div class="container">
       <div class="row" id="data-wrapper">
@@ -110,8 +110,8 @@
     </div><!-- end container -->
   </section><!-- end card-area -->
   <!-- ================================
-                                                                                                                                                                                                                                                END CARD AREA
-                                                                                                                                                                                                                                              ================================= -->
+                                                                                                                                                                                                                                                  END CARD AREA
+                                                                                                                                                                                                                                                ================================= -->
 @endsection
 
 @section('scripts')

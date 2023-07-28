@@ -1,9 +1,9 @@
-@extends('layout.trizen.master')
+@extends('layout.efacility.master')
 
 @section('content')
   <!-- ================================
-                                                                                                                                                                                                                                                                                                                                  START CART AREA
-                                                                                                                                                                                                                                                                                                                              ================================= -->
+                                                                                                                                                                                                                                                                                                                                          START CART AREA
+                                                                                                                                                                                                                                                                                                                                      ================================= -->
   <section class="cart-area section-padding">
     <div class="container">
       <div class="row">
@@ -119,8 +119,8 @@
     </div><!-- end container -->
   </section><!-- end cart-area -->
   <!-- ================================
-                                                                                                                                                                                                                                                                                                                                  END CART AREA
-                                                                                                                                                                                                                                                                                                                              ================================= -->
+                                                                                                                                                                                                                                                                                                                                          END CART AREA
+                                                                                                                                                                                                                                                                                                                                      ================================= -->
 @endsection
 
 
@@ -150,7 +150,7 @@
       var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
       // Display the result in the element with id="demo"
-      document.getElementById("countdown-expired").innerHTML = " " + hours + " Jam " +
+      document.getElementById("countdown-expired").innerHTML = hours + " Jam " +
         minutes + " Menit " + seconds + " detik";
 
       // If the count down is finished, write some text
@@ -182,7 +182,6 @@
             $('.alert').removeClass('alert-danger')
             $('.alert').addClass('alert-success')
             $('.alert').html(response.message).fadeIn().delay(3000).fadeOut()
-            await new Promise(r => setTimeout(r, 4000));
             window.location = "{{ route('website.reservation.show', $reservation->id) }}"
           },
           error: function(xhr, ajaxOptions, thrownError) {

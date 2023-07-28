@@ -5,7 +5,7 @@
         <div class="menu-wrapper">
           <a href="#" class="down-button"><i class="la la-angle-down"></i></a>
           <div class="logo">
-            <a href="{{ route('website.index') }}"><img src="{{ asset('trizen/images/logo.png') }}" alt="logo" /></a>
+            <a href="{{ route('website.index') }}"><img src="{{ asset('efacility/images/logo-putih.jpeg') }}" alt="logo" /></a>
             <div class="menu-toggler">
               <i class="la la-bars"></i>
               <i class="la la-times"></i>

@@ -15,10 +15,10 @@
               <div class="header-right-action">
                 <ul class="list-items">
                   <li>
-                    <a href="#"><i class="la la-phone mr-1"></i>(123) 123-456</a>
+                    <a href="#"><i class="la la-phone mr-1"></i>(022) 86010100</a>
                   </li>
                   <li>
-                    <a href="#"><i class="la la-envelope mr-1"></i>trizen@example.com</a>
+                    <a href="#"><i class="la la-envelope mr-1"></i>ditsp@itb.ac.id</a>
                   </li>
                 </ul>
               </div>
@@ -28,5 +28,5 @@
       </div>
     </div>
   </div>
-  @include('layout.trizen.header._menu')
+  @include('layout.efacility.header._menu')
 </header>

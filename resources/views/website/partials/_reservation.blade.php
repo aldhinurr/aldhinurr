@@ -1,6 +1,11 @@
 <div class="sidebar single-content-sidebar mb-0 mr-2">
   <div class="sidebar-widget single-content-widget">
-    <h3 class="title stroke-shape">Sewa</h3>
+    <div class="row justify-content-between m-0">
+      <h3 class="title stroke-shape">Sewa</h3>
+      <h4 id="is_available">
+        <span class="badge badge-success">Tersedia</span>
+      </h4>
+    </div>
     <div class="sidebar-widget-item">
       <div class="contact-form-action">
         <form action="#" id="sewa">
@@ -27,14 +32,15 @@
           <div class="total-price">
             <label class="d-flex justify-content-between align-items-center">Duration
               <span class="text-black font-weight-regular"><input type="text" id="duration" name="duration"
-                  class="num text-right" value="{{ old('duration') ?? '1' }}" readonly="readonly" />
+                  class="text-right" value="{{ old('duration') ?? '1' }}" readonly="readonly" />
                 {{ $data->price_for }}</span>
             </label>
           </div>
           <div class="total-price">
             <label class="d-flex justify-content-between align-items-center">Biaya
-              <span class="text-black font-weight-regular">Rp. <input type="text" id="fee" name="fee"
-                  class="num" value="{{ old('fee') ?? $data->price }}" readonly="readonly" /></span></label>
+              <span class="text-black font-weight-regular">Rp. <input type="text" id="fee"
+                  class="num text-right" name="fee" value="{{ old('fee') ?? $data->price }}"
+                  readonly="readonly" /></span></label>
           </div>
           <hr>
           <div class="input-box">
@@ -56,19 +62,25 @@
                 Fee <span class="text-black font-weight-regular">$15</span></label>
             </div> --}}
           </div>
-          <div class="total-price pt-3 d-flex justify-content-between mr-3">
+          <div class="total-price pt-3 d-flex justify-content-between">
             <label class="label-text">Total</label>
             <p class="d-flex align-items-center"><span class="font-size-17 text-black">Rp. <input type="text"
-                  id="total" name="total" class="num" value="{{ $data->price }}" readonly="readonly" />
+                  id="total" name="total" class="num text-right" value="{{ $data->price }}"
+                  readonly="readonly" />
               </span>
             </p>
           </div>
         </form>
       </div>
-    </div>
-  </div><!-- end sidebar-widget-item -->
+    </div><!-- end sidebar-widget-item -->
+  </div><!-- end sidebar-widget -->
   <div class="btn-box">
     <a href="#" id="submit-sewa" class="theme-btn text-center w-100 mb-2">Sewa</a>
   </div>
-</div><!-- end sidebar-widget -->
+  <div class="footer-item text-center padding-top-20px">
+    <ul class="list-items list--items">
+      <li><a href="{{ route('website.rooms') }}">Lihat Ruangan Lainnya</a></li>
+      <li><a href="{{ route('website.status') }}">Lihat Status Peminjaman</a></li>
+    </ul>
+  </div>
 </div><!-- end sidebar -->
