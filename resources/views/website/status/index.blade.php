@@ -42,7 +42,7 @@
                       <div class="select-contain">
                         <select id="type" name="type" class="select-contain-select">
                           <option value="RUANG">Ruangan</option>
-                          <option value="Kendaraan">Kendaraan</option>
+                          <option value="KENDARAAN">Kendaraan</option>
                         </select>
                       </div><!-- end select-contain -->
                     </div>
@@ -88,43 +88,6 @@
                   </div>
                 </div>
               </div><!-- end form-box -->
-              @if ($sewa->isNotEmpty())
-                <nav aria-label="Page navigation example">
-                  <ul class="pagination" id="pagination-sewa">
-                    <input type="hidden" name="hidden_page" value=1>
-                    <li class="page-item">
-                      @if ($sewa->onFirstPage())
-                        <a class="page-link page-link-nav disabled" aria-label="Previous">
-                          <span aria-hidden="true"><i class="la la-angle-left"></i></span>
-                          <span class="sr-only">Previous</span>
-                        </a>
-                      @else
-                        <a class="page-link page-link-nav" href="{{ $sewa->previousPageUrl() }}" aria-label="Previous">
-                          <span aria-hidden="true"><i class="la la-angle-left"></i></span>
-                          <span class="sr-only">Previous</span>
-                        </a>
-                      @endif
-                    </li>
-                    <li class="page-item active">
-                      <a class="page-link page-link-nav" href="#">{{ $sewa->currentPage() }}<span
-                          class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="page-item">
-                      @if ($sewa->hasMorePages())
-                        <a class="page-link page-link-nav" href="{{ $sewa->nextPageUrl() }}" aria-label="Next">
-                          <span aria-hidden="true"><i class="la la-angle-right"></i></span>
-                          <span class="sr-only">Next</span>
-                        </a>
-                      @else
-                        <a class="page-link page-link-nav disabled" aria-label="Next">
-                          <span aria-hidden="true"><i class="la la-angle-right"></i></span>
-                          <span class="sr-only">Next</span>
-                        </a>
-                      @endif
-                    </li>
-                  </ul>
-                </nav>
-              @endif
             </div><!-- end tab-pane -->
             <div class="tab-pane fade" id="my-laporan" role="tabpanel" aria-labelledby="my-laporan-tab">
               <div class="filter-wrap margin-bottom-30px">
@@ -237,32 +200,26 @@
 
 @section('scripts')
   <script>
-    // $(window).on('hashchange', function() {
-    //   if (window.location.hash) {
-    //     var page = window.location.hash.replace('#', '');
-    //     if (page == Number.NaN || page <= 0) {
-    //       return false;
-    //     } else {
-    //       fetch_data(page);
-    //     }
-    //   }
-    // });
-
     $(document).ready(function() {
       const fetch_data = (page, type, seach_term) => {
+        if (page === undefined) {
+          page = 1;
+        }
+
         if (type === undefined) {
           type = "";
         }
+
         if (seach_term === undefined) {
           seach_term = "";
         }
+
+        var url = "{{ route('website.status') }}?page=" + page + "&type=" + type + "&seach_term=" + seach_term
         $.ajax({
-          url: "{{ route('website.status') }}/?page=" + page + "&type=" + type + "&seach_term=" +
-            seach_term,
+          url: url,
           success: function(data) {
             $('tbody').html('');
             $('tbody').html(data);
-            location.hash = page;
           }
         })
       }

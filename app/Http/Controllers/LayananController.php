@@ -7,6 +7,7 @@ use App\Models\Layanan;
 use App\Http\Requests\StoreLayananRequest;
 use App\Http\Requests\UpdateLayananRequest;
 use App\Models\LayananGambar;
+use App\Models\Reservation;
 use App\Models\ServiceFacility;
 use DB;
 use Str;
@@ -58,6 +59,23 @@ class LayananController extends Controller
             $layanan = Layanan::create($validated);
 
             if ($layanan) {
+                // save Fasilitas Layanan
+                $facility = json_decode($validated['facility']);
+                foreach ($facility->facility as $key => $facility) {
+                    if ($facility->quantity < 1) {
+                        throw new \Exception('Jumlah Fasilitas minimal 1');
+                    }
+
+                    ServiceFacility::create([
+                        'layanan_id' => $layanan->id,
+                        'facility_id' => $facility->facility_id,
+                        'quantity' => $facility->quantity,
+                        'status' => 'AKTIF',
+                        'created_by' => auth()->user()->email,
+                        'updated_by' => auth()->user()->email,
+                    ]);
+                }
+
                 // upload dan simpan gambar layanan
                 foreach ($validated['layanan_gambar'] as $layanan_gambar => $image) {
                     // do upload and save to db
@@ -69,19 +87,6 @@ class LayananController extends Controller
                         'picture' => 'media/images/layanan/' . $imageName,
                         'status' => 'AKTIF',
                         'created_by' => auth()->user()->email,
-                    ]);
-                }
-
-                // save Fasilitas Layanan
-                $facility = json_decode($validated['facility']);
-                foreach ($facility->facility as $key => $facility) {
-                    ServiceFacility::create([
-                        'layanan_id' => $layanan->id,
-                        'facility_id' => $facility->facility_id,
-                        'quantity' => $facility->quantity,
-                        'status' => 'AKTIF',
-                        'created_by' => auth()->user()->email,
-                        'updated_by' => auth()->user()->email,
                     ]);
                 }
             }
@@ -132,10 +137,12 @@ class LayananController extends Controller
 
             array_push($files, $obj);
         }
+        $facilities = ServiceFacility::with('facility')->whereBelongsTo($layanan)->get()->toArray();
 
         return view('pages.layanan.edit', [
             'layanan' => $layanan,
-            'layanan_gambars' => $files
+            'layanan_gambars' => $files,
+            'facilities' => $facilities,
         ]);
     }
 
@@ -155,6 +162,30 @@ class LayananController extends Controller
             $validated = $request->validate($request->rules());
             $validated['updated_by'] = auth()->user()->email;
             $layanan->update($validated);
+
+            // get request facility
+            $facilities = json_decode($validated['facility']);
+
+            // delete old facility
+            ServiceFacility::whereBelongsTo($layanan)->delete();
+
+            // update facilities
+            if (count($facilities->facility) > 0) {
+                foreach ($facilities->facility as $f => $facility) {
+                    if ($facility->quantity < 1) {
+                        throw new \Exception('Jumlah Fasilitas minimal 1');
+                    }
+
+                    ServiceFacility::create([
+                        'layanan_id' => $layanan->id,
+                        'facility_id' => $facility->facility_id,
+                        'quantity' => $facility->quantity,
+                        'status' => 'AKTIF',
+                        'created_by' => auth()->user()->email,
+                        'updated_by' => auth()->user()->email,
+                    ]);
+                }
+            }
 
             // update gambar layanan
             $oldImages = LayananGambar::whereBelongsTo($layanan)->get();
@@ -216,6 +247,12 @@ class LayananController extends Controller
     {
         DB::beginTransaction();
         try {
+            // check if facility is used
+            $is_used = Reservation::where('layanan_id', $layanan->id)->count();
+            if ($is_used > 0) {
+                throw new \Exception('Data Layanan pernah tersimpan di sewa, silahkan untuk ubah status ke Tidak Aktif / Tidak Disewa');
+            }
+
             // update data to deleted
             $validated['status'] = "DIHAPUS";
             $validated['deleted_at'] = date('Y-m-d H:i:s');

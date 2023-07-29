@@ -11,7 +11,7 @@
         <form action="#" id="sewa">
           @csrf
           <div class="input-box">
-            <div class="alert alert-danger label-text" role="alert" style="display: none">
+            <div class="alert alert-danger label-text" id="alert" role="alert" style="display: none">
               A simple danger alert—check it out!
             </div>
           </div>

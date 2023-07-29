@@ -15,7 +15,7 @@ class CreateServiceFacilitiesTable extends Migration
     {
         Schema::create('service_facilities', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('layanan_id');
+            $table->uuid('layanan_id')->nullable(false);
             $table->unsignedBigInteger('facility_id');
             $table->integer('quantity');
             $table->enum('status', array("AKTIF", "TIDAK AKTIF", "DIHAPUS"));

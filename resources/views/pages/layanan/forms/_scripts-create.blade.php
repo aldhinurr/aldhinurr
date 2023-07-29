@@ -60,6 +60,28 @@
                 }
               }
             },
+            large: {
+              validators: {
+                notEmpty: {
+                  message: 'Luas belum diisi'
+                },
+                greaterThan: {
+                  min: 1,
+                  message: 'Minimal diisi 1'
+                }
+              }
+            },
+            capacity: {
+              validators: {
+                notEmpty: {
+                  message: 'Kapasitas belum diisi'
+                },
+                greaterThan: {
+                  min: 1,
+                  message: 'Minimal diisi 1'
+                }
+              }
+            }
           },
           plugins: {
             trigger: new FormValidation.plugins.Trigger(),
@@ -278,7 +300,7 @@
                     text: dataMessage,
                     icon: "error",
                     buttonsStyling: false,
-                    confirmButtonText: "Ok, got it!",
+                    confirmButtonText: "Ok",
                     customClass: {
                       confirmButton: "btn btn-primary"
                     }
@@ -296,10 +318,10 @@
           } else {
             // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
             Swal.fire({
-              text: "Sorry, looks like there are some errors detected, please try again.",
+              text: "Terjadi kesalahan, Silahkan cek kembali.",
               icon: "error",
               buttonsStyling: false,
-              confirmButtonText: "Ok, got it!",
+              confirmButtonText: "Ok",
               customClass: {
                 confirmButton: "btn btn-primary"
               }

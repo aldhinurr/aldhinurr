@@ -17,12 +17,13 @@
         var data_row = dt.row(parent).data();
 
         Swal.fire({
-          html: "Are you sure you want to delete <strong>" + data_row['name'] + "</strong>?",
+          html: "Apakah yakin data ingin dihapus <strong>" + data_row['name'] + "</strong>?",
           icon: "warning",
           showCancelButton: true,
           buttonsStyling: false,
-          confirmButtonText: "Yes, delete!",
-          cancelButtonText: "No, cancel",
+          confirmButtonText: "Ya",
+          cancelButtonText: "Batal",
+          reverseButtons: true,
           customClass: {
             confirmButton: "btn fw-bold btn-danger",
             cancelButton: "btn fw-bold btn-primary"
@@ -30,7 +31,7 @@
         }).then(function(result) {
           if (result.isConfirmed) {
             Swal.fire({
-              text: "Deleting " + data_row['name'],
+              text: "Proses hapus " + data_row['name'] + "...",
               icon: "info",
               buttonsStyling: false,
               showConfirmButton: false,
@@ -41,7 +42,7 @@
                   'id']))
                 .then(function(response) {
                   Swal.fire({
-                    html: "Facility <strong>" + data_row['name'] + "</strong> was deleted.",
+                    html: "Facility <strong>" + data_row['name'] + "</strong> berhasil dihapus.",
                     icon: "success",
                     buttonsStyling: false,
                     confirmButtonText: "Ok",
@@ -68,23 +69,13 @@
                       text: dataMessage,
                       icon: "error",
                       buttonsStyling: false,
-                      confirmButtonText: "Ok, got it!",
+                      confirmButtonText: "Ok",
                       customClass: {
                         confirmButton: "btn btn-primary"
                       }
                     });
                   }
                 });
-            });
-          } else if (result.dismiss === 'cancel') {
-            Swal.fire({
-              text: data_row['name'] + " was not deleted.",
-              icon: "error",
-              buttonsStyling: false,
-              confirmButtonText: "Ok, got it!",
-              customClass: {
-                confirmButton: "btn fw-bold btn-primary",
-              }
             });
           }
         });

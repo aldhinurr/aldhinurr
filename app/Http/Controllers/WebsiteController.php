@@ -9,7 +9,9 @@ use App\Models\Reservation;
 use DateTime;
 use DateTimeZone;
 use DB;
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Request;
+use Nette\Utils\Paginator as UtilsPaginator;
 
 class WebsiteController extends Controller
 {
@@ -90,13 +92,16 @@ class WebsiteController extends Controller
      */
     public function status(Request $request)
     {
-        $sewa = Reservation::with("layanan")->paginate(10);
+        $sewa = Reservation::with(["layanan", "user"])->paginate(10);
         if ($request->ajax()) {
-            $sewa = Reservation::select('*')
+            // Reservation::;
+            $sewa = Reservation::select('reservations.*', 'layanans.id', 'layanans.type', 'layanans.name', 'layanans.location', 'users.*')
+                ->join('users', 'users.email', '=', 'reservations.created_by')
                 ->join('layanans', 'layanans.id', '=', 'reservations.layanan_id')
                 ->when($request->type, function ($q) use ($request) {
                     $q->where('layanans.type', $request->type);
-                })->paginate(1);
+                })
+                ->paginate(10);
             return view('website.status._data', compact('sewa'))->render();
         }
 
@@ -138,12 +143,13 @@ class WebsiteController extends Controller
                 "facilities.satuan",
                 "facilities.fee_for",
                 DB::raw("concat(facilities.name, ' - Rp. ', convert(format(facilities.fee, 0), Char), ' / ', facilities.fee_for, ' ', facilities.satuan) as text")
-            )->whereNotIn('facilities.id', function ($query) use ($dataId) {
-                $query->select('facilities.id')->from('facilities')
-                    ->join('service_facilities', "facilities.id", "=", "service_facilities.facility_id")
-                    ->where('facilities.status', 'AKTIF')
-                    ->where('service_facilities.layanan_id', "=", $dataId);
-            })
+            )
+                // ->whereNotIn('facilities.id', function ($query) use ($dataId) {
+                //     $query->select('facilities.id')->from('facilities')
+                //         ->join('service_facilities', "facilities.id", "=", "service_facilities.facility_id")
+                //         ->where('facilities.status', 'AKTIF')
+                //         ->where('service_facilities.layanan_id', "=", $dataId);
+                // })
                 ->where('facilities.status', 'AKTIF')
                 ->orderby('facilities.name', 'asc')
                 ->limit(20)->get();
@@ -155,12 +161,13 @@ class WebsiteController extends Controller
                 "facilities.satuan",
                 "facilities.fee_for",
                 DB::raw("concat(facilities.name, ' - Rp. ', convert(format(facilities.fee, 0), Char), ' / ', facilities.fee_for, ' ', facilities.satuan) as text")
-            )->whereNotIn('facilities.id', function ($query) use ($dataId) {
-                $query->select('facilities.id')->from('facilities')
-                    ->join('service_facilities', "facilities.id", "=", "service_facilities.facility_id")
-                    ->where('facilities.status', 'AKTIF')
-                    ->where('service_facilities.layanan_id', "=", $dataId);
-            })
+            )
+                // ->whereNotIn('facilities.id', function ($query) use ($dataId) {
+                //     $query->select('facilities.id')->from('facilities')
+                //         ->join('service_facilities', "facilities.id", "=", "service_facilities.facility_id")
+                //         ->where('facilities.status', 'AKTIF')
+                //         ->where('service_facilities.layanan_id', "=", $dataId);
+                // })
                 ->where('facilities.status', 'AKTIF')
                 ->where('facilities.name', 'like', '%' . $search . '%')
                 ->orderby('facilities.name', 'asc')

@@ -29,10 +29,13 @@ class UpdateLayananRequest extends FormRequest
             "description" => "nullable|string",
             "address" => "required|string|max:255",
             "location" => "required|in:GANESHA,SARAGA,JATINANGOR,CIREBON",
+            "large" => "required|numeric|min:1",
+            "capacity" => "required|numeric|min:1",
             "price" => "required|numeric",
             "price_for" => "required|in:JAM,HARI",
             "status" => "required|in:AKTIF,TIDAK AKTIF,RUSAK,TIDAK BISA DISEWA,DIHAPUS",
-            "layanan_gambar" => "required|array"
+            "layanan_gambar" => "required|array",
+            "facility" => "required"
         ];
     }
 }

@@ -145,10 +145,17 @@
           },
           error: function(xhr, ajaxOptions, thrownError) {
             var contentType = xhr.getResponseHeader("Content-Type");
-            if (xhr.status === 200 && contentType.toLowerCase().indexOf("text/html") >= 0) {
-              // assume that our login has expired - reload our current page
-              window.location.reload();
+            if (xhr.status == 401) {
+              $([document.documentElement, document.body]).animate({
+                scrollTop: $("#is_available").offset().top - 200
+              }, 2000);
+              $('.alert').html('Silahkan login terlebih dahulu untuk melanjutkan.').fadeIn().delay(3000)
+                .fadeOut();
+              setTimeout(function() {
+                window.location = "{{ route('login') }}"
+              }, 5000);
             } else {
+              console.log(xhr.responseText);
               alert(xhr.responseText)
             };
           }

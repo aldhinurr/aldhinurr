@@ -55,26 +55,12 @@
           <!--begin::Col-->
           <div class="col-lg-8 fv-row">
             <input type="text" name="name" class="form-control form-control-lg form-control-solid"
-              placeholder="Nama Layanan" value="{{ old('name', $layanan->name ?? '') }}" />
+              value="{{ old('name', $layanan->name ?? '') }}" />
           </div>
           <!--end::Col-->
         </div>
         <!--end::Input group-->
 
-        <!--begin::Input group-->
-        <div class="row mb-6">
-          <!--begin::Label-->
-          <label class="col-lg-4 col-form-label fw-bold fs-6">{{ __('Keterangan') }}</label>
-          <!--end::Label-->
-
-          <!--begin::Col-->
-          <div class="col-lg-8 fv-row">
-            <input type="hidden" name="description" id="description">
-            <textarea id="editor_description" name="editor_description" class="form-control form-control-lg form-control-solid"></textarea>
-          </div>
-          <!--end::Col-->
-        </div>
-        <!--end::Input group-->
 
         <!--begin::Input group-->
         <div class="row mb-6">
@@ -125,6 +111,54 @@
         </div>
         <!--end::Input group-->
 
+
+        <!--begin::Input group-->
+        <div class="row mb-6">
+          <!--begin::Label-->
+          <label class="col-lg-4 col-form-label fw-bold fs-6">
+            <span class="required">{{ __('Luas') }}</span>
+          </label>
+          <!--end::Label-->
+
+          <!--begin::Col-->
+          <div class="col-lg-8">
+            <!--begin::Row-->
+            <div class="row">
+              <!--begin::Col-->
+              <div class="col-lg-4 fv-row mb-2">
+                <div class="input-group input-group-solid">
+                  <input type="number" min="1" id="large" name="large"
+                    class="form-control form-control-lg form-control-solid mb-lg-0 mb-3"
+                    value="{{ old('large', $layanan->large ?? '') }}" />
+                  <span class="input-group-text" id="basic-addon2">m<sup>2</sup></span>
+                </div>
+              </div>
+              <!--end::Col-->
+
+              <!--begin::Label-->
+              <label class="col-lg-2 col-form-label fw-bold fs-6">
+                {{ __('Kapasitas') }}</span>
+              </label>
+              <!--end::Label-->
+
+              <!--begin::Col-->
+              <div class="col-lg-4">
+                <div class="input-group input-group-solid fv-row mb-2">
+                  <input type="number" min="1" id="capacity" name="capacity"
+                    class="form-control form-control-lg form-control-solid mb-lg-0 mb-3"
+                    value="{{ old('capacity', $layanan->capacity ?? '') }}" />
+                  <span class="input-group-text" id="basic-addon2">Orang</span>
+                </div>
+              </div>
+              <!--end::Col-->
+            </div>
+            <!--end::Row-->
+          </div>
+          <!--end::Col-->
+        </div>
+        <!--end::Input group-->
+
+
         <!--begin::Input group-->
         <div class="row mb-6">
           <!--begin::Label-->
@@ -159,7 +193,8 @@
                   <option value="JAM" {{ 'JAM' == old('price_for', $layanan->price_for ?? '') ? 'selected' : '' }}>
                     {{ __('Jam') }}
                   </option>
-                  <option value="HARI" {{ 'HARI' == old('price_for', $layanan->price_for ?? '') ? 'selected' : '' }}>
+                  <option value="HARI"
+                    {{ 'HARI' == old('price_for', $layanan->price_for ?? '') ? 'selected' : '' }}>
                     {{ __('Hari') }}
                   </option>
                 </select>
@@ -175,26 +210,15 @@
         <!--begin::Input group-->
         <div class="row mb-6">
           <!--begin::Label-->
-          <label class="col-lg-4 col-form-label fw-bold fs-6">
-            <span class="required">{{ __('Gambar') }}</span>
-          </label>
+          <label class="col-lg-4 col-form-label fw-bold fs-6">{{ __('Keterangan') }}</label>
           <!--end::Label-->
 
+          <!--begin::Col-->
           <div class="col-lg-8 fv-row">
-            <input type="file" name="layanan_gambar" id="layanan_gambar" multiple hidden>
-            <!--begin::Dropzone-->
-            <div class="dropzone" id="layanan_gambar_upload">
-              <!--begin::Message-->
-              <div class="dz-message needsclick">
-                <div class="ms-4">
-                  <h3 class="fs-5 fw-bold mb-1 text-gray-900">Drop files here or click to upload.
-                  </h3>
-                </div>
-              </div>
-            </div>
-            <!--end::Dropzone-->
-            <span class="fs-7 fw-semibold text-gray-400">Max Upload 10 gambar</span>
+            <input type="hidden" name="description" id="description">
+            <textarea id="editor_description" name="editor_description" class="form-control form-control-lg form-control-solid"></textarea>
           </div>
+          <!--end::Col-->
         </div>
         <!--end::Input group-->
 
@@ -254,16 +278,101 @@
         </div>
         <!--end::Input group-->
 
+        <div class="separator my-10"></div>
+
+        <!--begin::Input group-->
+        <div class="row mb-6">
+          <!--begin::Label-->
+          <label class="col-lg-4 col-form-label fw-bold fs-6">
+            <span class="required">{{ __('Gambar') }}</span>
+          </label>
+          <!--end::Label-->
+
+          <div class="col-lg-8 fv-row">
+            <input type="file" name="layanan_gambar" id="layanan_gambar" multiple hidden>
+            <!--begin::Dropzone-->
+            <div class="dropzone" id="layanan_gambar_upload">
+              <!--begin::Message-->
+              <div class="dz-message needsclick">
+                <div class="ms-4">
+                  <h3 class="fs-5 fw-bold mb-1 text-gray-900">Drop files here or click to upload.
+                  </h3>
+                </div>
+              </div>
+            </div>
+            <!--end::Dropzone-->
+            <span class="fs-7 fw-semibold text-gray-400">Max Upload 10 gambar, Ukuran per gambar max 10MB </span>
+          </div>
+        </div>
+        <!--end::Input group-->
+
+        <div class="separator my-10"></div>
+
+        <!--begin::Input group-->
+        <div class="row mb-6">
+          <!--begin::Label-->
+          <label class="col-lg-4 col-form-label fw-bold fs-6">
+            <span class="required">{{ __('Fasilitas') }}</span>
+          </label>
+          <!--end::Label-->
+
+          <!--begin::Col-->
+          <div class="col-lg-8 fv-row">
+            <!--begin::Repeater-->
+            <div id="facility">
+              <!--begin::Form group-->
+              <div class="form-group">
+                <div data-repeater-list="facility">
+                  <div data-repeater-item>
+                    <div class="form-group row mb-5">
+                      <div class="col-md-6">
+                        <label class="form-label">Pilih Fasilitas:</label>
+                        <select class="form-select" name="facility_id" data-kt-repeater="select2"
+                          data-placeholder="Silahkan Pilih Fasilitas">
+                        </select>
+                      </div>
+                      <div class="col-md-2">
+                        <label class="form-label">Qty:</label>
+                        <input type="text" min="1" name="quantity" placeholder="Jumlah"
+                          class="form-control mb-2 mb-md-0" />
+                      </div>
+                      <div class="col-md-2">
+                        <a href="javascript:;" data-repeater-delete
+                          class="btn btn-flex btn-sm btn-light-danger mt-3 mt-md-9">
+                          Hapus
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--end::Form group-->
+
+              <!--begin::Form group-->
+              <div class="form-group">
+                <a href="javascript:;" data-repeater-create class="btn btn-flex btn-light-primary">
+                  Tambah
+                </a>
+              </div>
+              <!--end::Form group-->
+            </div>
+            <!--end::Repeater-->
+          </div>
+          <!--end::Col-->
+        </div>
+        <!--end::Input group-->
+
       </div>
       <!--end::Card body-->
 
 
       <!--begin::Actions-->
       <div class="card-footer d-flex justify-content-end px-9 py-6">
-        <button type="reset" class="btn btn-white btn-active-light-primary me-2">{{ __('Discard') }}</button>
+        <a href="{{ route('layanan.index') }}" type="reset"
+          class="btn btn-white btn-active-light-primary me-2">{{ __('Kembali') }}</a>
 
         <button type="button" class="btn btn-primary" id="kt_layanan_layanan_create_submit">
-          @include('partials.general._button-indicator', ['label' => __('Save Changes')])
+          @include('partials.general._button-indicator', ['label' => __('Ubah')])
         </button>
       </div>
       <!--end::Actions-->

@@ -20,9 +20,12 @@ class FacilityDataTable extends DataTable
     public function dataTable($query)
     {
         return datatables()
-            ->eloquent($query)
+            ->eloquent($query->where('status', '!=', 'DIHAPUS'))
             ->editColumn('icon', function (Facility $model) {
                 return view('pages.facility.columns._icon-column', compact('model'));
+            })
+            ->editColumn('fee', function (Facility $model) {
+                return number_format($model->fee);
             })
             ->addColumn('action', function (Facility $model) {
                 return view('pages.facility.columns._action-menu', compact('model'));
@@ -72,11 +75,13 @@ class FacilityDataTable extends DataTable
             Column::make('created_at')
                 ->title('#Dibuat')
                 ->hidden(),
-            Column::make('name')->title('Nama'),
-            Column::make('satuan')->title('Satuan'),
             Column::make('icon')->title('Icon'),
+            Column::make('name')->title('Nama'),
+            Column::make('fee')->title('Biaya'),
+            Column::make('fee_for')->title('Per'),
+            Column::make('satuan')->title('Satuan'),
             Column::make('status')->title('Status'),
-            Column::computed('action')
+            Column::computed('action')->title('Kelola')
                 ->exportable(false)
                 ->printable(false)
                 ->width(60)

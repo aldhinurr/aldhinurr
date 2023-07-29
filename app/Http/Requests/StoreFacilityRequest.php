@@ -25,6 +25,8 @@ class StoreFacilityRequest extends FormRequest
     {
         return [
             "name" => "required|string",
+            "fee" => "required|numeric",
+            "fee_for" => "required|numeric|min:1",
             "satuan" => "required|string",
             "icon" => "required|string",
             "status" => "required|in:AKTIF,TIDAK AKTIF",

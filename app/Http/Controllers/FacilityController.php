@@ -6,6 +6,7 @@ use App\DataTables\FacilityDataTable;
 use App\Models\Facility;
 use App\Http\Requests\StoreFacilityRequest;
 use App\Http\Requests\UpdateFacilityRequest;
+use App\Models\ServiceFacility;
 use DB;
 use Illuminate\Http\Request;
 
@@ -98,8 +99,18 @@ class FacilityController extends Controller
     public function edit(Facility $facility)
     {
         $this->authorize("update facility");
+
+        // load icons
+        foreach (scandir(resource_path('assets/core/media/icons/lineawesome')) as $key => $icon) {
+            if (!in_array($icon, [".", ".."])) {
+                $obj['name'] = str_replace('-solid', '', explode(".", $icon)[0]);
+                $obj['icon'] = 'demo1/media/icons/lineawesome/' . $icon;
+                $icons[] = $obj;
+            }
+        }
         return view('pages.facility.edit', [
-            'facility' => $facility
+            'facility' => $facility,
+            'icons' => $icons,
         ]);
     }
 
@@ -139,11 +150,30 @@ class FacilityController extends Controller
      */
     public function destroy(Facility $facility)
     {
-        // update data to deleted
-        $validated['status'] = "DIHAPUS";
-        $validated['deleted_at'] = date('Y-m-d H:i:s');
-        $validated['deleted_by'] = auth()->user()->email;
-        $facility->update($validated);
+        DB::beginTransaction();
+        try {
+            // check if facility is used
+            $is_used = ServiceFacility::where('facility_id', $facility->id)->count();
+            if ($is_used > 0) {
+                throw new \Exception('Gagal Hapus, Saat ini fasilitas sedang digunakan di Layanan.');
+            }
+
+            // update data to deleted
+            $validated['status'] = "DIHAPUS";
+            $validated['deleted_at'] = date('Y-m-d H:i:s');
+            $validated['deleted_by'] = auth()->user()->email;
+            $facility->update($validated);
+
+            // update facility
+            $facility->update($validated);
+
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return response()->json([
+                'message' => $th->getMessage()
+            ], 500);
+        }
     }
 
     public function getFacilities(Request $request)

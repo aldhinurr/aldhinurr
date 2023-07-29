@@ -60,7 +60,7 @@ class ReservationController extends Controller
             $validated['end_date'] = date('Y-m-d', $end_date);
             $validated['status'] = "MENUNGGU UPLOAD";
             $validated['expired_payment'] = $now->add(new DateInterval("P1D"));
-            $validated['created_by'] = "customer@email.com";
+            $validated['created_by'] = auth()->user()->email;
             $validated['uuid'] = Str::uuid()->toString();
 
             $reservation = Reservation::create($validated);

@@ -20,7 +20,7 @@ class LayananDataTable extends DataTable
     public function dataTable($query)
     {
         return datatables()
-            ->eloquent($query)
+            ->eloquent($query->where('status', '!=', 'DIHAPUS'))
             ->editColumn('price', function (layanan $model) {
                 return number_format($model->price, 2);
             })
@@ -75,7 +75,7 @@ class LayananDataTable extends DataTable
             Column::make('price')->title("Harga"),
             Column::make('price_for')->title("Per"),
             Column::make('status')->title("Status"),
-            Column::computed('action')
+            Column::computed('action')->title('Kelola')
                 ->exportable(false)
                 ->printable(false)
                 ->width(60)

@@ -33,7 +33,7 @@
               data-placeholder="{{ __('Pilih Jenis Layanan...') }}"
               class="form-select form-select-solid form-select-lg fw-bold">
               <option value="">{{ __('Pilih Jenis...') }}</option>
-              <option value="RUANG">
+              <option value="RUANG" selected>
                 {{ __('Ruang') }}
               </option>
               <option value="KENDARAAN">
@@ -53,8 +53,7 @@
 
           <!--begin::Col-->
           <div class="col-lg-8 fv-row">
-            <input type="text" name="name" class="form-control form-control-lg form-control-solid"
-              placeholder="Nama Layanan" />
+            <input type="text" name="name" class="form-control form-control-lg form-control-solid" />
           </div>
           <!--end::Col-->
         </div>
@@ -70,7 +69,7 @@
 
           <!--begin::Col-->
           <div class="col-lg-8 fv-row">
-            <textarea id="address" name="address" class="form-control form-control-lg form-control-solid" placeholder="Alamat"></textarea>
+            <textarea id="address" name="address" class="form-control form-control-lg form-control-solid"></textarea>
           </div>
           <!--end::Col-->
         </div>
@@ -85,12 +84,12 @@
           <!--end::Label-->
 
           <!--begin::Col-->
-          <div class="col-lg-4 fv-row">
+          <div class="col-lg-3 fv-row">
             <select name="location" aria-label="{{ __('Pilih Lokasi') }}" data-control="select2"
               data-placeholder="{{ __('Pilih Lokasi Layanan...') }}"
               class="form-select form-select-solid form-select-lg fw-bold">
               <option value="">{{ __('Pilih Lokasi Layanan...') }}</option>
-              <option value="GANESHA">
+              <option value="GANESHA" selected>
                 {{ __('GANESHA') }}
               </option>
               <option value="SARAGA">
@@ -112,6 +111,50 @@
         <div class="row mb-6">
           <!--begin::Label-->
           <label class="col-lg-4 col-form-label fw-bold fs-6">
+            <span class="required">{{ __('Luas') }}</span>
+          </label>
+          <!--end::Label-->
+
+          <!--begin::Col-->
+          <div class="col-lg-8">
+            <!--begin::Row-->
+            <div class="row">
+              <!--begin::Col-->
+              <div class="col-lg-4 fv-row mb-2">
+                <div class="input-group input-group-solid">
+                  <input type="number" min="1" id="large" name="large"
+                    class="form-control form-control-lg form-control-solid mb-lg-0 mb-3" />
+                  <span class="input-group-text" id="basic-addon2">m<sup>2</sup></span>
+                </div>
+              </div>
+              <!--end::Col-->
+
+              <!--begin::Label-->
+              <label class="col-lg-2 col-form-label fw-bold fs-6">
+                {{ __('Kapasitas') }}</span>
+              </label>
+              <!--end::Label-->
+
+              <!--begin::Col-->
+              <div class="col-lg-4">
+                <div class="input-group input-group-solid fv-row mb-2">
+                  <input type="number" min="1" id="capacity" name="capacity"
+                    class="form-control form-control-lg form-control-solid mb-lg-0 mb-3" />
+                  <span class="input-group-text" id="basic-addon2">Orang</span>
+                </div>
+              </div>
+              <!--end::Col-->
+            </div>
+            <!--end::Row-->
+          </div>
+          <!--end::Col-->
+        </div>
+        <!--end::Input group-->
+
+        <!--begin::Input group-->
+        <div class="row mb-6">
+          <!--begin::Label-->
+          <label class="col-lg-4 col-form-label fw-bold fs-6">
             <span class="required">{{ __('Harga') }}</span>
           </label>
           <!--end::Label-->
@@ -121,27 +164,27 @@
             <!--begin::Row-->
             <div class="row">
               <!--begin::Col-->
-              <div class="col-lg-6 fv-row">
+              <div class="col-lg-4 fv-row">
                 <input type="text" id="price" name="price"
-                  class="form-control form-control-lg form-control-solid mb-lg-0 mb-3" placeholder="Harga" />
+                  class="form-control form-control-lg form-control-solid mb-lg-0 mb-3" />
               </div>
               <!--end::Col-->
 
               <!--begin::Label-->
-              <label class="col-lg-1 col-form-label fw-bold fs-6">
+              <label class="col-lg-2 col-form-label fw-bold fs-6">
                 {{ __('Per') }}</span>
               </label>
               <!--end::Label-->
 
               <!--begin::Col-->
-              <div class="col-lg-5 fv-row">
+              <div class="col-lg-4 fv-row">
                 <select name="price_for" aria-label="{{ __('Pilih Harga Per') }}" data-control="select2"
                   data-placeholder="{{ __('Pilih Harga Per...') }}"
                   class="form-select form-select-solid form-select-lg fw-bold">
                   <option value="JAM">
                     {{ __('Jam') }}
                   </option>
-                  <option value="HARI">
+                  <option value="HARI" selected>
                     {{ __('Hari') }}
                   </option>
                 </select>
@@ -276,8 +319,8 @@
                       </div>
                       <div class="col-md-2">
                         <label class="form-label">Qty:</label>
-                        <input type="text" name="quantity" class="form-control mb-2 mb-md-0"
-                          placeholder="Jumlah" />
+                        <input type="text" min="1" name="quantity" placeholder="Jumlah"
+                          class="form-control mb-2 mb-md-0" />
                       </div>
                       <div class="col-md-2">
                         <a href="javascript:;" data-repeater-delete
@@ -311,10 +354,11 @@
 
       <!--begin::Actions-->
       <div class="card-footer d-flex justify-content-end px-9 py-6">
-        <button type="reset" class="btn btn-white btn-active-light-primary me-2">{{ __('Discard') }}</button>
+        <a href="{{ route('layanan.index') }}" type="reset"
+          class="btn btn-white btn-active-light-primary me-2">{{ __('Kembali') }}</a>
 
         <button type="button" class="btn btn-primary" id="kt_layanan_layanan_create_submit">
-          @include('partials.general._button-indicator', ['label' => __('Save Changes')])
+          @include('partials.general._button-indicator', ['label' => __('Simpan')])
         </button>
       </div>
       <!--end::Actions-->

@@ -76,7 +76,7 @@ class ReservationDataTable extends DataTable
             ->minifiedAjax()
             ->orderBy(1, 'asc')
             ->parameters([
-                "drawCallback" => "function() { handleDeleteRows(); KTMenu.createInstances(); }"
+                "drawCallback" => "function() { KTMenu.createInstances(); }"
             ]);
     }
 

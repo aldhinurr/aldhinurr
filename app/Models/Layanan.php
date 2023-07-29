@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Uuids;
 use DateTime;
 use DateTimeZone;
 use DB;
@@ -12,7 +13,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class Layanan extends Model
 {
-    use HasFactory, HasRoles;
+    use HasFactory, HasRoles, Uuids;
     protected $guarded = ['id'];
 
     /**

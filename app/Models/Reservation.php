@@ -23,6 +23,16 @@ class Reservation extends Model
         return $this->belongsTo(Layanan::class, 'layanan_id');
     }
 
+    /**
+     * Get the layanan that owns the LayananGambar
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by', 'email');
+    }
+
 
     /**
      * User relation to service facility model

@@ -31,23 +31,6 @@ use Illuminate\Support\Str;
 |
 */
 
-// web
-Route::get('/', [WebsiteController::class, 'index'])->name('website.index');
-Route::get('/rooms', [WebsiteController::class, 'rooms'])->name('website.rooms');
-Route::get('/rooms/{layanan:id}/detail', [WebsiteController::class, 'show_room'])->name('website.room.show');
-Route::get('/cars', [WebsiteController::class, 'cars'])->name('website.cars');
-Route::get('/report', [WebsiteController::class, 'report'])->name('website.report');
-Route::get('/status', [WebsiteController::class, 'status'])->name('website.status');
-Route::get('/facilities', [WebsiteController::class, 'facilities'])->name('website.facilities');
-
-Route::post('/reservation', [ReservationController::class, 'store'])->name('website.reservation');
-Route::get('/reservation/{reservation:id}/detail', [ReservationController::class, 'detail'])->name('website.reservation.show');
-Route::post('/reservation/{reservation:id}/receipt/upload', [ReservationController::class, 'upload_receipt'])->name('website.reservation.receipt.upload');
-Route::get('/reservation/check', [ReservationController::class, 'check'])->name('website.reservation.check');
-
-Route::post('/report/store', [ReportServiceController::class, 'store'])->name('website.report.store');
-Route::get('/report/{reportService:id}/detail', [ReportServiceController::class, 'detail'])->name('website.report.show');
-
 $menu = theme()->getMenu();
 array_walk($menu, function ($val) {
     if (isset($val['path'])) {
@@ -60,8 +43,28 @@ array_walk($menu, function ($val) {
     }
 });
 
-// admin
+
+// web
+Route::get('/', [WebsiteController::class, 'index'])->name('website.index');
+Route::get('/rooms', [WebsiteController::class, 'rooms'])->name('website.rooms');
+Route::get('/rooms/{layanan:id}/detail', [WebsiteController::class, 'show_room'])->name('website.room.show');
+Route::get('/cars', [WebsiteController::class, 'cars'])->name('website.cars');
+Route::get('/report', [WebsiteController::class, 'report'])->name('website.report');
+Route::get('/status', [WebsiteController::class, 'status'])->name('website.status');
+Route::get('/facilities', [WebsiteController::class, 'facilities'])->name('website.facilities');
+
+Route::get('/reservation/check', [ReservationController::class, 'check'])->name('website.reservation.check');
+Route::get('/report/{reportService:id}/detail', [ReportServiceController::class, 'detail'])->name('website.report.show');
+
 Route::middleware('auth')->group(function () {
+    // website
+    Route::post('/reservation', [ReservationController::class, 'store'])->name('website.reservation');
+    Route::get('/reservation/{reservation:id}/detail', [ReservationController::class, 'detail'])->name('website.reservation.show');
+    Route::post('/reservation/{reservation:id}/receipt/upload', [ReservationController::class, 'upload_receipt'])->name('website.reservation.receipt.upload');
+
+    Route::post('/report/store', [ReportServiceController::class, 'store'])->name('website.report.store');
+
+    // admin
     Route::prefix('admin')->group(function () {
         Route::get('', function () {
             return view('pages.index');
@@ -98,20 +101,6 @@ Route::middleware('auth')->group(function () {
             Route::get('/{reservation:id}/detail', [ReservationController::class, 'show'])->name('reservation.show');
             Route::post('/{reservation:id}/approve', [ReservationController::class, 'approve'])->name('reservation.approve');
             Route::post('/{reservation:id}/reject', [ReservationController::class, 'reject'])->name('reservation.reject');
-        });
-
-        // Account pages
-        Route::prefix('account')->group(function () {
-            Route::get('settings', [SettingsController::class, 'index'])->name('settings.index');
-            Route::put('settings', [SettingsController::class, 'update'])->name('settings.update');
-            Route::put('settings/email', [SettingsController::class, 'changeEmail'])->name('settings.changeEmail');
-            Route::put('settings/password', [SettingsController::class, 'changePassword'])->name('settings.changePassword');
-        });
-
-        // Logs pages
-        Route::prefix('log')->name('log.')->group(function () {
-            Route::resource('system', SystemLogsController::class)->only(['index', 'destroy']);
-            Route::resource('audit', AuditLogsController::class)->only(['index', 'destroy']);
         });
     });
 });

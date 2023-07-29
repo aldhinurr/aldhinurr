@@ -16,12 +16,12 @@ License: {{ theme()->getOption('product', 'license') }}
 
 <head>
   <meta charset="utf-8" />
-  <title>{{ ucfirst(theme()->getOption('meta', 'title')) }} | Keenthemes</title>
+  <title>{{ ucfirst(theme()->getOption('meta', 'title')) }} | Admin</title>
   <meta name="description" content="{{ ucfirst(theme()->getOption('meta', 'description')) }}" />
   <meta name="keywords" content="{{ theme()->getOption('meta', 'keywords') }}" />
   <link rel="canonical" href="{{ ucfirst(theme()->getOption('meta', 'canonical')) }}" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="shortcut icon" href="{{ asset(theme()->getDemo() . '/' . theme()->getOption('assets', 'favicon')) }}" />
+  <link rel="shortcut icon" href="{{ asset('efacility/images/favicon.png') }}" />
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
   {{-- begin::Fonts --}}

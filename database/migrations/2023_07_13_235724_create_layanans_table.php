@@ -14,12 +14,14 @@ class CreateLayanansTable extends Migration
     public function up()
     {
         Schema::create('layanans', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->enum('type', array("RUANG", "KENDARAAN"));
             $table->string('name')->nullable(false);
             $table->longText('description')->nullable();
             $table->longText('address')->nullable();
             $table->enum('location', array("GANESHA", "SARAGA", "JATINANGOR", "CIREBON"))->nullable();
+            $table->integer('large');
+            $table->integer('capacity');
             $table->float('price', 36, 2);
             $table->enum('price_for', array("JAM", "HARI"));
             $table->enum('status', array("AKTIF", "TIDAK AKTIF", "RUSAK", "TIDAK BISA DISEWA", "DIHAPUS"));

@@ -4,8 +4,11 @@
       <div class="col-lg-12">
         <div class="menu-wrapper">
           <a href="#" class="down-button"><i class="la la-angle-down"></i></a>
-          <div class="logo">
-            <a href="{{ route('website.index') }}"><img src="{{ asset('efacility/images/logo-efacility-putih.png') }}" alt="logo" /></a>
+          <div class="logo pt-2 pb-2">
+            <a href="{{ route('website.index') }}">
+              <img src="{{ asset('efacility/images/logo-efacility-putih.png') }}" alt="logo"
+                style="width: 20rem;" />
+            </a>
             <div class="menu-toggler">
               <i class="la la-bars"></i>
               <i class="la la-times"></i>
@@ -33,14 +36,31 @@
                 <li>
                   <a href="https://asrama.itb.ac.id" target="_blank">Asrama</a>
                 </li>
+                @if (Auth::check())
+                  <li>
+                    <a href="#">{{ auth()->user()->name }} <i class="la la-angle-down"></i></a>
+                    <ul class="dropdown-menu-item">
+                      @if (in_array(auth()->user()->role, ['admin', 'superadmin']))
+                        <li><a href="{{ route('admin.index') }}">Halaman Admin</a></li>
+                      @endif
+                      <li>
+                        <a href="#" data-action="{{ theme()->getPageUrl('logout') }}" data-method="post"
+                          data-csrf="{{ csrf_token() }}" data-reload="true" class="logout-button">
+                          {{ __('Keluar') }}
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+                @endif
               </ul>
-            </nav>
           </div>
           <!-- end main-menu-content -->
-          <div class="nav-btn">
-            <a href="#" class="theme-btn theme-btn-small" data-toggle="modal" data-target="#loginPopupForm">Masuk</a>
-          </div>
-          <!-- end nav-btn -->
+          @if (!Auth::check())
+            <div class="nav-btn">
+              <a href="{{ route('login') }}" class="theme-btn theme-btn-small">Masuk</a>
+            </div>
+            <!-- end nav-btn -->
+          @endif
         </div>
         <!-- end menu-wrapper -->
       </div>

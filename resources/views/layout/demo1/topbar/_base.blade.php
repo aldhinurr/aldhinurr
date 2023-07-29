@@ -11,11 +11,10 @@
   {{-- begin::User --}}
   @if (Auth::check())
     <div class="d-flex align-items-center {{ $toolbarButtonMarginClass }}" id="kt_header_user_menu_toggle">
-      <div class="fv-row px-5">
+      <div class="fv-row px-3 pt-1">
         <div class="fw-bolder d-flex align-items-center fs-5">
           {{ auth()->user()->name }}
         </div>
-        <a href="#" class="fw-bold text-muted text-hover-primary fs-7">{{ auth()->user()->email }}</a>
       </div>
 
       {{-- begin::Menu --}}

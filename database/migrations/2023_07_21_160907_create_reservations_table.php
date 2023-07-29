@@ -15,7 +15,7 @@ class CreateReservationsTable extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->unsignedBigInteger('layanan_id')->nullable(false);
+            $table->uuid('layanan_id')->nullable(false);
             $table->timestamp('start_date')->nullable();
             $table->timestamp('end_date')->nullable();
             $table->float('fee', 36, 2)->nullable(false);

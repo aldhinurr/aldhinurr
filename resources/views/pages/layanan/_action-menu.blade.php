@@ -21,7 +21,7 @@
     <!--begin::Menu item-->
     <div class="menu-item px-3">
       <a href="{{ route('layanan.edit', $model->id) }}" class="menu-link flex-stack px-3">
-        Edit
+        Ubah
       </a>
     </div>
     <!--end::Menu item-->

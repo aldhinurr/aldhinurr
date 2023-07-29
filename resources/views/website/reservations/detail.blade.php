@@ -2,8 +2,8 @@
 
 @section('content')
   <!-- ================================
-                                                                                                                                                                                                                                                                                                                                          START CART AREA
-                                                                                                                                                                                                                                                                                                                                      ================================= -->
+                                                                                                                                                                                                                                                                                                                                                    START CART AREA
+                                                                                                                                                                                                                                                                                                                                                ================================= -->
   <section class="cart-area section-padding">
     <div class="container">
       <div class="row">
@@ -31,8 +31,12 @@
                     <th scope="row">
                       <div class="table-content product-content d-flex align-items-center">
                         <a href="{{ route('website.room.show', $reservation->layanan->id) }}" class="d-block">
-                          <img src="{{ asset($reservation->layanan->layanan_gambars->first()->picture) }}" alt=""
-                            class="flex-shrink-0">
+                          @if ($reservation->layanan->layanan_gambars->count() > 0)
+                            <img src="{{ asset($reservation->layanan->layanan_gambars->first()->picture) }}"
+                              alt="" class="flex-shrink-0">
+                          @else
+                            <img src="" alt="Gambar Tidak Tersedia" class="flex-shrink-0">
+                          @endif
                         </a>
                         <div class="product-content">
                           <a href="{{ route('website.room.show', $reservation->layanan->id) }}"
@@ -93,34 +97,36 @@
               @endif
             </div>
             <div class="section-block"></div>
-            <div class="cart-actions d-flex justify-content-end align-items-center pt-4 pb-5">
-              <div class="contact-form-action">
-                <form method="post" enctype="multipart/form-data" id="upload-receipt">
-                  @csrf
-                  <div class="input-group d-flex justify-content-end">
-                    <div class="custom-file">
-                      <input type="file" class="custom-file-input" id="receipt" name="receipt"
-                        aria-describedby="receipt">
-                      <label class="custom-file-label" for="receipt">Pilih File...</label>
+            @if (auth()->user()->email == $reservation->created_by)
+              <div class="cart-actions d-flex justify-content-end align-items-center pt-4 pb-5">
+                <div class="contact-form-action">
+                  <form method="post" enctype="multipart/form-data" id="upload-receipt">
+                    @csrf
+                    <div class="input-group d-flex justify-content-end">
+                      <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="receipt" name="receipt"
+                          aria-describedby="receipt">
+                        <label class="custom-file-label" for="receipt">Pilih File...</label>
+                      </div>
                     </div>
-                  </div>
-                  <div class="d-flex justify-content-between pt-2">
-                    <ul class="list-items list--items ml-2 pt-2">
-                      <li><a href="{{ asset($reservation->receipt) }}">Download Bukti Pembayaran</a></li>
-                    </ul>
-                    <button class="btn btn-primary" type="button" id="uploadButton">Upload</button>
-                  </div>
-                </form>
-              </div><!-- end contact-form-action -->
-            </div>
+                    <div class="d-flex justify-content-between pt-2">
+                      <ul class="list-items list--items ml-2 pt-2">
+                        <li><a href="{{ asset($reservation->receipt) }}">Download Bukti Pembayaran</a></li>
+                      </ul>
+                      <button class="btn btn-primary" type="button" id="uploadButton">Upload</button>
+                    </div>
+                  </form>
+                </div><!-- end contact-form-action -->
+              </div>
+            @endif
           </div><!-- end cart-wrap -->
         </div><!-- end col-lg-12 -->
       </div><!-- end row -->
     </div><!-- end container -->
   </section><!-- end cart-area -->
   <!-- ================================
-                                                                                                                                                                                                                                                                                                                                          END CART AREA
-                                                                                                                                                                                                                                                                                                                                      ================================= -->
+                                                                                                                                                                                                                                                                                                                                                    END CART AREA
+                                                                                                                                                                                                                                                                                                                                                ================================= -->
 @endsection
 
 

@@ -20,15 +20,15 @@ class UsersSeeder extends Seeder
      */
     public function run(Generator $faker)
     {
-        $demoUser = User::create([
-            'first_name'        => $faker->firstName,
-            'last_name'         => $faker->lastName,
-            'email'             => 'demo@demo.com',
-            'password'          => Hash::make('demo'),
-            'email_verified_at' => now(),
-        ]);
+        // $demoUser = User::create([
+        //     'first_name'        => $faker->firstName,
+        //     'last_name'         => $faker->lastName,
+        //     'email'             => 'demo@demo.com',
+        //     'password'          => Hash::make('demo'),
+        //     'email_verified_at' => now(),
+        // ]);
 
-        $this->addDummyInfo($faker, $demoUser);
+        // $this->addDummyInfo($faker, $demoUser);
 
         // User::factory(100)->create()->each(function (User $user) use ($faker) {
         //     $this->addDummyInfo($faker, $user);
@@ -39,7 +39,7 @@ class UsersSeeder extends Seeder
             $demoUser = User::create([
                 'first_name'        => $dummy['name'],
                 'last_name'         => $faker->lastName,
-                'email'             => $dummy['name'] . '@demo.com',
+                'email'             => $dummy['name'] . '@email.com',
                 'password'          => Hash::make($dummy['name']),
                 'email_verified_at' => now(),
             ]);

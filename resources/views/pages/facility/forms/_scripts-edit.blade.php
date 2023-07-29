@@ -78,9 +78,16 @@
     }
 
     var handleForm = function() {
+      Inputmask("Rp. 999.999.999", {
+        "numericInput": true
+      }).mask("#fee");
 
       submitButton.addEventListener('click', function(e) {
         e.preventDefault();
+
+        var data = new FormData(form);
+        data.set('fee', form.querySelector("#fee").inputmask.unmaskedvalue());
+
 
         // Validate form
         validation.validate().then(function(status) {
@@ -92,11 +99,11 @@
             submitButton.disabled = true;
 
             // Send ajax request
-            axios.post(submitButton.closest('form').getAttribute('action'), new FormData(form))
+            axios.post(submitButton.closest('form').getAttribute('action'), data)
               .then(function(response) {
                 // Show message popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                 Swal.fire({
-                  text: "Fasilitas Berhasil Diedit",
+                  text: "Fasilitas Berhasil Diubah",
                   icon: "success",
                   buttonsStyling: false,
                   confirmButtonText: "Ok",

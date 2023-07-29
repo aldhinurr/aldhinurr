@@ -8,17 +8,17 @@
   <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-bold w-200px py-3" data-kt-menu="true">
 
     <!--begin::Menu item-->
-    <div class="menu-item px-3">
+    <!-- <div class="menu-item px-3">
       <a href="{{ route('facility.show', $model->id) }}" class="menu-link px-3">
         Detail
       </a>
-    </div>
+    </div> -->
     <!--end::Menu item-->
 
     <!--begin::Menu item-->
     <div class="menu-item px-3">
       <a href="{{ route('facility.edit', $model->id) }}" class="menu-link flex-stack px-3">
-        Edit
+        Ubah
       </a>
     </div>
     <!--end::Menu item-->

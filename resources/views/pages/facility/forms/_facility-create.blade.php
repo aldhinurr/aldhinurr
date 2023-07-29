@@ -5,7 +5,7 @@
     data-bs-target="#kt_facility_create" aria-expanded="true" aria-controls="kt_facility_create">
     <!--begin::Card title-->
     <div class="card-title m-0">
-      <h3 class="fw-bolder m-0">{{ __('New Fasilitas') }}</h3>
+      <h3 class="fw-bolder m-0">{{ __('Tambah Fasilitas') }}</h3>
     </div>
     <!--end::Card title-->
   </div>
@@ -28,8 +28,47 @@
 
           <!--begin::Col-->
           <div class="col-lg-8 fv-row">
-            <input type="text" name="name" class="form-control form-control-lg form-control-solid"
-              placeholder="Nama Fasilitas" />
+            <input type="text" name="name" class="form-control form-control-lg form-control-solid" />
+          </div>
+          <!--end::Col-->
+        </div>
+        <!--end::Input group-->
+
+
+        <!--begin::Input group-->
+        <div class="row mb-6">
+          <!--begin::Label-->
+          <label class="col-lg-4 col-form-label fw-bold fs-6">
+            <span class="required">{{ __('Biaya') }}</span>
+          </label>
+          <!--end::Label-->
+
+          <!--begin::Col-->
+          <div class="col-lg-8 fv-row">
+            <!--begin::Row-->
+            <div class="row">
+              <!--begin::Col-->
+              <div class="col-lg-6 fv-row">
+                <input type="text" id="fee" name="fee"
+                  class="form-control form-control-lg form-control-solid mb-lg-0 mb-3" />
+              </div>
+              <!--end::Col-->
+
+              <!--begin::Label-->
+              <label class="col-lg-1 col-form-label fw-bold fs-6">
+                {{ __('Per') }}</span>
+              </label>
+              <!--end::Label-->
+
+              <!--begin::Col-->
+              <div class="col-lg-5 fv-row">
+                <input type="text" name="fee_for"
+                  class="form-control form-control-lg form-control-solid mb-lg-0 mb-3" />
+                </select>
+              </div>
+              <!--end::Col-->
+            </div>
+            <!--end::Row-->
           </div>
           <!--end::Col-->
         </div>
@@ -48,7 +87,7 @@
             <select name="satuan" aria-label="{{ __('Pilih Satuan') }}" data-control="select2"
               data-placeholder="{{ __('Pilih Satuan...') }}"
               class="form-select form-select-solid form-select-lg fw-bold">
-              <option value="">{{ __('Pilih Satuan...') }}</option>
+              {{-- <option value="">{{ __('Pilih Satuan...') }}</option> --}}
               <option value="UNIT">
                 {{ __('UNIT') }}
               </option>
@@ -81,6 +120,8 @@
                 </option>
               @endforeach
             </select>
+            <div class="form-text"><a href="https://icons8.com/line-awesome" target="_blank"
+                rel="noopener noreferrer">Lihat daftar icon</a></div>
           </div>
           <!--end::Col-->
         </div>
@@ -126,10 +167,10 @@
 
       <!--begin::Actions-->
       <div class="card-footer d-flex justify-content-end px-9 py-6">
-        <button type="reset" class="btn btn-white btn-active-light-primary me-2">{{ __('Discard') }}</button>
-
+        <a href="{{ route('facility.index') }}" type="reset"
+          class="btn btn-white btn-active-light-primary me-2">{{ __('Kembali') }}</a>
         <button type="button" class="btn btn-primary" id="kt_facility_create_submit">
-          @include('partials.general._button-indicator', ['label' => __('Save')])
+          @include('partials.general._button-indicator', ['label' => __('Simpan')])
         </button>
       </div>
       <!--end::Actions-->

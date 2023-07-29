@@ -29,6 +29,8 @@ class StoreLayananRequest extends FormRequest
             "description" => "nullable|string",
             "address" => "required|string|max:255",
             "location" => "required|in:GANESHA,SARAGA,JATINANGOR,CIREBON",
+            "large" => "required|numeric|min:1",
+            "capacity" => "required|numeric|min:1",
             "price" => "required",
             "price_for" => "required|in:JAM,HARI",
             "status" => "required|in:AKTIF,TIDAK AKTIF,RUSAK,TIDAK BISA DISEWA,DIHAPUS",

@@ -15,7 +15,7 @@ class CreateLayananGambarsTable extends Migration
     {
         Schema::create('layanan_gambars', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('layanan_id');
+            $table->uuid('layanan_id')->nullable(false);
             $table->longText('picture')->nullable(false);
             $table->enum('status', array("AKTIF", "TIDAK AKTIF", "DIHAPUS"));
             $table->string('created_by', 50)->nullable();

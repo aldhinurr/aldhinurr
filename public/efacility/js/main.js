@@ -760,5 +760,29 @@ Author Email:   contact@tecydevs.com
             e.preventDefault();
             $("#resume_text").toggle();
         });
+
+        /*======= logout-btn =======*/
+        $(document).on("click", ".logout-button", function (e) {
+            e.preventDefault();
+            var action = $(this).data("action");
+            var method = $(this).data("method");
+            var csrf = $(this).data("csrf");
+            var reload = $(this).data("reload");
+
+            $.ajax({
+                url: action,
+                type: method,
+                data: {
+                    _token: csrf,
+                },
+                success: function (response) {
+                    console.log(response);
+                    window.location = "/";
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.responseText);
+                },
+            });
+        });
     });
 })(jQuery);

@@ -1,4 +1,4 @@
-  @if (!$sewa->isEmpty())
+  @if ($sewa->total() > 0)
     @foreach ($sewa as $data)
       <tr>
         <th scope="row">
@@ -17,7 +17,7 @@
         <td>{{ $data->layanan->location }}</td>
         <td>{{ $data->start_date }}</td>
         <td>{{ $data->end_date }}</td>
-        <td>{{ $data->created_by }}</td>
+        <td>{{ $data->user->first_name }} {{ $data->user->last_name }}</td>
         <td>{{ $data->status }}</td>
         <td>
           <div class="table-content">
@@ -26,6 +26,13 @@
         </td>
       </tr>
     @endforeach
+    <tr>
+      <td colspan="8">
+        <nav aria-label="Page navigation example">
+          {{ $sewa->links('website.status._pagination') }}
+        </nav>
+      </td>
+    </tr>
   @else
     <tr>
       <td colspan="8">

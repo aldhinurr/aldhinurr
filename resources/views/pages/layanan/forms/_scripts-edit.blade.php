@@ -8,6 +8,7 @@
     var validation;
     var myDropzone;
     var editor;
+    var myRepeater;
     var description;
     var layananGambar;
 
@@ -167,6 +168,90 @@
         },
       });
 
+      myRepeater = $('#facility').repeater({
+        initEmpty: false,
+
+        defaultValues: {
+          'quantity': '1'
+        },
+
+        show: function() {
+          $(this).slideDown();
+
+          // Re-init select2
+          $(this).find('[data-kt-repeater="select2"]').select2({
+            ajax: {
+              url: "{{ route('facility.getFacilities') }}",
+              type: "post",
+              dataType: 'json',
+              delay: 250,
+              data: function(params) {
+                return {
+                  _token: '{{ csrf_token() }}',
+                  search: params.term // search term
+                };
+              },
+              processResults: function(response) {
+                return {
+                  results: response
+                };
+              },
+              cache: true
+            }
+          });
+
+        },
+
+        hide: function(deleteElement) {
+          $(this).slideUp(deleteElement);
+        },
+
+        ready: function() {
+          // Init select2
+          $('[data-kt-repeater="select2"]').select2({
+            ajax: {
+              url: "{{ route('facility.getFacilities') }}",
+              type: "post",
+              dataType: 'json',
+              delay: 250,
+              data: function(params) {
+                return {
+                  _token: '{{ csrf_token() }}',
+                  search: params.term // search term
+                };
+              },
+              processResults: function(response) {
+                return {
+                  results: response
+                };
+              },
+              cache: true
+            }
+          });
+        }
+      });
+
+      // set facilities
+      var facilities = <?= json_encode($facilities, JSON_PRETTY_PRINT) ?>;
+      if (facilities.length > 0) {
+        var setList = [];
+        for (let idx = 0; idx < facilities.length; idx++) {
+          const e = facilities[idx];
+          setList.push({
+            'facility_id': e['facility_id'],
+            'facility_name': e['facility']['name'],
+            'quantity': e['quantity'],
+          })
+        }
+        myRepeater.setList(setList);
+
+        for (let idx = 0; idx < setList.length; idx++) {
+          const e = setList[idx];
+          var newOption = new Option(e['facility_name'], e['facility_id'], true, true);
+          $('[name="facility[' + idx + '][facility_id]"]').append(newOption).trigger('change');
+        }
+      }
+
       submitButton.addEventListener('click', function(e) {
         e.preventDefault();
 
@@ -182,6 +267,9 @@
           }
           data.append('layanan_gambar[]', file);
         }
+
+        // assign value fasilitas
+        data.append('facility', JSON.stringify($('#facility').repeaterVal()));
 
         // Validate form
         validation.validate().then(function(status) {

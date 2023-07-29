@@ -2,8 +2,8 @@
 
 @section('content')
   <!-- ================================
-                                                                                                                                    START BREADCRUMB TOP BAR
-                                                                                                                                ================================= -->
+                                                                                                                                                                                                                                            START BREADCRUMB TOP BAR
+                                                                                                                                                                                                                                        ================================= -->
   <section class="breadcrumb-top-bar">
     <div class="container">
       <div class="row justify-content-between">
@@ -13,49 +13,57 @@
             <span class="la la-map-marker font-size-48"></span>
             {{ $data->address }}
           <h6 class="info__title">{{ $data->location }}</h6>
+          <span class="info__desc pt-1">Luas: {{ $data->large }} m<sup>2</sup>, Kapasitas: {{ $data->capacity }}
+            Orang</span>
           </p>
         </div><!-- end single-content-item -->
-        <div class="single-content-item pb-4 pt-4">
-          <h3 class="title font-size-26">Rp. {{ number_format($data->price, 0) }} / {{ $data->price_for }}</h3>
+        <div class="single-content-item pb-4 pt-4 text-right">
+          <h3 class="title font-size-26 pb-2">Rp. {{ number_format($data->price, 0) }} / {{ $data->price_for }}</h3>
+          <a href="{{ route('website.rooms') }}" class="theme-btn theme-btn-small"><i class="la la-arrow-left"></i>
+            Kembali</a>
         </div><!-- end single-content-item -->
       </div>
       <div class="section-block"></div>
     </div><!-- end container -->
   </section><!-- end breadcrumb-top-bar -->
   <!-- ================================
-                                                                                                                                    END BREADCRUMB TOP BAR
-                                                                                                                                ================================= -->
+                                                                                                                                                                                                                                            END BREADCRUMB TOP BAR
+                                                                                                                                                                                                                                        ================================= -->
 
   <!-- ================================
-                                                                                                                                    START ROOM DETAIL BREAD
-                                                                                                                                ================================= -->
+                                                                                                                                                                                                                                            START ROOM DETAIL BREAD
+                                                                                                                                                                                                                                        ================================= -->
   <section class="room-detail-bread padding-top-10px">
     <div class="container">
-      <div class="full-width-slider carousel-action">
-        @foreach ($room_pictures as $image)
-          <div class="full-width-slide-item">
-            <a class="d-block" data-fancybox="gallery" href="{{ asset($image['picture']) }}"
-              data-caption="Showing image 1">
-              <img src="{{ asset($image['picture']) }}">
-            </a>
-          </div><!-- end full-width-slide-item -->
-        @endforeach
-        {{-- <div class="full-width-slide-item">
+      @if (count($room_pictures) > 0)
+        <div class="full-width-slider carousel-action">
+          @foreach ($room_pictures as $image)
+            <div class="full-width-slide-item">
+              <a class="d-block" data-fancybox="gallery" href="{{ asset($image['picture']) }}"
+                data-caption="Showing image">
+                <img src="{{ asset($image['picture']) }}" style="height: 600px; width: auto">
+              </a>
+            </div>
+          @endforeach
+          {{-- <div class="full-width-slide-item">
           <a class="d-block" data-fancybox="gallery" href="https://source.unsplash.com/1200x800?event"
             data-caption="Showing image 2">
             <img src="https://source.unsplash.com/1200x800?event">
           </a>
         </div><!-- end full-width-slide-item --> --}}
-      </div><!-- end full-width-slider -->
+        </div><!-- end full-width-slider -->
+      @else
+        <h3 class="title font-size-26 text-center padding-top-100px padding-bottom-200px">Gambar Belum Tersedia</h3>
+      @endif
     </div>
   </section><!-- end room-detail-bread -->
   <!-- ================================
-                                                                                                                                    END ROOM DETAIL BREAD
-                                                                                                                                ================================= -->
+                                                                                                                                                                                                                                            END ROOM DETAIL BREAD
+                                                                                                                                                                                                                                        ================================= -->
 
   <!-- ================================
-                                                                                                                                    START TOUR DETAIL AREA
-                                                                                                                                ================================= -->
+                                                                                                                                                                                                                                            START TOUR DETAIL AREA
+                                                                                                                                                                                                                                        ================================= -->
   <section class="tour-detail-area padding-bottom-70px">
     <div class="single-content-box">
       <div class="container">
@@ -74,16 +82,17 @@
                   <h3 class="title font-size-20">Fasilitas</h3>
                   <div class="row pt-4">
                     @foreach ($service_facilities as $facilities)
-                      <div class="col-lg-6 responsive-column">
+                      <div class="col-lg-6">
                         <div class="single-tour-feature d-flex align-items-center mb-3">
                           <div class="single-feature-icon icon-element ml-0 flex-shrink-0 mr-3">
                             <i class="la la-{{ $facilities->facility->icon }}"></i>
                           </div>
-                          <div class="single-feature-titles">
+                          <div class="row col-lg-8 d-flex justify-content-between">
                             <h3 class="title font-size-15 font-weight-medium">{{ $facilities->facility->name }}</h3>
+                            <h6 class="title font-size-15 text-muted">{{ $facilities->quantity }}
+                              {{ $facilities->facility->satuan }}
+                            </h6>
                           </div>
-                          <h6 class="title font-size-15 text-muted px-5">{{ $facilities->quantity }}
-                            {{ $facilities->facility->satuan }}</h6>
                         </div><!-- end single-tour-feature -->
                       </div><!-- end col-lg-4 -->
                     @endforeach
@@ -115,12 +124,12 @@
     </div><!-- end single-content-box -->
   </section><!-- end tour-detail-area -->
   <!-- ================================
-                                                                                                                                    END TOUR DETAIL AREA
-                                                                                                                                ================================= -->
+                                                                                                                                                                                                                                            END TOUR DETAIL AREA
+                                                                                                                                                                                                                                        ================================= -->
 
   <!-- ================================
-                                                                                                                                    START RELATE TOUR AREA
-                                                                                                                                ================================= -->
+                                                                                                                                                                                                                                            START RELATE TOUR AREA
+                                                                                                                                                                                                                                        ================================= -->
   <section class="related-tour-area section--padding">
     <div class="container">
       <div class="row">
@@ -189,8 +198,8 @@
     </div>
   </section><!-- end related-tour-area -->
   <!-- ================================
-                                                                                                                                    END RELATE TOUR AREA
-                                                                                                                                ================================= -->
+                                                                                                                                                                                                                                            END RELATE TOUR AREA
+                                                                                                                                                                                                                                        ================================= -->
 @endsection
 
 @section('scripts')
