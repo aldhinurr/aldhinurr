@@ -27,6 +27,7 @@
             buttonsStyling: false,
             confirmButtonText: "Ok",
             cancelButtonText: "Batal",
+            reverseButtons: true,
             customClass: {
               cancelButton: "btn fw-bold btn-danger",
               confirmButton: "btn fw-bold btn-primary",

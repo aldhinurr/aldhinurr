@@ -40,7 +40,7 @@
                   <li>
                     <a href="#">{{ auth()->user()->name }} <i class="la la-angle-down"></i></a>
                     <ul class="dropdown-menu-item">
-                      @if (in_array(auth()->user()->role, ['admin', 'superadmin']))
+                      @if (auth()->user()->hasRole(['admin', 'superadmin']))
                         <li><a href="{{ route('admin.index') }}">Halaman Admin</a></li>
                       @endif
                       <li>

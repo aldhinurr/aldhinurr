@@ -51,6 +51,7 @@ Route::get('/rooms/{layanan:id}/detail', [WebsiteController::class, 'show_room']
 Route::get('/cars', [WebsiteController::class, 'cars'])->name('website.cars');
 Route::get('/report', [WebsiteController::class, 'report'])->name('website.report');
 Route::get('/status', [WebsiteController::class, 'status'])->name('website.status');
+Route::get('/status/calendar', [WebsiteController::class, 'status_calendar'])->name('website.status.calendar');
 Route::get('/facilities', [WebsiteController::class, 'facilities'])->name('website.facilities');
 
 Route::get('/reservation/check', [ReservationController::class, 'check'])->name('website.reservation.check');

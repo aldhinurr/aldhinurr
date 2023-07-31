@@ -65,7 +65,7 @@ class WebsiteController extends Controller
         }
 
         $sewa = Reservation::select('layanan_id')
-            ->where('status', 'DISETUJUI')
+            ->whereNotIn('status', ['DITOLAK', 'DIBATALKAN', 'SELESAI'])
             ->where('end_date', '>=', $dateNow)
             ->get();
 
@@ -95,17 +95,67 @@ class WebsiteController extends Controller
         $sewa = Reservation::with(["layanan", "user"])->paginate(10);
         if ($request->ajax()) {
             // Reservation::;
-            $sewa = Reservation::select('reservations.*', 'layanans.id', 'layanans.type', 'layanans.name', 'layanans.location', 'users.*')
+            $sewa = Reservation::select(
+                'reservations.*',
+                'layanans.type',
+                'layanans.name',
+                'layanans.location',
+                'users.first_name',
+                'users.last_name',
+                'users.email'
+            )
                 ->join('users', 'users.email', '=', 'reservations.created_by')
                 ->join('layanans', 'layanans.id', '=', 'reservations.layanan_id')
+                ->whereNotIn('status', ['DITOLAK', 'DIBATALKAN', 'SELESAI'])
                 ->when($request->type, function ($q) use ($request) {
                     $q->where('layanans.type', $request->type);
+                })
+                ->when($request->search != null, function ($q) use ($request) {
+                    $q->where('layanans.name', 'like', '%' . $request->search . '%');
+                })
+                ->when($request->only_me != null, function ($q) {
+                    $q->where('reservations.created_by', '=', auth()->user()->email);
                 })
                 ->paginate(10);
             return view('website.status._data', compact('sewa'))->render();
         }
 
         return view('website.status.index', compact('sewa'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function status_calendar(Request $request)
+    {
+        $data = Reservation::select(
+            'reservations.id',
+            DB::raw("concat(layanans.name, ' ', users.first_name) as title"),
+            'reservations.start_date as start',
+            'reservations.end_date as end',
+            'layanans.name as layanan',
+            'layanans.type',
+            'reservations.created_by'
+        )
+            ->join('layanans', 'layanans.id', '=', 'reservations.layanan_id')
+            ->join('users', 'users.email', '=', 'reservations.created_by')
+            ->whereDate('start_date', '>=', $request->start)
+            ->whereDate('end_date',   '<=', $request->end)
+            ->whereNotIn('status', ['DITOLAK', 'DIBATALKAN', 'SELESAI'])
+            ->when($request->type, function ($q) use ($request) {
+                $q->where('layanans.type', $request->type);
+            })
+            ->when($request->search != null, function ($q) use ($request) {
+                $q->where('layanans.name', 'like', '%' . $request->search . '%');
+            })
+            ->when($request->only_me != null, function ($q) {
+                $q->where('reservations.created_by', '=', auth()->user()->email);
+            })
+            ->get();
+
+        return response()->json($data);
     }
 
     /**

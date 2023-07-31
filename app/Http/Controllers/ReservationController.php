@@ -181,7 +181,7 @@ class ReservationController extends Controller
             $receipt->move(public_path('media/upload/receipt'), $fileName);
 
             $validated['receipt'] = 'media/upload/receipt/' . $fileName;
-            $validated['status'] = "MENUNGGU PERSETUUAN";
+            $validated['status'] = "MENUNGGU VERIFIKASI";
             $reservation->update($validated);
 
             DB::commit();
@@ -213,7 +213,7 @@ class ReservationController extends Controller
                 'description' => "required|string|max:200"
             ]);
 
-            $validated['status'] = "DITERIMA";
+            $validated['status'] = "DISETUUI";
             $validated['approved_by'] = auth()->user()->email;
             $validated['approved_at'] = new DateTime("now", new DateTimeZone('Asia/Jakarta'));
             $reservation->update($validated);
@@ -247,7 +247,7 @@ class ReservationController extends Controller
                 'description' => "required|string|max:200"
             ]);
 
-            $validated['status'] = "DIBATALKAN";
+            $validated['status'] = "DITOLAK";
             $validated['approved_by'] = auth()->user()->email;
             $validated['approved_at'] = new DateTime("now", new DateTimeZone('Asia/Jakarta'));
             $reservation->update($validated);
@@ -255,7 +255,7 @@ class ReservationController extends Controller
             DB::commit();
             return response()->json([
                 'status' => 0,
-                'message' => "Sewa Berhasil Dibatalkan."
+                'message' => "Sewa Berhasil Ditolak."
             ], 200);
         } catch (\Throwable $th) {
             DB::rollBack();

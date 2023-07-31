@@ -89,13 +89,79 @@
     <!--end::Card title-->
 
     <!--begin::Action-->
-    @if (!in_array($reservation->status, ['DITERIMA', 'DIBATALKAN']))
-      <div class="d-flex my-4">
-        <a href="#" id="approveButton"
-          class="btn btn-sm btn-success align-self-center me-2">{{ __('Setuju') }}</a>
-        <a href="#" id="rejectButton" class="btn btn-sm btn-danger align-self-center">{{ __('Tolak') }}</a>
-      </div>
-    @endif
+    <div class="d-flex my-4">
+      {{-- <a href="#" id="approveButton" class="btn btn-sm btn-success align-self-center me-2">{{ __('Setuju') }}</a>
+        <a href="#" id="rejectButton" class="btn btn-sm btn-danger align-self-center">{{ __('Tolak') }}</a> --}}
+      <a href="{{ route('reservation.index') }}"
+        class="btn btn-sm btn-white btn-active-light-primary align-self-center me-2">{{ __('Kembali') }}</a>
+
+      @if ($reservation->status != 'EXPIRED')
+        <!--begin::Menu-->
+        <div class="me-0 pt-1">
+          <button class="btn btn-sm btn-bg-primary text-white" data-kt-menu-trigger="click"
+            data-kt-menu-placement="bottom-end">
+            Proses
+          </button>
+
+          <!--begin::Menu 3-->
+          <div
+            class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-bold w-200px py-3"
+            data-kt-menu="true">
+
+            <!--begin::Menu item-->
+            <div class="menu-item px-3">
+              <a href="#" id="approveButton" class="menu-link px-3">
+                Setuju
+              </a>
+            </div>
+            <!--end::Menu item-->
+
+            <!--begin::Menu item-->
+            <div class="menu-item px-3">
+              <a href="#" id="approveMoveButton" class="menu-link px-3">
+                Setuju dan Alihkan
+              </a>
+            </div>
+            <!--end::Menu item-->
+
+            <!--begin::Menu item-->
+            <div class="menu-item px-3">
+              <a href="#" id="rejectButton" class="menu-link flex-stack px-3">
+                Tolak
+              </a>
+            </div>
+            <!--end::Menu item-->
+
+            <!--begin::Menu item-->
+            <div class="menu-item px-3">
+              <a href="#" id="cancelButton" class="menu-link flex-stack px-3">
+                Batal
+              </a>
+            </div>
+            <!--end::Menu item-->
+
+            <!--begin::Menu item-->
+            <div class="menu-item px-3 my-1">
+              <a href="#" id="onProgressButton" class="menu-link px-3">
+                Sedang Berjalan
+              </a>
+            </div>
+            <!--end::Menu item-->
+
+            <!--begin::Menu item-->
+            <div class="menu-item px-3 my-1">
+              <a href="#" id="doneButton" class="menu-link px-3">
+                Selesai
+              </a>
+            </div>
+            <!--end::Menu item-->
+          </div>
+          <!--end::Menu 3-->
+        </div>
+        <!--end::Menu-->
+      @endif
+
+    </div>
     <!--end::Action-->
   </div>
   <!--begin::Card header-->

@@ -4,6 +4,8 @@ namespace App\DataTables;
 
 use App\Models\Reservation;
 use Carbon\Carbon;
+use DateTime;
+use DateTimeZone;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
@@ -20,6 +22,7 @@ class ReservationDataTable extends DataTable
      */
     public function dataTable($query)
     {
+        $now = new DateTime("now", new DateTimeZone('Asia/Jakarta'));
         return datatables()
             ->eloquent($query)
             ->editColumn('layanan.name', function (Reservation $model) {
@@ -45,6 +48,12 @@ class ReservationDataTable extends DataTable
             })
             ->editColumn('total', function (Reservation $model) {
                 return number_format($model->total, 2);
+            })
+            ->editColumn('status', function (Reservation $model) use ($now) {
+                if ($model->status == "MENUNGGU UPLOAD" && ($now > $model->expired_payment)) {
+                    $model->update(['status' => "EXPIRED"]);
+                }
+                return $model->status;
             })
             ->addColumn('action', function (Reservation $model) {
                 return view('pages.reservation._action-menu', compact('model'));
@@ -99,7 +108,7 @@ class ReservationDataTable extends DataTable
             Column::make('total')->title("Total"),
             Column::make('created_at')->title("Dibuat"),
             Column::make('status')->title("Status"),
-            Column::computed('action')
+            Column::computed('action')->title("Kelola")
                 ->exportable(false)
                 ->printable(false)
                 ->width(60)
