@@ -2,8 +2,8 @@
 
 @section('content')
   <!-- ================================
-                                                                                                                    START FORM AREA
-                                                                                                                ================================= -->
+                                                                                                                                      START FORM AREA
+                                                                                                                                  ================================= -->
   <section class="listing-form section--padding">
     <div class="container">
       <div class="row">
@@ -67,19 +67,22 @@
               </form>
             </div><!-- end form-content -->
           </div><!-- end form-box -->
-          <div class="submit-box">
+          <div class="row submit-box">
             <div class="btn-box">
               <button type="button" id="submitButton" class="theme-btn">Simpan <i
                   class="la la-arrow-right ml-1"></i></button>
             </div>
+            <ul class="list-items list--items ml-3 pt-2">
+              <li><a href="{{ route('website.status') }}#my-laporan">Lihat Laporan Lainnya</a></li>
+            </ul>
           </div><!-- end submit-box -->
         </div><!-- end col-lg-9 -->
       </div><!-- end row -->
     </div><!-- end container -->
   </section><!-- end listing-form -->
   <!-- ================================
-                                                                                                                    END FORM AREA
-                                                                                                                ================================= -->
+                                                                                                                                      END FORM AREA
+                                                                                                                                  ================================= -->
 @endsection
 
 @section('scripts')

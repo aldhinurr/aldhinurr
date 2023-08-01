@@ -94,6 +94,7 @@ class WebsiteController extends Controller
     public function status(Request $request)
     {
         $sewa = Reservation::with(["layanan", "user"])->paginate(10);
+        $report = ReportService::with(["report_service_images", "user"])->paginate(10);
         if ($request->ajax()) {
             // Reservation::;
             $sewa = Reservation::select(
@@ -107,7 +108,7 @@ class WebsiteController extends Controller
             )
                 ->join('users', 'users.email', '=', 'reservations.created_by')
                 ->join('layanans', 'layanans.id', '=', 'reservations.layanan_id')
-                ->whereNotIn('reservations.status', ['EXPIRED', 'DITOLAK', 'DIBATALKAN'])
+                ->whereNotIn('reservations.status', ['EXPIRED', 'DIBATALKAN'])
                 ->when($request->type, function ($q) use ($request) {
                     $q->where('layanans.type', $request->type);
                 })
@@ -118,10 +119,10 @@ class WebsiteController extends Controller
                     $q->where('reservations.created_by', '=', auth()->user()->email);
                 })
                 ->paginate(10);
-            return view('website.status._data', compact('sewa'))->render();
+            return view('website.status._data-sewa', compact('sewa'))->render();
         }
 
-        return view('website.status.index', compact('sewa'));
+        return view('website.status.index', compact('sewa', 'report'));
     }
 
     /**
@@ -157,6 +158,38 @@ class WebsiteController extends Controller
             ->get();
 
         return response()->json($data);
+    }
+
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function status_report(Request $request)
+    {
+        if ($request->ajax()) {
+            // Reservation::;
+            $report = ReportService::select(
+                'report_services.*',
+                'users.first_name',
+                'users.last_name',
+                'users.email'
+            )
+                ->join('users', 'users.email', '=', 'report_services.created_by')
+                // ->whereNotIn('reservations.status', ['EXPIRED', 'DITOLAK', 'DIBATALKAN'])
+                ->when($request->type, function ($q) use ($request) {
+                    $q->where('report_services.jenis', $request->type);
+                })
+                ->when($request->search != null, function ($q) use ($request) {
+                    $q->where('report_services.keterangan', 'like', '%' . $request->search . '%');
+                })
+                ->when($request->only_me != null, function ($q) {
+                    $q->where('report_services.created_by', '=', auth()->user()->email);
+                })
+                ->paginate(10);
+            return view('website.status._data-report', compact('report'))->render();
+        }
     }
 
     /**

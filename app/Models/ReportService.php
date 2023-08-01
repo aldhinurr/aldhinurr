@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ReportService extends Model
@@ -23,8 +24,14 @@ class ReportService extends Model
         return $this->HasMany(ReportServiceImage::class);
     }
 
-    public function get_count_data($status)
+
+    /**
+     * Get the layanan that owns the LayananGambar
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user(): BelongsTo
     {
-        return Layanan::where('status', $status)->count();
+        return $this->belongsTo(User::class, 'created_by', 'email');
     }
 }

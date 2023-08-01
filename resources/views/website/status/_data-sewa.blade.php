@@ -29,7 +29,7 @@
     <tr>
       <td colspan="8">
         <nav aria-label="Page navigation example">
-          {{ $sewa->links('website.status._pagination') }}
+          {{ $sewa->links('website.status._pagination-sewa') }}
         </nav>
       </td>
     </tr>

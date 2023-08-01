@@ -47,7 +47,7 @@ class ReportServiceController extends Controller
 
             $validated = $request->validate($request->rules());
             $validated['status'] = "MENUNGGU";
-            $validated['created_by'] = "customer@email.com";
+            $validated['created_by'] = auth()->user()->email;
             $validated['created_at'] = $now;
 
             // create report
@@ -64,7 +64,7 @@ class ReportServiceController extends Controller
                         'report_service_id' => $report_service->id,
                         'image' => 'media/images/report/' . $imageName,
                         'status' => 'SEBELUM',
-                        'created_by' => "customer@email.com",
+                        'created_by' => auth()->user()->email,
                     ]);
                 }
             }
