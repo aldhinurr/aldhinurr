@@ -17,6 +17,8 @@ class CreateServiceFacilitiesTable extends Migration
             $table->id();
             $table->uuid('layanan_id')->nullable(false);
             $table->unsignedBigInteger('facility_id');
+            $table->enum('type', array("UTAMA", "TAMBAHAN"));
+            $table->float('fee', 36, 2)->default(0);
             $table->integer('quantity');
             $table->enum('status', array("AKTIF", "TIDAK AKTIF", "DIHAPUS"));
             $table->string('created_by', 50)->nullable();

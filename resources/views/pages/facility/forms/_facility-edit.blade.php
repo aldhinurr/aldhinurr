@@ -40,47 +40,6 @@
         <div class="row mb-6">
           <!--begin::Label-->
           <label class="col-lg-4 col-form-label fw-bold fs-6">
-            <span class="required">{{ __('Biaya') }}</span>
-          </label>
-          <!--end::Label-->
-
-          <!--begin::Col-->
-          <div class="col-lg-8 fv-row">
-            <!--begin::Row-->
-            <div class="row">
-              <!--begin::Col-->
-              <div class="col-lg-6 fv-row">
-                <input type="text" id="fee" name="fee"
-                  class="form-control form-control-lg form-control-solid mb-lg-0 mb-3"
-                  value="{{ old('fee', $facility->fee ?? '') }}" />
-              </div>
-              <!--end::Col-->
-
-              <!--begin::Label-->
-              <label class="col-lg-1 col-form-label fw-bold fs-6">
-                {{ __('Per') }}</span>
-              </label>
-              <!--end::Label-->
-
-              <!--begin::Col-->
-              <div class="col-lg-5 fv-row">
-                <input type="text" name="fee_for"
-                  class="form-control form-control-lg form-control-solid mb-lg-0 mb-3"
-                  value="{{ old('fee_for', $facility->fee_for ?? '') }}" />
-                </select>
-              </div>
-              <!--end::Col-->
-            </div>
-            <!--end::Row-->
-          </div>
-          <!--end::Col-->
-        </div>
-        <!--end::Input group-->
-
-        <!--begin::Input group-->
-        <div class="row mb-6">
-          <!--begin::Label-->
-          <label class="col-lg-4 col-form-label fw-bold fs-6">
             <span class="required">{{ __('Satuan') }}</span>
           </label>
           <!--end::Label-->

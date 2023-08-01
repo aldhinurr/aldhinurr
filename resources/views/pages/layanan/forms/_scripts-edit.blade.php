@@ -179,7 +179,8 @@
           $(this).slideDown();
 
           // Re-init select2
-          $(this).find('[data-kt-repeater="select2"]').select2({
+          $(this).find('[data-kt-repeater="select2"]').select2();
+          $(this).find('[data-kt-repeater="select2-facility"]').select2({
             ajax: {
               url: "{{ route('facility.getFacilities') }}",
               type: "post",
@@ -208,7 +209,8 @@
 
         ready: function() {
           // Init select2
-          $('[data-kt-repeater="select2"]').select2({
+          $('[data-kt-repeater="select2"]').select2();
+          $('[data-kt-repeater="select2-facility"]').select2({
             ajax: {
               url: "{{ route('facility.getFacilities') }}",
               type: "post",
@@ -231,7 +233,7 @@
         }
       });
 
-      // set facilities
+      // set facilitiesl
       var facilities = <?= json_encode($facilities, JSON_PRETTY_PRINT) ?>;
       if (facilities.length > 0) {
         var setList = [];
@@ -240,6 +242,8 @@
           setList.push({
             'facility_id': e['facility_id'],
             'facility_name': e['facility']['name'],
+            'type': e['type'],
+            'fee': e['fee'],
             'quantity': e['quantity'],
           })
         }
@@ -285,7 +289,7 @@
               .then(function(response) {
                 // Show message popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                 Swal.fire({
-                  text: "Layanan Berhasil Ditambahkan",
+                  text: "Layanan Berhasil Diubah",
                   icon: "success",
                   buttonsStyling: false,
                   confirmButtonText: "Ok",
@@ -331,7 +335,7 @@
           } else {
             // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
             Swal.fire({
-              text: "Sorry, looks like there are some errors detected, please try again.",
+              text: "Terjadi kesalahan, silahkan cek kembali",
               icon: "error",
               buttonsStyling: false,
               confirmButtonText: "Ok, got it!",

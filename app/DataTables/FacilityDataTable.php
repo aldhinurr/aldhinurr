@@ -24,9 +24,6 @@ class FacilityDataTable extends DataTable
             ->editColumn('icon', function (Facility $model) {
                 return view('pages.facility.columns._icon-column', compact('model'));
             })
-            ->editColumn('fee', function (Facility $model) {
-                return number_format($model->fee);
-            })
             ->addColumn('action', function (Facility $model) {
                 return view('pages.facility.columns._action-menu', compact('model'));
             })
@@ -69,16 +66,10 @@ class FacilityDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            Column::make('id')
-                ->title('#ID')
-                ->hidden(),
-            Column::make('created_at')
-                ->title('#Dibuat')
-                ->hidden(),
+            Column::make('id')->title('#ID')->hidden(),
+            Column::make('created_at')->title('#Dibuat')->hidden(),
             Column::make('icon')->title('Icon'),
             Column::make('name')->title('Nama'),
-            Column::make('fee')->title('Biaya'),
-            Column::make('fee_for')->title('Per'),
             Column::make('satuan')->title('Satuan'),
             Column::make('status')->title('Status'),
             Column::computed('action')->title('Kelola')

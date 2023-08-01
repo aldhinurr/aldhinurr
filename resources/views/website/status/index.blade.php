@@ -120,7 +120,7 @@
               </div>
             </div><!-- end tab-pane -->
             <div class="tab-pane fade" id="my-laporan" role="tabpanel" aria-labelledby="my-laporan-tab">
-              <div class="filter-wrap margin-bottom-30px">
+              {{-- <div class="filter-wrap margin-bottom-30px">
                 <div class="filter-bar d-flex align-items-center justify-content-between">
                   <div class="filter-bar-filter d-flex flex-wrap align-items-center">
                     <div class="filter-option">
@@ -183,43 +183,7 @@
                     </table>
                   </div>
                 </div>
-              </div><!-- end form-box -->
-              @if ($sewa->isNotEmpty())
-                <nav aria-label="Page navigation example">
-                  <ul class="pagination">
-                    <li class="page-item">
-                      @if ($sewa->onFirstPage())
-                        <a class="page-link page-link-nav disabled" aria-label="Previous">
-                          <span aria-hidden="true"><i class="la la-angle-left"></i></span>
-                          <span class="sr-only">Previous</span>
-                        </a>
-                      @else
-                        <a class="page-link page-link-nav" href="{{ $sewa->previousPageUrl() }}" aria-label="Previous">
-                          <span aria-hidden="true"><i class="la la-angle-left"></i></span>
-                          <span class="sr-only">Previous</span>
-                        </a>
-                      @endif
-                    </li>
-                    <li class="page-item active">
-                      <a class="page-link page-link-nav" href="#">{{ $sewa->currentPage() }}<span
-                          class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="page-item">
-                      @if ($sewa->hasMorePages())
-                        <a class="page-link page-link-nav" href="{{ $sewa->nextPageUrl() }}" aria-label="Next">
-                          <span aria-hidden="true"><i class="la la-angle-right"></i></span>
-                          <span class="sr-only">Next</span>
-                        </a>
-                      @else
-                        <a class="page-link page-link-nav disabled" aria-label="Next">
-                          <span aria-hidden="true"><i class="la la-angle-right"></i></span>
-                          <span class="sr-only">Next</span>
-                        </a>
-                      @endif
-                    </li>
-                  </ul>
-                </nav>
-              @endif
+              </div><!-- end form-box --> --}}
             </div><!-- end tab-pane -->
           </div>
         </div><!-- end col-lg-9 -->

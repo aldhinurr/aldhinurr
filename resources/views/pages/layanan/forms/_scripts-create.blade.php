@@ -191,7 +191,8 @@
           $(this).slideDown();
 
           // Re-init select2
-          $(this).find('[data-kt-repeater="select2"]').select2({
+          $(this).find('[data-kt-repeater="select2"]').select2();
+          $(this).find('[data-kt-repeater="select2-facility"]').select2({
             ajax: {
               url: "{{ route('facility.getFacilities') }}",
               type: "post",
@@ -220,7 +221,8 @@
 
         ready: function() {
           // Init select2
-          $('[data-kt-repeater="select2"]').select2({
+          $('[data-kt-repeater="select2"]').select2();
+          $('[data-kt-repeater="select2-facility"]').select2({
             ajax: {
               url: "{{ route('facility.getFacilities') }}",
               type: "post",

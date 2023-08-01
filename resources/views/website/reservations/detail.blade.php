@@ -2,8 +2,8 @@
 
 @section('content')
   <!-- ================================
-                                                                                                                                                                                                                                                                                                                                                    START CART AREA
-                                                                                                                                                                                                                                                                                                                                                ================================= -->
+                                                                                                                                                                                                                                                                                                                                                      START CART AREA
+                                                                                                                                                                                                                                                                                                                                                  ================================= -->
   <section class="cart-area section-padding">
     <div class="container">
       <div class="row">
@@ -64,7 +64,7 @@
                                 @if (count($extraFacilities) > 0)
                                   @foreach ($extraFacilities as $extraFacility)
                                     @php
-                                      $facilities[] = $extraFacility->facility->name . ' ' . $extraFacility->facility->fee_for . ' ' . $extraFacility->facility->satuan;
+                                      $facilities[] = $extraFacility->facility->name . ' ' . $extraFacility->quantity . ' ' . $extraFacility->facility->satuan;
                                     @endphp
                                   @endforeach
                                   {{ implode(', ', $facilities) }}
@@ -125,8 +125,8 @@
     </div><!-- end container -->
   </section><!-- end cart-area -->
   <!-- ================================
-                                                                                                                                                                                                                                                                                                                                                    END CART AREA
-                                                                                                                                                                                                                                                                                                                                                ================================= -->
+                                                                                                                                                                                                                                                                                                                                                      END CART AREA
+                                                                                                                                                                                                                                                                                                                                                  ================================= -->
 @endsection
 
 

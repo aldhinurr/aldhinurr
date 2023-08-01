@@ -61,7 +61,6 @@ class ReservationController extends Controller
             $validated['status'] = "MENUNGGU UPLOAD";
             $validated['expired_payment'] = $now->add(new DateInterval("P1D"));
             $validated['created_by'] = auth()->user()->email;
-            $validated['uuid'] = Str::uuid()->toString();
 
             $reservation = Reservation::create($validated);
 
@@ -213,7 +212,7 @@ class ReservationController extends Controller
                 'description' => "required|string|max:200"
             ]);
 
-            $validated['status'] = "DISETUUI";
+            $validated['status'] = "DISETUJUI";
             $validated['approved_by'] = auth()->user()->email;
             $validated['approved_at'] = new DateTime("now", new DateTimeZone('Asia/Jakarta'));
             $reservation->update($validated);

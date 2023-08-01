@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
                 PermissionsSeeder::class,
                 RolesSeeder::class,
                 UsersSeeder::class,
-                // LayananSeeder::class,
+                LayananSeeder::class,
             ]);
             DB::commit();
         } catch (\Throwable $th) {

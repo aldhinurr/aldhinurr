@@ -49,8 +49,11 @@ class ReservationDataTable extends DataTable
             ->editColumn('total', function (Reservation $model) {
                 return number_format($model->total, 2);
             })
-            ->editColumn('status', function (Reservation $model) use ($now) {
-                if ($model->status == "MENUNGGU UPLOAD" && ($now > $model->expired_payment)) {
+            ->editColumn('status', function (Reservation $model) {
+                $now = new DateTime("now", new DateTimeZone('Asia/Jakarta'));
+                $expired_payment = new DateTime($model->expired_payment, new DateTimeZone('Asia/Jakarta'));
+
+                if ($model->status == "MENUNGGU UPLOAD" && $now > $expired_payment) {
                     $model->update(['status' => "EXPIRED"]);
                 }
                 return $model->status;

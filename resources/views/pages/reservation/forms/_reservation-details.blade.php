@@ -100,7 +100,7 @@
         <div class="me-0 pt-1">
           <button class="btn btn-sm btn-bg-primary text-white" data-kt-menu-trigger="click"
             data-kt-menu-placement="bottom-end">
-            Proses
+            Update Status
           </button>
 
           <!--begin::Menu 3-->
@@ -264,6 +264,18 @@
           <!--begin::Col-->
           <div class="col-lg-4">
             <span class="fw-bolder fs-6 text-dark">{{ $reservation->status }}</span>
+          </div>
+          <!--end::Col-->
+        </div>
+
+        <div class="row mb-6">
+          <!--begin::Label-->
+          <label class="col-lg-4 fw-bold text-muted">{{ __('Keterangan') }}</label>
+          <!--end::Label-->
+
+          <!--begin::Col-->
+          <div class="col-lg-8">
+            <span class="fw-bolder fs-6 text-dark">{{ $reservation->description }}</span>
           </div>
           <!--end::Col-->
         </div>

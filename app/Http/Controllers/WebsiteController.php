@@ -6,6 +6,7 @@ use App\Models\Facility;
 use App\Models\Layanan;
 use App\Models\ReportService;
 use App\Models\Reservation;
+use App\Models\ServiceFacility;
 use DateTime;
 use DateTimeZone;
 use DB;
@@ -65,7 +66,7 @@ class WebsiteController extends Controller
         }
 
         $sewa = Reservation::select('layanan_id')
-            ->whereNotIn('status', ['DITOLAK', 'DIBATALKAN', 'SELESAI'])
+            ->whereNotIn('status', ['DITOLAK', 'DIBATALKAN', 'DIALIHKAN', 'SELESAI'])
             ->where('end_date', '>=', $dateNow)
             ->get();
 
@@ -106,7 +107,7 @@ class WebsiteController extends Controller
             )
                 ->join('users', 'users.email', '=', 'reservations.created_by')
                 ->join('layanans', 'layanans.id', '=', 'reservations.layanan_id')
-                ->whereNotIn('status', ['DITOLAK', 'DIBATALKAN', 'SELESAI'])
+                ->whereNotIn('reservations.status', ['EXPIRED', 'DITOLAK', 'DIBATALKAN'])
                 ->when($request->type, function ($q) use ($request) {
                     $q->where('layanans.type', $request->type);
                 })
@@ -141,9 +142,9 @@ class WebsiteController extends Controller
         )
             ->join('layanans', 'layanans.id', '=', 'reservations.layanan_id')
             ->join('users', 'users.email', '=', 'reservations.created_by')
+            ->whereNotIn('reservations.status', ['EXPIRED', 'DITOLAK', 'DIBATALKAN'])
             ->whereDate('start_date', '>=', $request->start)
             ->whereDate('end_date',   '<=', $request->end)
-            ->whereNotIn('status', ['DITOLAK', 'DIBATALKAN', 'SELESAI'])
             ->when($request->type, function ($q) use ($request) {
                 $q->where('layanans.type', $request->type);
             })
@@ -185,44 +186,24 @@ class WebsiteController extends Controller
         $search = $request->search;
         $dataId = $request->data_id;
 
-        if ($search == '') {
-            $facilities = Facility::select(
-                "facilities.id",
-                "facilities.name",
-                "facilities.fee",
-                "facilities.satuan",
-                "facilities.fee_for",
-                DB::raw("concat(facilities.name, ' - Rp. ', convert(format(facilities.fee, 0), Char), ' / ', facilities.fee_for, ' ', facilities.satuan) as text")
-            )
-                // ->whereNotIn('facilities.id', function ($query) use ($dataId) {
-                //     $query->select('facilities.id')->from('facilities')
-                //         ->join('service_facilities', "facilities.id", "=", "service_facilities.facility_id")
-                //         ->where('facilities.status', 'AKTIF')
-                //         ->where('service_facilities.layanan_id', "=", $dataId);
-                // })
-                ->where('facilities.status', 'AKTIF')
-                ->orderby('facilities.name', 'asc')
-                ->limit(20)->get();
-        } else {
-            $facilities = Facility::select(
-                "facilities.id",
-                "facilities.name",
-                "facilities.fee",
-                "facilities.satuan",
-                "facilities.fee_for",
-                DB::raw("concat(facilities.name, ' - Rp. ', convert(format(facilities.fee, 0), Char), ' / ', facilities.fee_for, ' ', facilities.satuan) as text")
-            )
-                // ->whereNotIn('facilities.id', function ($query) use ($dataId) {
-                //     $query->select('facilities.id')->from('facilities')
-                //         ->join('service_facilities', "facilities.id", "=", "service_facilities.facility_id")
-                //         ->where('facilities.status', 'AKTIF')
-                //         ->where('service_facilities.layanan_id', "=", $dataId);
-                // })
-                ->where('facilities.status', 'AKTIF')
-                ->where('facilities.name', 'like', '%' . $search . '%')
-                ->orderby('facilities.name', 'asc')
-                ->limit(20)->get();
-        }
+        $facilities = ServiceFacility::select(
+            "facilities.id",
+            "facilities.name",
+            "service_facilities.fee",
+            "service_facilities.quantity",
+            "facilities.satuan",
+            DB::raw("concat(facilities.name, ' - Rp. ', convert(format(service_facilities.fee, 0), Char), ' / ', service_facilities.quantity, ' ', facilities.satuan) as text")
+        )
+            ->join('facilities', "facilities.id", "=", "service_facilities.facility_id")
+            ->where('facilities.status', 'AKTIF')
+            ->where("service_facilities.type", "Tambahan")
+            ->where('service_facilities.layanan_id', "=", $dataId)
+            ->when($search != '', function ($q) use ($search) {
+                $q->where('facilities.name', 'like', '%' . $search . '%');
+            })
+            ->orderby('facilities.name', 'asc')
+            ->limit(20)->get();
+
 
         $response = array();
         foreach ($facilities as $facility) {
@@ -231,7 +212,7 @@ class WebsiteController extends Controller
                 "text" => $facility->text,
                 "name" => $facility->name,
                 "fee" => $facility->fee,
-                "fee_for" => $facility->fee_for,
+                "fee_for" => $facility->quantity,
                 "satuan" => $facility->satuan
             );
         }

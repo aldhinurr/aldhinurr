@@ -64,11 +64,15 @@ class LayananController extends Controller
                 foreach ($facility->facility as $key => $facility) {
                     if ($facility->quantity < 1) {
                         throw new \Exception('Jumlah Fasilitas minimal 1');
+                    } elseif ($facility->type == 'TAMBAHAN' && $facility->fee <= 0) {
+                        throw new \Exception('Biaya minimal Rp. 1 untuk fasilitas tambahan.');
                     }
 
                     ServiceFacility::create([
                         'layanan_id' => $layanan->id,
                         'facility_id' => $facility->facility_id,
+                        'type' => $facility->type,
+                        'fee' => $facility->fee,
                         'quantity' => $facility->quantity,
                         'status' => 'AKTIF',
                         'created_by' => auth()->user()->email,
@@ -171,14 +175,18 @@ class LayananController extends Controller
 
             // update facilities
             if (count($facilities->facility) > 0) {
-                foreach ($facilities->facility as $f => $facility) {
+                foreach ($facilities->facility as $key => $facility) {
                     if ($facility->quantity < 1) {
                         throw new \Exception('Jumlah Fasilitas minimal 1');
+                    } elseif ($facility->type == 'TAMBAHAN' && $facility->fee <= 0) {
+                        throw new \Exception('Biaya minimal Rp. 1 untuk fasilitas tambahan.');
                     }
 
                     ServiceFacility::create([
                         'layanan_id' => $layanan->id,
                         'facility_id' => $facility->facility_id,
+                        'type' => $facility->type,
+                        'fee' => $facility->fee,
                         'quantity' => $facility->quantity,
                         'status' => 'AKTIF',
                         'created_by' => auth()->user()->email,

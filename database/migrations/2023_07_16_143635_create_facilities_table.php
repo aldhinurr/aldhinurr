@@ -17,8 +17,6 @@ class CreateFacilitiesTable extends Migration
             $table->id();
             $table->string('name')->nullable(false);
             $table->string('icon', 50)->nullable(false);
-            $table->float('fee', 36, 2)->nullable(false);
-            $table->integer('fee_for')->nullable(false);
             $table->string('satuan', 20)->nullable(false);
             $table->enum('status', array("AKTIF", "TIDAK AKTIF", "DIHAPUS"));
             $table->string('created_by', 50)->nullable();

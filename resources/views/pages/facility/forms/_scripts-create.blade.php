@@ -54,15 +54,10 @@
     }
 
     var handleForm = function() {
-      Inputmask("Rp. 999.999.999", {
-        "numericInput": true
-      }).mask("#fee");
-
       submitButton.addEventListener('click', function(e) {
         e.preventDefault();
 
         var data = new FormData(form);
-        data.set('fee', form.querySelector("#fee").inputmask.unmaskedvalue());
 
         // Validate form
         validation.validate().then(function(status) {

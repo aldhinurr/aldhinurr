@@ -2,8 +2,8 @@
 
 @section('content')
   <!-- ================================
-                                                                                                                                                                                                                                            START BREADCRUMB TOP BAR
-                                                                                                                                                                                                                                        ================================= -->
+                                                                                                                                                                                                                                                START BREADCRUMB TOP BAR
+                                                                                                                                                                                                                                            ================================= -->
   <section class="breadcrumb-top-bar">
     <div class="container">
       <div class="row justify-content-between">
@@ -27,12 +27,12 @@
     </div><!-- end container -->
   </section><!-- end breadcrumb-top-bar -->
   <!-- ================================
-                                                                                                                                                                                                                                            END BREADCRUMB TOP BAR
-                                                                                                                                                                                                                                        ================================= -->
+                                                                                                                                                                                                                                                END BREADCRUMB TOP BAR
+                                                                                                                                                                                                                                            ================================= -->
 
   <!-- ================================
-                                                                                                                                                                                                                                            START ROOM DETAIL BREAD
-                                                                                                                                                                                                                                        ================================= -->
+                                                                                                                                                                                                                                                START ROOM DETAIL BREAD
+                                                                                                                                                                                                                                            ================================= -->
   <section class="room-detail-bread padding-top-10px">
     <div class="container">
       @if (count($room_pictures) > 0)
@@ -58,12 +58,12 @@
     </div>
   </section><!-- end room-detail-bread -->
   <!-- ================================
-                                                                                                                                                                                                                                            END ROOM DETAIL BREAD
-                                                                                                                                                                                                                                        ================================= -->
+                                                                                                                                                                                                                                                END ROOM DETAIL BREAD
+                                                                                                                                                                                                                                            ================================= -->
 
   <!-- ================================
-                                                                                                                                                                                                                                            START TOUR DETAIL AREA
-                                                                                                                                                                                                                                        ================================= -->
+                                                                                                                                                                                                                                                START TOUR DETAIL AREA
+                                                                                                                                                                                                                                            ================================= -->
   <section class="tour-detail-area padding-bottom-70px">
     <div class="single-content-box">
       <div class="container">
@@ -82,30 +82,22 @@
                   <h3 class="title font-size-20">Fasilitas</h3>
                   <div class="row pt-4">
                     @foreach ($service_facilities as $facilities)
-                      <div class="col-lg-6">
-                        <div class="single-tour-feature d-flex align-items-center mb-3">
-                          <div class="single-feature-icon icon-element ml-0 flex-shrink-0 mr-3">
-                            <i class="la la-{{ $facilities->facility->icon }}"></i>
-                          </div>
-                          <div class="row col-lg-8 d-flex justify-content-between">
-                            <h3 class="title font-size-15 font-weight-medium">{{ $facilities->facility->name }}</h3>
-                            <h6 class="title font-size-15 text-muted">{{ $facilities->quantity }}
-                              {{ $facilities->facility->satuan }}
-                            </h6>
-                          </div>
-                        </div><!-- end single-tour-feature -->
-                      </div><!-- end col-lg-4 -->
+                      @if ($facilities->type == 'UTAMA')
+                        <div class="col-lg-6">
+                          <div class="single-tour-feature d-flex align-items-center mb-3">
+                            <div class="single-feature-icon icon-element ml-0 flex-shrink-0 mr-3">
+                              <i class="la la-{{ $facilities->facility->icon }}"></i>
+                            </div>
+                            <div class="row col-lg-8 d-flex justify-content-between">
+                              <h3 class="title font-size-15 font-weight-medium">{{ $facilities->facility->name }}</h3>
+                              <h6 class="title font-size-15 text-muted">{{ $facilities->quantity }}
+                                {{ $facilities->facility->satuan }}
+                              </h6>
+                            </div>
+                          </div><!-- end single-tour-feature -->
+                        </div><!-- end col-lg-4 -->
+                      @endif
                     @endforeach
-                    {{-- <div class="col-lg-4 responsive-column">
-                      <div class="single-tour-feature d-flex align-items-center mb-3">
-                        <div class="single-feature-icon icon-element ml-0 flex-shrink-0 mr-3">
-                          <i class="la la-television"></i>
-                        </div>
-                        <div class="single-feature-titles">
-                          <h3 class="title font-size-15 font-weight-medium">40-Inch Samsung LED TV</h3>
-                        </div>
-                      </div><!-- end single-tour-feature -->
-                    </div><!-- end col-lg-4 --> --}}
                   </div><!-- end row -->
                 </div><!-- end single-content-item -->
                 <div class="section-block"></div>
@@ -124,12 +116,12 @@
     </div><!-- end single-content-box -->
   </section><!-- end tour-detail-area -->
   <!-- ================================
-                                                                                                                                                                                                                                            END TOUR DETAIL AREA
-                                                                                                                                                                                                                                        ================================= -->
+                                                                                                                                                                                                                                                END TOUR DETAIL AREA
+                                                                                                                                                                                                                                            ================================= -->
 
   <!-- ================================
-                                                                                                                                                                                                                                            START RELATE TOUR AREA
-                                                                                                                                                                                                                                        ================================= -->
+                                                                                                                                                                                                                                                START RELATE TOUR AREA
+                                                                                                                                                                                                                                            ================================= -->
   <section class="related-tour-area section--padding">
     <div class="container">
       <div class="row">
@@ -198,8 +190,8 @@
     </div>
   </section><!-- end related-tour-area -->
   <!-- ================================
-                                                                                                                                                                                                                                            END RELATE TOUR AREA
-                                                                                                                                                                                                                                        ================================= -->
+                                                                                                                                                                                                                                                END RELATE TOUR AREA
+                                                                                                                                                                                                                                            ================================= -->
 @endsection
 
 @section('scripts')

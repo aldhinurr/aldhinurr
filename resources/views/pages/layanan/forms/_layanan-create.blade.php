@@ -22,7 +22,7 @@
         <!--begin::Input group-->
         <div class="row mb-6">
           <!--begin::Label-->
-          <label class="col-lg-4 col-form-label fw-bold fs-6">
+          <label class="col-lg-3 col-form-label fw-bold fs-6">
             <span class="required">{{ __('Jenis Layanan') }}</span>
           </label>
           <!--end::Label-->
@@ -48,7 +48,7 @@
         <!--begin::Input group-->
         <div class="row mb-6">
           <!--begin::Label-->
-          <label class="col-lg-4 col-form-label required fw-bold fs-6">{{ __('Nama Layanan') }}</label>
+          <label class="col-lg-3 col-form-label required fw-bold fs-6">{{ __('Nama Layanan') }}</label>
           <!--end::Label-->
 
           <!--begin::Col-->
@@ -62,7 +62,7 @@
         <!--begin::Input group-->
         <div class="row mb-6">
           <!--begin::Label-->
-          <label class="col-lg-4 col-form-label fw-bold fs-6">
+          <label class="col-lg-3 col-form-label fw-bold fs-6">
             <span class="required">{{ __('Alamat') }}</span>
           </label>
           <!--end::Label-->
@@ -78,7 +78,7 @@
         <!--begin::Input group-->
         <div class="row mb-6">
           <!--begin::Label-->
-          <label class="col-lg-4 col-form-label fw-bold fs-6">
+          <label class="col-lg-3 col-form-label fw-bold fs-6">
             <span class="required">{{ __('Lokasi') }}</span>
           </label>
           <!--end::Label-->
@@ -110,7 +110,7 @@
         <!--begin::Input group-->
         <div class="row mb-6">
           <!--begin::Label-->
-          <label class="col-lg-4 col-form-label fw-bold fs-6">
+          <label class="col-lg-3 col-form-label fw-bold fs-6">
             <span class="required">{{ __('Luas') }}</span>
           </label>
           <!--end::Label-->
@@ -154,7 +154,7 @@
         <!--begin::Input group-->
         <div class="row mb-6">
           <!--begin::Label-->
-          <label class="col-lg-4 col-form-label fw-bold fs-6">
+          <label class="col-lg-3 col-form-label fw-bold fs-6">
             <span class="required">{{ __('Harga') }}</span>
           </label>
           <!--end::Label-->
@@ -200,7 +200,7 @@
         <!--begin::Input group-->
         <div class="row mb-6">
           <!--begin::Label-->
-          <label class="col-lg-4 col-form-label fw-bold fs-6">{{ __('Keterangan') }}</label>
+          <label class="col-lg-3 col-form-label fw-bold fs-6">{{ __('Keterangan') }}</label>
           <!--end::Label-->
 
           <!--begin::Col-->
@@ -215,7 +215,7 @@
         <!--begin::Input group-->
         <div class="row mb-6">
           <!--begin::Label-->
-          <label class="col-lg-4 col-form-label fw-bold fs-6">{{ __('Status') }}</label>
+          <label class="col-lg-3 col-form-label fw-bold fs-6">{{ __('Status') }}</label>
           <!--end::Label-->
 
           <!--begin::Col-->
@@ -269,7 +269,7 @@
         <!--begin::Input group-->
         <div class="row mb-6">
           <!--begin::Label-->
-          <label class="col-lg-4 col-form-label fw-bold fs-6">
+          <label class="col-lg-3 col-form-label fw-bold fs-6">
             <span class="required">{{ __('Gambar') }}</span>
           </label>
           <!--end::Label-->
@@ -297,7 +297,7 @@
         <!--begin::Input group-->
         <div class="row mb-6">
           <!--begin::Label-->
-          <label class="col-lg-4 col-form-label fw-bold fs-6">
+          <label class="col-lg-3 col-form-label fw-bold fs-6">
             <span class="required">{{ __('Fasilitas') }}</span>
           </label>
           <!--end::Label-->
@@ -311,21 +311,34 @@
                 <div data-repeater-list="facility">
                   <div data-repeater-item>
                     <div class="form-group row mb-5">
-                      <div class="col-md-6">
-                        <label class="form-label">Pilih Fasilitas:</label>
-                        <select class="form-select" name="facility_id" data-kt-repeater="select2"
-                          data-placeholder="Silahkan Pilih Fasilitas">
+                      <div class="col-md-4">
+                        <label class="form-label">Fasilitas:</label>
+                        <select class="form-select  form-select-solid" name="facility_id"
+                          data-kt-repeater="select2-facility" data-placeholder="Pilih Fasilitas">
+                        </select>
+                      </div>
+                      <div class="col-md-2">
+                        <label class="form-label">Jenis:</label>
+                        <select name="type" aria-label="{{ __('Pilih Jenis') }}" data-kt-repeater="select2"
+                          data-placeholder="Jenis" class="form-select form-select-solid ">
+                          <option value="UTAMA">{{ __('Utama') }}</option>
+                          <option value="TAMBAHAN">{{ __('Tambahan') }}</option>
                         </select>
                       </div>
                       <div class="col-md-2">
                         <label class="form-label">Qty:</label>
-                        <input type="text" min="1" name="quantity" placeholder="Jumlah"
-                          class="form-control mb-2 mb-md-0" />
+                        <input type="text" min="1" name="quantity" value=1
+                          class="form-control form-control-solid mb-2 mb-md-0" />
                       </div>
-                      <div class="col-md-2">
+                      <div class="col-md-3">
+                        <label class="form-label">Biaya:</label>
+                        <input type="text" name="fee" class="form-control form-control-solid mb-2 mb-md-0"
+                          value=0 />
+                      </div>
+                      <div class="col-md-1">
                         <a href="javascript:;" data-repeater-delete
-                          class="btn btn-flex btn-sm btn-light-danger mt-3 mt-md-9">
-                          Hapus
+                          class="btn btn-flex btn-light-danger mt-3 mt-md-9 align-items-center">
+                          <i class="bi bi-trash"></i>
                         </a>
                       </div>
                     </div>
