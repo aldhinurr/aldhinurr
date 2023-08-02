@@ -167,6 +167,24 @@ return array(
                 ),
             ),
         ),
+
+        'report'  => array(
+            "*" => array(
+                'title'  => 'Laporan',
+                'view'   => 'report',
+                'assets' => array(
+                    'custom' => array(
+                        'css' => array(
+                            'plugins/custom/datatables/datatables.bundle.css',
+                        ),
+                        'js'  => array(
+                            'plugins/custom/datatables/datatables.bundle.js',
+                            'plugins/custom/fslightbox/fslightbox.bundle.js',
+                        ),
+                    ),
+                ),
+            ),
+        ),
     )
 
 );

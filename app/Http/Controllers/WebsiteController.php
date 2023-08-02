@@ -193,6 +193,40 @@ class WebsiteController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function status_report_calendar(Request $request)
+    {
+        $data = ReportService::select(
+            'report_services.id',
+            DB::raw("concat(report_services.keterangan, ' ', users.first_name) as title"),
+            'report_services.created_at as start',
+            'report_services.created_at as end',
+            'report_services.jenis',
+            'report_services.status'
+        )
+            ->join('users', 'users.email', '=', 'report_services.created_by')
+            // ->whereNotIn('reservations.status', ['EXPIRED', 'DITOLAK', 'DIBATALKAN'])
+            ->whereDate('report_services.created_at', '>=', $request->start)
+            ->whereDate('report_services.created_at',   '<=', $request->end)
+            ->when($request->type, function ($q) use ($request) {
+                $q->where('report_services.jenis', $request->type);
+            })
+            ->when($request->search != null, function ($q) use ($request) {
+                $q->where('report_services.keterangan', 'like', '%' . $request->search . '%');
+            })
+            ->when($request->only_me != null, function ($q) {
+                $q->where('report_services.created_by', '=', auth()->user()->email);
+            })
+            ->get();
+
+        return response()->json($data);
+    }
+
+
+    /**
      * Display the specified resource.
      *
      * @param  int  $id

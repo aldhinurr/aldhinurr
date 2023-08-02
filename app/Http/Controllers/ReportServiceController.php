@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\ReportServiceDataTable;
 use App\Models\ReportService;
 use App\Http\Requests\StoreReportServiceRequest;
 use App\Http\Requests\UpdateReportServiceRequest;
@@ -18,9 +19,9 @@ class ReportServiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(ReportServiceDataTable $dataTable)
     {
-        //
+        return $dataTable->render("pages.report.index");
     }
 
     /**
@@ -91,7 +92,11 @@ class ReportServiceController extends Controller
      */
     public function show(ReportService $reportService)
     {
-        //
+        return view('pages.report.details', [
+            'report' => $reportService,
+            'imagesBefore' => ReportServiceImage::whereBelongsTo($reportService)->where('status', 'SEBELUM')->get(),
+            'imagesAfter' => ReportServiceImage::whereBelongsTo($reportService)->where('status', 'SESUDAH')->get()
+        ]);
     }
 
     /**

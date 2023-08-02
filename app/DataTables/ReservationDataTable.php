@@ -22,7 +22,6 @@ class ReservationDataTable extends DataTable
      */
     public function dataTable($query)
     {
-        $now = new DateTime("now", new DateTimeZone('Asia/Jakarta'));
         return datatables()
             ->eloquent($query)
             ->editColumn('layanan.name', function (Reservation $model) {

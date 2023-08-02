@@ -135,7 +135,7 @@
                     </div>
                     <div class="filter-option">
                       <div class="select-contain">
-                        <select id="type-laporan" name="type-laporan" class="select-contain-select">
+                        <select id="type-report" name="type-report" class="select-contain-select">
                           <option value="Laporan Kerusakan">Laporan Kerusakan</option>
                           <option value="Laporan Kebersihan">Laporan Kebersihan</option>
                           <option value="Laporan Keamanan<">Laporan Keamanan</option>
@@ -145,7 +145,7 @@
                     <div class="filter-option">
                       <div class="contact-form-action">
                         <div class="form-group mb-0">
-                          <input class="form-control" type="text" id="search-laporan" name="search-laporan"
+                          <input class="form-control" type="text" id="search-report" name="search-report"
                             placeholder="Cari" style="padding-left: 20px">
                           <button class="search-btn"><i class="la la-search"></i></button>
                         </div>
@@ -295,6 +295,11 @@
         fetch_data(page, type, seach_term, only_me);
         calendar.refetchEvents().render();
       });
+
+      $('#my-sewa-tab').on('click', function() {
+        calendar.refetchEvents().render();
+      });
+
 
       var todayDate = moment().startOf("day");
       var YM = todayDate.format("YYYY-MM");
@@ -463,91 +468,89 @@
         calendarReport.refetchEvents().render();
       });
 
-      var todayDate = moment().startOf("day");
-      var YM = todayDate.format("YYYY-MM");
-      var YESTERDAY = todayDate.clone().subtract(1, "day").format("YYYY-MM-DD");
-      var TODAY = todayDate.format("YYYY-MM-DD");
-      var TOMORROW = todayDate.clone().add(1, "day").format("YYYY-MM-DD");
+      $('#my-laporan-tab').on('click', function() {
+        calendarReport.refetchEvents().render();
+      });
 
-      // var calendarReportEl = document.getElementById("kt_docs_fullcalendar_report");
-      // var calendarReport = new FullCalendar.Calendar(calendarReportEl, {
-      //   headerToolbar: {
-      //     left: "prev,next today",
-      //     center: "title",
-      //     right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth"
-      //   },
+      var calendarReportEl = document.getElementById("kt_docs_fullcalendar_report");
+      var calendarReport = new FullCalendar.Calendar(calendarReportEl, {
+        headerToolbar: {
+          left: "prev,next today",
+          center: "title",
+          right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth"
+        },
 
-      //   height: 760,
-      //   contentHeight: 700,
-      //   // aspectRatio: 3, // see: https://fullcalendar.io/docs/aspectRatio
+        height: 760,
+        contentHeight: 700,
+        // aspectRatio: 3, // see: https://fullcalendar.io/docs/aspectRatio
 
-      //   nowIndicator: true,
-      //   now: TODAY,
+        nowIndicator: true,
+        now: TODAY,
 
-      //   views: {
-      //     dayGridMonth: {
-      //       buttonText: "month"
-      //     },
-      //     timeGridWeek: {
-      //       buttonText: "week"
-      //     },
-      //     timeGridDay: {
-      //       buttonText: "day"
-      //     }
-      //   },
+        views: {
+          dayGridMonth: {
+            buttonText: "month"
+          },
+          timeGridWeek: {
+            buttonText: "week"
+          },
+          timeGridDay: {
+            buttonText: "day"
+          }
+        },
 
-      //   initialView: "dayGridMonth",
-      //   initialDate: TODAY,
+        initialView: "dayGridMonth",
+        initialDate: TODAY,
 
-      //   editable: false,
-      //   dayMaxEvents: true, // allow "more" link when too many events
-      //   navLinks: true,
-      //   displayEventTime: false,
-      //   selectable: true,
-      //   events: {
-      //     url: "{{ route('website.status.report.calendar') }}",
-      //     method: 'GET',
-      //     extraParams: function() {
-      //       /*
-      //         Here we will grab the values of each of our filter input
-      //         These will then be sent to the server
-      //       */
+        editable: false,
+        dayMaxEvents: true, // allow "more" link when too many events
+        navLinks: true,
+        displayEventTime: false,
+        selectable: true,
+        events: {
+          url: "{{ route('website.status.report.calendar') }}",
+          method: 'GET',
+          extraParams: function() {
+            /*
+              Here we will grab the values of each of our filter input
+              These will then be sent to the server
+            */
 
-      //       var only_me = $('#only_me-report:checked').val();
-      //       if (only_me === undefined) {
-      //         only_me = "";
-      //       }
+            var only_me = $('#only_me-report:checked').val();
+            if (only_me === undefined) {
+              only_me = "";
+            }
 
-      //       return {
-      //         type: $('[name="type-report"]').val(),
-      //         search: $('[name="search-report"]').val(),
-      //         only_me: only_me
-      //       };
-      //     }
-      //   },
-      //   eventContent: function(info) {
-      //     var element = $(info.el);
+            return {
+              type: $('[name="type-report"]').val(),
+              search: $('[name="search-report"]').val(),
+              only_me: only_me
+            };
+          }
+        },
+        eventContent: function(info) {
+          var element = $(info.el);
 
-      //     if (info.event.extendedProps && info.event.extendedProps.description) {
-      //       if (element.hasClass("fc-day-grid-event")) {
-      //         element.data("content", info.event.extendedProps.description);
-      //         element.data("placement", "top");
-      //         KTApp.initPopover(element);
-      //       } else if (element.hasClass("fc-time-grid-event")) {
-      //         element.find(".fc-title").append("<div class='fc-description'>" + info.event.extendedProps
-      //           .description + "</div>");
-      //       } else if (element.find(".fc-list-item-title").lenght !== 0) {
-      //         element.find(".fc-list-item-title").append("<div class='fc-description'>" + info.event
-      //           .extendedProps.description + "</div>");
-      //       }
-      //     }
-      //   },
-      //   eventClick: function(info) {
-      //     var redirect_url = "{{ route('website.reservation.show', ':id') }}"
-      //     window.location = redirect_url.replace(':id', info.event.id)
-      //   }
-      // });
-      // calendarReport.render();
+          if (info.event.extendedProps && info.event.extendedProps.description) {
+            if (element.hasClass("fc-day-grid-event")) {
+              element.data("content", info.event.extendedProps.description);
+              element.data("placement", "top");
+              KTApp.initPopover(element);
+            } else if (element.hasClass("fc-time-grid-event")) {
+              element.find(".fc-title").append("<div class='fc-description'>" + info.event.extendedProps
+                .description + "</div>");
+            } else if (element.find(".fc-list-item-title").lenght !== 0) {
+              element.find(".fc-list-item-title").append("<div class='fc-description'>" + info.event
+                .extendedProps.description + "</div>");
+            }
+          }
+        },
+        eventClick: function(info) {
+          var redirect_url = "{{ route('website.report.show', ':id') }}"
+          window.location = redirect_url.replace(':id', info.event.id)
+        }
+      });
+      calendarReport.render();
     });
   </script>
 @endsection

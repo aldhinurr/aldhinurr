@@ -37,6 +37,13 @@ return array(
             'role' => ["admin", "superadmin"],
         ),
 
+        array(
+            'title' => 'Laporan',
+            'path'  => 'admin/report',
+            'icon'  => theme()->getSvgIcon("demo1/media/icons/duotune/communication/com004.svg", "svg-icon-2"),
+            'role' => ["admin", "superadmin"],
+        ),
+
 
         //// User
         /* array(
