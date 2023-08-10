@@ -212,12 +212,28 @@
       </div><!-- end row -->
     </div><!-- end container -->
   </section><!-- end card-area -->
+  @include('website.status._modal-calendar')
 @endsection
 
 @section('scripts')
   <script src="{{ asset('demo1/plugins/custom/fullcalendar/fullcalendar.bundle.js') }}"></script>
   <script>
     $(document).ready(function() {
+      window.onload = function() {
+
+        var url = document.location.toString();
+        if (url.match('#')) {
+          $('.nav-tabs a[href="#' + url.split('#')[1] + '"]').tab('show');
+          calendar.refetchEvents();
+          calendarReport.refetchEvents();
+        }
+
+        //Change hash for page-reload
+        $('.nav-tabs a[href="#' + url.split('#')[1] + '"]').on('shown', function(e) {
+          window.location.hash = e.target.hash;
+        });
+      }
+
       const fetch_data = (page, type, seach_term, only_me) => {
         if (page === undefined) {
           page = 1;
@@ -253,7 +269,7 @@
         var only_me = $('#only_me:checked').val();
 
         fetch_data(page, type, seach_term, only_me);
-        calendar.refetchEvents().render();
+        calendar.refetchEvents();
       });
 
       $('body').on('change', '#type-sewa', function() {
@@ -263,7 +279,7 @@
         var only_me = $('#only_me:checked').val();
 
         fetch_data(page, type, seach_term, only_me);
-        calendar.refetchEvents().render();
+        calendar.refetchEvents();
       });
 
       $('body').on('click', '#pagination-sewa a', function(event) {
@@ -293,11 +309,11 @@
         var only_me = $('#only_me:checked').val();
 
         fetch_data(page, type, seach_term, only_me);
-        calendar.refetchEvents().render();
+        calendar.refetchEvents();
       });
 
       $('#my-sewa-tab').on('click', function() {
-        calendar.refetchEvents().render();
+        calendar.refetchEvents();
       });
 
 
@@ -383,7 +399,20 @@
         },
         eventClick: function(info) {
           var redirect_url = "{{ route('website.reservation.show', ':id') }}"
-          window.location = redirect_url.replace(':id', info.event.id)
+
+          $('#eventDetailTitle').text(info.event.extendedProps.layanan);
+          $('#address').text(info.event.extendedProps.address);
+          $('#location').text(info.event.extendedProps.location);
+          $('#pengguna').text(`${info.event.extendedProps.first_name} ${info.event.extendedProps.last_name}`);
+          $('#start_date').text(info.event.start.toLocaleString("id-ID"));
+          $('#end_date').text(
+            (info.event.end != null ? info.event.end.toLocaleString("id-ID") :
+              info.event.start.toLocaleString("id-ID")));
+          $('#duration').text(`${info.event.extendedProps.fee_for} ${info.event.extendedProps.price_for}`);
+          $('#catatan').text(info.event.extendedProps.catatan);
+          $('#description').text(info.event.extendedProps.description);
+          $('#link-detail').attr("href", redirect_url.replace(':id', info.event.id));
+          $('#eventDetail').modal();
         }
       });
       calendar.render();
@@ -425,7 +454,7 @@
         var only_me = $('#only_me-report:checked').val();
 
         fetch_data_report(page, type, seach_term, only_me);
-        calendarReport.refetchEvents().render();
+        calendarReport.refetchEvents();
       });
 
       $('body').on('change', '#type-report', function() {
@@ -435,7 +464,7 @@
         var only_me = $('#only_me-report:checked').val();
 
         fetch_data_report(page, type, seach_term, only_me);
-        calendarReport.refetchEvents().render();
+        calendarReport.refetchEvents();
       });
 
       $('body').on('click', '#pagination-report a', function(event) {
@@ -465,11 +494,11 @@
         var only_me = $('#only_me:checked').val();
 
         fetch_data_report(page, type, seach_term, only_me);
-        calendarReport.refetchEvents().render();
+        calendarReport.refetchEvents();
       });
 
       $('#my-laporan-tab').on('click', function() {
-        calendarReport.refetchEvents().render();
+        calendarReport.refetchEvents();
       });
 
       var calendarReportEl = document.getElementById("kt_docs_fullcalendar_report");

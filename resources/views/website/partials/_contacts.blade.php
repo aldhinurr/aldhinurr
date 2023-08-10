@@ -7,7 +7,8 @@
           <i class="la la-home"></i>
         </div>
         <div class="single-feature-titles">
-          <h3 class="title font-size-15 font-weight-medium">CS Layanan Fasilitas Direktorat Sarana dan Prasarana Gd. CRCS Lt. 5</h3>
+          <h3 class="title font-size-15 font-weight-medium">CS Layanan Fasilitas Direktorat Sarana dan Prasarana Gd. CRCS
+            Lt. 5</h3>
         </div>
       </div><!-- end single-tour-feature -->
     </div><!-- end col-lg -->
@@ -17,7 +18,7 @@
           <i class="la la-envelope"></i>
         </div>
         <div class="single-feature-titles">
-          <h3 class="title font-size-15 font-weight-medium">mail@itb.ac.id</h3>
+          <h3 class="title font-size-15 font-weight-medium">ditsp@itb.ac.id</h3>
         </div>
       </div><!-- end single-tour-feature -->
     </div><!-- end col-lg -->
@@ -31,7 +32,7 @@
         </div>
       </div><!-- end single-tour-feature -->
     </div><!-- end col-lg -->
-    <div class="col-lg responsive-column">
+    {{-- <div class="col-lg responsive-column">
       <div class="single-tour-feature d-flex align-items-center mb-3">
         <div class="single-feature-icon icon-element ml-0 flex-shrink-0 mr-3">
           <i class="la la-whatsapp"></i>
@@ -40,6 +41,6 @@
           <h3 class="title font-size-15 font-weight-medium">082102203366</h3>
         </div>
       </div><!-- end single-tour-feature -->
-    </div><!-- end col-lg -->
+    </div><!-- end col-lg --> --}}
   </div><!-- end row -->
 </div><!-- end single-content-item -->

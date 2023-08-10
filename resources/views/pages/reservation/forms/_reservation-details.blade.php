@@ -140,21 +140,6 @@
             </div>
             <!--end::Menu item-->
 
-            <!--begin::Menu item-->
-            <div class="menu-item px-3 my-1">
-              <a href="#" id="onProgressButton" class="menu-link px-3">
-                Sedang Berjalan
-              </a>
-            </div>
-            <!--end::Menu item-->
-
-            <!--begin::Menu item-->
-            <div class="menu-item px-3 my-1">
-              <a href="#" id="doneButton" class="menu-link px-3">
-                Selesai
-              </a>
-            </div>
-            <!--end::Menu item-->
           </div>
           <!--end::Menu 3-->
         </div>
@@ -171,53 +156,54 @@
     <!--begin::Row-->
     <div class="row">
       <div class="col-lg-6">
-        <div class="row mb-6">
+        <div class="row mb-4">
           <!--begin::Label-->
           <label class="col-lg-4 fw-bold text-muted">{{ __('Penyewa') }}</label>
           <!--end::Label-->
 
           <!--begin::Col-->
           <div class="col-lg-4">
-            <span class="fw-bolder fs-6 text-dark">{{ $reservation->created_by }}</span>
+            <span class="fw-bolder fs-6 text-dark">{{ $reservation->user->first_name }}
+              {{ $reservation->user->last_name }}</span>
           </div>
           <!--end::Col-->
         </div>
 
-        <div class="row mb-6">
+        <div class="row mb-4">
           <!--begin::Label-->
           <label class="col-lg-4 fw-bold text-muted">{{ __('Tanggal Mulai') }}</label>
           <!--end::Label-->
 
           <!--begin::Col-->
-          <div class="col-lg-4">
+          <div class="col-lg-8">
             <span class="fw-bolder fs-6 text-dark">
-              {{ date('d-m-Y', strtotime($reservation->start_date)) }}
+              {{ date('d-m-Y H:i', strtotime($reservation->start_date)) }} WIB
             </span>
           </div>
           <!--end::Col-->
         </div>
 
-        <div class="row mb-6">
+        <div class="row mb-4">
           <!--begin::Label-->
           <label class="col-lg-4 fw-bold text-muted">{{ __('Tanggal Selesai') }}</label>
           <!--end::Label-->
 
           <!--begin::Col-->
-          <div class="col-lg-4">
+          <div class="col-lg-8">
             <span class="fw-bolder fs-6 text-dark">
-              {{ date('d-m-Y', strtotime($reservation->end_date)) }}
+              {{ date('d-m-Y H:i', strtotime($reservation->end_date)) }} WIB
             </span>
           </div>
           <!--end::Col-->
         </div>
 
-        <div class="row mb-6">
+        <div class="row mb-4">
           <!--begin::Label-->
           <label class="col-lg-4 fw-bold text-muted">{{ __('Biaya') }}</label>
           <!--end::Label-->
 
           <!--begin::Col-->
-          <div class="col-lg-4">
+          <div class="col-lg-8">
             <div class="fs-6 fw-bolder text-dark" data-kt-countup="true"
               data-kt-countup-value="{{ $reservation->fee }}" data-kt-countup-prefix="Rp. ">
               0
@@ -226,13 +212,13 @@
           <!--end::Col-->
         </div>
 
-        <div class="row mb-6">
+        <div class="row mb-4">
           <!--begin::Label-->
           <label class="col-lg-4 fw-bold text-muted">{{ __('Biaya Tambahan') }}</label>
           <!--end::Label-->
 
           <!--begin::Col-->
-          <div class="col-lg-4">
+          <div class="col-lg-8">
             <div class="fs-6 fw-bolder text-dark" data-kt-countup="true"
               data-kt-countup-value="{{ $reservation->extra_fee }}" data-kt-countup-prefix="Rp. ">
               0
@@ -241,13 +227,13 @@
           <!--end::Col-->
         </div>
 
-        <div class="row mb-6">
+        <div class="row mb-4">
           <!--begin::Label-->
           <label class="col-lg-4 fw-bold text-muted">{{ __('Total') }}</label>
           <!--end::Label-->
 
           <!--begin::Col-->
-          <div class="col-lg-4">
+          <div class="col-lg-8">
             <div class="fs-6 fw-bolder text-dark" data-kt-countup="true"
               data-kt-countup-value="{{ $reservation->total }}" data-kt-countup-prefix="Rp. ">
               0
@@ -256,19 +242,31 @@
           <!--end::Col-->
         </div>
 
-        <div class="row mb-6">
+        <div class="row mb-4">
           <!--begin::Label-->
           <label class="col-lg-4 fw-bold text-muted">{{ __('Status') }}</label>
           <!--end::Label-->
 
           <!--begin::Col-->
-          <div class="col-lg-4">
+          <div class="col-lg-8">
             <span class="fw-bolder fs-6 text-dark">{{ $reservation->status }}</span>
           </div>
           <!--end::Col-->
         </div>
 
-        <div class="row mb-6">
+        <div class="row mb-4">
+          <!--begin::Label-->
+          <label class="col-lg-4 fw-bold text-muted">{{ __('Catatan') }}</label>
+          <!--end::Label-->
+
+          <!--begin::Col-->
+          <div class="col-lg-8">
+            <span class="fw-bolder fs-6 text-dark">{{ $reservation->catatan }}</span>
+          </div>
+          <!--end::Col-->
+        </div>
+
+        <div class="row mb-4">
           <!--begin::Label-->
           <label class="col-lg-4 fw-bold text-muted">{{ __('Keterangan') }}</label>
           <!--end::Label-->
@@ -280,15 +278,19 @@
           <!--end::Col-->
         </div>
 
-        <div class="row mb-6">
+        <div class="row mb-4">
           <!--begin::Label-->
           <label class="col-lg-4 fw-bold text-muted">{{ __('Receipt') }}</label>
           <!--end::Label-->
 
           <!--begin::Col-->
-          <div class="col-lg-4">
-            <a href="{{ asset($reservation->receipt) }}" class="btn btn-sm btn-success"><i
-                class="fas fa-envelope-open-text fs-4 me-2"></i> Download</a>
+          <div class="col-lg-8">
+            @if (strlen($reservation->receipt) > 0)
+              <a href="{{ asset($reservation->receipt) }}" target="_blank" class="btn btn-sm btn-success"><i
+                  class="fas fa-envelope-open-text fs-4 me-2"></i> Download</a>
+            @else
+              <span class="fw-bolder fs-6 text-dark">{{ __('Belum ada file yang diupload.') }}</span>
+            @endif
           </div>
           <!--end::Col-->
         </div>

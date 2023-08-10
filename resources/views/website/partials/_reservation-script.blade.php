@@ -13,6 +13,18 @@
     var fasilitasButton;
 
     var handleForm = function() {
+      $('[name="daterange-single"]').daterangepicker({
+        singleDatePicker: true,
+        timePicker: true,
+        timePicker24Hour: true,
+        opens: "right",
+        startDate: moment().add(3, "day"),
+        minDate: moment().add(3, "day"),
+        locale: {
+          format: "DD/MM/YYYY HH:mm",
+        },
+      });
+
       $('#start_date').on('apply.daterangepicker', (e, picker) => {
         var start = moment(picker.startDate.format('YYYY-MM-DD'));
         var end = moment($('#end_date').val(), 'DD/MM/YYYY');
@@ -42,6 +54,7 @@
 
         $('#duration').val(days);
         sumFeeReservation();
+        checkReservation();
       });
 
       $('#fasilitas').select2({
@@ -76,7 +89,8 @@
           <div class="custom-checkbox">
             <input type="hidden" class="extra-fee" value="${fasilitas['id']}" id="facility_${fasilitas['id']}" data-fee="${fasilitas['fee']}" />
             <label for="cleaningChb" class="d-flex justify-content-between align-items-center">
-              ${fasilitas['name']} (${fasilitas['fee_for']} ${fasilitas['satuan']})<span onclick="javascript:removeFacility('facility_${fasilitas['id']}')" class="text-black font-weight-regular delete-facility">Rp. ${fasilitas['fee']}<i class="la la-trash form-icon text-danger"></i></span></label>
+              ${fasilitas['name']} (${fasilitas['fee_for']} ${fasilitas['satuan']})<span onclick="javascript:removeFacility('facility_${fasilitas['id']}')" class="text-black font-weight-regular delete-facility">
+              Rp. ${parseFloat(fasilitas['fee'], 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString()}<i class="la la-trash form-icon text-danger"></i></span></label>
           </div>
         `
 
@@ -105,9 +119,10 @@
         data["layanan_id"] = "{{ $data->id }}";
         data["start_date"] = $("#start_date").val();
         data["end_date"] = $("#end_date").val();
-        data["fee"] = $("#fee").val();
+        data["catatan"] = $("#catatan").val();
+        data["fee"] = $("#fee").val().replace(/[^0-9\.-]+/g, "");
         data["fee_for"] = $("#duration").val();
-        data["total"] = $("#total").val();
+        data["total"] = $("#total").val().replace(/[^0-9\.-]+/g, "");
 
         // add extra fee
         var extra_fee = 0
@@ -171,7 +186,7 @@
 
       handleForm();
       checkReservation();
-
+      sumFeeReservation();
     });
   })(jQuery);
 
@@ -210,8 +225,8 @@
     totalFee = parseInt(fee) * parseInt(duration);
     total = totalFee + addFee;
 
-    $('#fee').val(totalFee);
-    $('#total').val(total);
+    $('#fee').val(parseFloat(totalFee, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString());
+    $('#total').val(parseFloat(total, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString());
   }
 
   function removeFacility(id) {

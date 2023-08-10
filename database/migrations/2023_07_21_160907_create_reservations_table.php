@@ -22,7 +22,8 @@ class CreateReservationsTable extends Migration
             $table->string('fee_for', 20)->nullable(false);
             $table->float('extra_fee', 36, 2);
             $table->float('total', 36, 2)->nullable(false);
-            $table->string('description', 200);
+            $table->string('catatan', 200)->nullable();
+            $table->string('description', 200)->nullable();
             $table->string('status', 20)->nullable(false);
             $table->timestamp('expired_payment')->nullable();
             $table->text('receipt')->nullable();

@@ -597,6 +597,8 @@ Author Email:   contact@tecydevs.com
             $(dateRangePickerTwo).daterangepicker({
                 singleDatePicker: true,
                 opens: "right",
+                startDate: moment().add(3, "day"),
+                minDate: moment().add(3, "day"),
                 locale: {
                     format: "DD/MM/YYYY",
                 },

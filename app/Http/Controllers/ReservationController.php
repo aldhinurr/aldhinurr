@@ -56,14 +56,13 @@ class ReservationController extends Controller
             $start_date = strtotime(str_replace("/", "-", $request->start_date));
             $end_date = strtotime(str_replace("/", "-", $request->end_date));
 
-            $validated['start_date'] = date('Y-m-d', $start_date);
-            $validated['end_date'] = date('Y-m-d', $end_date);
+            $validated['start_date'] = date('Y-m-d H:i', $start_date);
+            $validated['end_date'] = date('Y-m-d H:i', $end_date);
             $validated['status'] = "MENUNGGU UPLOAD";
-            $validated['expired_payment'] = $now->add(new DateInterval("P1D"));
+            $validated['expired_payment'] = $now->add(new DateInterval("P3D"));
             $validated['created_by'] = auth()->user()->email;
 
             $reservation = Reservation::create($validated);
-
             if ($reservation) {
                 $extra_fee_details = $request->input("extra_fee_detail");
                 if ($extra_fee_details) {

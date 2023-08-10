@@ -2,8 +2,8 @@
 
 @section('content')
   <!-- ================================
-                                                                                                                                                                                                                                                                                                                                                      START CART AREA
-                                                                                                                                                                                                                                                                                                                                                  ================================= -->
+                                                                                                                                                                                                                                                                                                                                                                                        START CART AREA
+                                                                                                                                                                                                                                                                                                                                                                                    ================================= -->
   <section class="cart-area section-padding">
     <div class="container">
       <div class="row">
@@ -74,9 +74,15 @@
                               </span>
                             </div><!-- end product-info -->
                             <div class="product-info line-height-24">
-                              <span class="product-info-label">Keterangan:</span>
-                              <span class="product-info-value">{{ $reservation->description }}</span>
+                              <span class="product-info-label">Catatan:</span>
+                              <span class="product-info-value">{{ $reservation->catatan }}</span>
                             </div><!-- end product-info -->
+                            @if (strlen($reservation->description) > 0)
+                              <div class="product-info line-height-24">
+                                <span class="product-info-label">Keterangan:</span>
+                                <span class="product-info-value">{{ $reservation->description }}</span>
+                              </div><!-- end product-info -->
+                            @endif
                           </div>
                         </div>
                       </div>
@@ -97,9 +103,9 @@
               @endif
             </div>
             <div class="section-block"></div>
-            @if (auth()->user()->email == $reservation->created_by)
+            @if (auth()->user()->email == $reservation->created_by && $reservation->status != 'EXPIRED')
               <div class="cart-actions d-flex justify-content-end align-items-center pt-4 pb-5">
-                <div class="contact-form-action">
+                <div id="form-upload" class="contact-form-action">
                   <form method="post" enctype="multipart/form-data" id="upload-receipt">
                     @csrf
                     <div class="input-group d-flex justify-content-end">
@@ -125,13 +131,20 @@
     </div><!-- end container -->
   </section><!-- end cart-area -->
   <!-- ================================
-                                                                                                                                                                                                                                                                                                                                                      END CART AREA
-                                                                                                                                                                                                                                                                                                                                                  ================================= -->
+                                                                                                                                                                                                                                                                                                                                                                                        END CART AREA
+                                                                                                                                                                                                                                                                                                                                                                                    ================================= -->
 @endsection
 
 
 @section('scripts')
   <script>
+    function hide(elements) {
+      elements = elements.length ? elements : [elements];
+      for (var index = 0; index < elements.length; index++) {
+        elements[index].style.display = 'none';
+      }
+    }
+
     $(".custom-file-input").on("change", function() {
       var fileName = $(this).val().split("\\").pop();
       $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
@@ -156,13 +169,14 @@
       var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
       // Display the result in the element with id="demo"
-      document.getElementById("countdown-expired").innerHTML = hours + " Jam " +
-        minutes + " Menit " + seconds + " detik";
+      document.getElementById("countdown-expired").innerHTML = " " + days + " Hari " + hours + " Jam " + minutes +
+        " Menit " + seconds + " detik";
 
       // If the count down is finished, write some text
       if (distance < 0) {
         clearInterval(x);
         document.getElementById("countdown-expired").innerHTML = "EXPIRED";
+        hide(document.getElementById("form-upload"));
       }
     }, 1000);
 

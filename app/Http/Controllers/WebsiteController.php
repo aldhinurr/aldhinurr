@@ -7,6 +7,7 @@ use App\Models\Layanan;
 use App\Models\ReportService;
 use App\Models\Reservation;
 use App\Models\ServiceFacility;
+use DateInterval;
 use DateTime;
 use DateTimeZone;
 use DB;
@@ -59,15 +60,16 @@ class WebsiteController extends Controller
 
         // is_sewa
         $now = new DateTime("now", new DateTimeZone('Asia/Jakarta'));
-        $dateNow = $now->format('Y-m-d');
+        $addThreedays = $now->add(DateInterval::createFromDateString('3 days'));
+        $dateSewa = $addThreedays->format('Y-m-d');
         if ($request->start_date) {
             $start_date = strtotime(str_replace("/", "-", $request->start_date));
-            $dateNow = date('Y-m-d', $start_date);
+            $dateSewa = date('Y-m-d', $start_date);
         }
 
         $sewa = Reservation::select('layanan_id')
             ->whereNotIn('status', ['DITOLAK', 'DIBATALKAN', 'DIALIHKAN', 'SELESAI'])
-            ->where('end_date', '>=', $dateNow)
+            ->where('end_date', '>=', $dateSewa)
             ->get();
 
         $is_sewa = array();
@@ -137,9 +139,17 @@ class WebsiteController extends Controller
             DB::raw("concat(layanans.name, ' ', users.first_name) as title"),
             'reservations.start_date as start',
             'reservations.end_date as end',
+            'reservations.fee_for',
+            'reservations.catatan',
+            'reservations.description',
+            'reservations.status',
             'layanans.name as layanan',
+            'layanans.address',
+            'layanans.location',
+            'layanans.price_for',
             'layanans.type',
-            'reservations.created_by'
+            'users.first_name',
+            'users.last_name',
         )
             ->join('layanans', 'layanans.id', '=', 'reservations.layanan_id')
             ->join('users', 'users.email', '=', 'reservations.created_by')

@@ -2,8 +2,8 @@
 
 @section('content')
   <!-- ================================
-                                                                                                                                      START FORM AREA
-                                                                                                                                  ================================= -->
+                                                                                                                                          START FORM AREA
+                                                                                                                                      ================================= -->
   <section class="listing-form section--padding">
     <div class="container">
       <div class="row">
@@ -81,8 +81,8 @@
     </div><!-- end container -->
   </section><!-- end listing-form -->
   <!-- ================================
-                                                                                                                                      END FORM AREA
-                                                                                                                                  ================================= -->
+                                                                                                                                          END FORM AREA
+                                                                                                                                      ================================= -->
 @endsection
 
 @section('scripts')

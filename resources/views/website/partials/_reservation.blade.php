@@ -44,6 +44,13 @@
           </div>
           <hr>
           <div class="input-box">
+            <label class="label-text">Catatan</label>
+            <div class="form-group">
+              <span class="la la-pencil form-icon"></span>
+              <textarea class="message-control form-control" id="catatan" name="catatan"></textarea>
+            </div>
+          </div>
+          <div class="input-box">
             <label class="label-text">Fasilitas</label>
             <div class="form-group">
               <select id="fasilitas" name="fasilitas" class="form-control w-100"></select>
@@ -80,7 +87,7 @@
   <div class="footer-item text-center padding-top-20px">
     <ul class="list-items list--items">
       <li><a href="{{ route('website.rooms') }}">Lihat Ruangan Lainnya</a></li>
-      <li><a href="{{ route('website.status') }}">Lihat Status Peminjaman</a></li>
+      <li><a href="{{ route('website.status') }}#my-sewa">Lihat Status Peminjaman</a></li>
     </ul>
   </div>
 </div><!-- end sidebar -->
