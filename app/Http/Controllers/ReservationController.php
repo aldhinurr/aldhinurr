@@ -132,7 +132,9 @@ class ReservationController extends Controller
         $date = strtotime(str_replace("/", "-", $request->date));
 
         return Reservation::where('layanan_id', $request->layanan)
-            ->where('end_date', '>=', date('Y-m-d', $date))->count();
+            ->where('start_date', '<=', date('Y-m-d', $date) . ' 23:59')
+            ->where('end_date', '>=', date('Y-m-d', $date) . ' 00:01')
+            ->count();
     }
 
     /**

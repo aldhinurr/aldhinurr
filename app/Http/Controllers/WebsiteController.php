@@ -69,7 +69,8 @@ class WebsiteController extends Controller
 
         $sewa = Reservation::select('layanan_id')
             ->whereNotIn('status', ['DITOLAK', 'DIBATALKAN', 'DIALIHKAN', 'SELESAI'])
-            ->where('end_date', '>=', $dateSewa)
+            ->where('start_date', '<=', $dateSewa . ' 23:59')
+            ->where('end_date', '>=', $dateSewa . ' 00:01')
             ->get();
 
         $is_sewa = array();
