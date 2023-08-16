@@ -14,6 +14,16 @@
           <h3 class="card-title">
             <a href="{{ route('website.room.show', $room->id) }}" id="link-detail">{{ $room->name }}</a>
           </h3>
+          <div class="card-attributes">
+            <ul class="d-flex align-items-center">
+              <li class="d-flex align-items-center" data-toggle="tooltip" data-placement="top" title="Kapasitas">
+                <i class="la la-users"></i><span>{{ $room->capacity }} Orang</span>
+              </li>
+              <li class="d-flex align-items-center" data-toggle="tooltip" data-placement="top" title="Luas">
+                <i class="la la-expand"></i><span>{{ $room->large }} m<sup>2</sup></span>
+              </li>
+            </ul>
+          </div>
           <p class="card-meta">{{ $room->address }}</p>
           <div class="card-price d-flex align-items-center justify-content-between">
             <p>

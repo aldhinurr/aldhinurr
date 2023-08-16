@@ -10,6 +10,7 @@ use App\Models\LayananGambar;
 use App\Models\Reservation;
 use App\Models\ServiceFacility;
 use DB;
+use Illuminate\Http\Request;
 use Str;
 
 class LayananController extends Controller
@@ -274,5 +275,45 @@ class LayananController extends Controller
                 'message' => $th->getMessage()
             ], 500);
         }
+    }
+
+
+    public function find(Request $request)
+    {
+        $id = $request->id;
+        $type = $request->type;
+        $price = $request->price;
+        $search = $request->search;
+
+        $layanans = Layanan::with(['layanan_gambars'])
+            ->select('layanans.*', 'layanans.name as title')
+            ->leftJoin('reservations', 'layanans.id', '=', 'reservations.layanan_id')
+            ->whereIn(DB::raw('coalesce(reservations.status, "TERSEDIA")'), ['TERSEDIA', 'EXPIRED', 'DITOLAK', 'DIBATALKAN'])
+            ->where('layanans.type', $type)
+            ->where('layanans.price', $price)
+            ->where('layanans.id', "!=", $id)
+            ->when($search != null, function ($q) use ($search) {
+                $q->where('layanans.name', 'like', '%' . $search . '%');
+            })
+            ->limit(10)
+            ->get();
+
+        $response = array();
+        foreach ($layanans as $layanan) {
+            $images = LayananGambar::whereBelongsTo($layanan)->first();
+            $picture = ($images) ? $images->picture : "";
+            $response[] = array(
+                "id" => $layanan->id,
+                "text" => $layanan->name,
+                "type" => $layanan->type,
+                "price" => $layanan->price,
+                "address" => $layanan->address,
+                "location" => $layanan->location,
+                "large" => $layanan->large,
+                "capacity" => $layanan->capacity,
+                "images" => $picture
+            );
+        }
+        return response()->json($response);
     }
 }

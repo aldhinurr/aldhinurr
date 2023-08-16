@@ -97,6 +97,9 @@ class Layanan extends Model
             ->when($params->location != null, function ($q) use ($params) {
                 $q->where('location', $params->location);
             })
+            ->when($params->large != null, function ($q) use ($params) {
+                $q->where('large', $params->large);
+            })
             ->orderby('jml_sewa', 'desc')->orderby('layanans.name', 'asc')
             ->paginate($show);
     }

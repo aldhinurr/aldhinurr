@@ -82,6 +82,35 @@
       });
     }
 
+    var changeInputLarge = function() {
+      var type = $('[id="type"]').val();
+      var titleInput = "Luas";
+      var htmlInput = `
+        <input type="number" min="1" id="large" name="large"
+          class="form-control form-control-lg form-control-solid mb-lg-0 mb-3" value="{{ old('large', $layanan->large ?? '') }}" />
+        <span class="input-group-text" id="basic-addon2">m<sup>2</sup></span>
+        `
+
+      if (type == "KENDARAAN") {
+        titleInput = "Jenis";
+        htmlInput = `
+          <select id="large" name="large" aria-label="{{ __('Pilih Kendaraan') }}" data-control="select2"
+            data-placeholder="{{ __('Pilih Kendaraan...') }}"
+            class="form-select form-select-solid form-select-lg fw-bold">
+            <option value=1>Mobil</option>
+            <option value=2>Motor</option>
+            <option value=3>Shuttle</option>
+            <option value=4>Bis</option>
+            <option value=5>Truk</option>
+          </select>
+          `
+      }
+
+      $('#label-large').text(titleInput);
+      $('#div-large').empty();
+      $('#div-large').append(htmlInput);
+    }
+
     var handleForm = function() {
       Inputmask("Rp. 999.999.999", {
         "numericInput": true
@@ -96,7 +125,6 @@
         .catch(error => {
           console.error(error);
         });
-
 
       myDropzone = new Dropzone("#layanan_gambar_upload", {
         url: "{{ route('layanan-gambar.upload') }}", // Set the url for your upload script location
@@ -166,6 +194,23 @@
             console.log("A file has been added");
           });
         },
+      });
+
+      $('[id="type"]').select2({
+        data: [{
+            id: "RUANG",
+            text: 'Ruangan'
+          },
+          {
+            id: "KENDARAAN",
+            text: 'Kendaraan'
+          },
+        ]
+      });
+      $('[id="type"]').val("{{ $layanan->type }}");
+      $('[id="type"]').trigger('change');
+      $('[id="type"]').on('select2:select', function(e) {
+        changeInputLarge();
       });
 
       myRepeater = $('#facility').repeater({
@@ -358,6 +403,11 @@
 
         initValidation();
         handleForm();
+        changeInputLarge();
+
+        // set value large
+        $('[id="large"]').val("{{ $layanan->large }}");
+        $('[id="large"]').trigger('change');
       }
     }
   }();

@@ -239,6 +239,82 @@ class ReservationController extends Controller
      * @param  \App\Models\Reservation  $reservation
      * @return \Illuminate\Http\Response
      */
+    public function approve_move(Request $request, Reservation $reservation)
+    {
+        Db::beginTransaction();
+        try {
+            // create new Reservation
+            $validatedMove = $request->validate([
+                'new_layanan_id' => "required",
+                'new_layanan_price' => "required"
+            ]);
+
+            $newValue = array(
+                'layanan_id' => $validatedMove['new_layanan_id'],
+                'start_date' => $reservation['start_date'],
+                'end_date' => $reservation['end_date'],
+                'catatan' => $reservation['catatan'],
+                'fee' => $reservation['fee'],
+                'fee_for' => $reservation['fee_for'],
+                'extra_fee' => $reservation['extra_fee'],
+                'total' => $reservation['total'],
+                'receipt' => $reservation['receipt'],
+                'created_by' => $reservation['created_by'],
+                'created_at' => $reservation['created_at'],
+                'status' => "DISETUJUI",
+                'approved_by' => auth()->user()->email,
+                'approved_at' => new DateTime("now", new DateTimeZone('Asia/Jakarta'))
+            );
+            $newReservation = Reservation::create($newValue);
+
+            if ($newReservation) {
+                $extra_fee_details = json_decode($request->input("facility"));
+                if ($extra_fee_details) {
+                    foreach ($extra_fee_details->facility as $ef => $extra_fee) {
+                        if ($extra_fee->facility_id) {
+                            ExtraFee::create([
+                                "reservation_id" => $newReservation->id,
+                                "facility_id" => $extra_fee->facility_id,
+                                "fee" => $extra_fee->facilty_fee,
+                            ]);
+                        }
+                    }
+                }
+            }
+
+            // update old reservation
+            $validated = $request->validate([
+                'description' => "required|string|max:200"
+            ]);
+
+            $validated['status'] = "DIALIHKAN";
+            $validated['approved_by'] = auth()->user()->email;
+            $validated['approved_at'] = new DateTime("now", new DateTimeZone('Asia/Jakarta'));
+            $validated['new_layanan_id'] = $newReservation->id;
+            $reservation->update($validated);
+
+            DB::commit();
+            return response()->json([
+                'status' => 0,
+                'message' => "Sewa Berhasil Dialihkan.",
+                'reservation_id' => $newReservation->id,
+            ], 200);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return response()->json([
+                'status' => 1,
+                'message' => $th->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \App\Http\Requests\UpdateReservationRequest  $request
+     * @param  \App\Models\Reservation  $reservation
+     * @return \Illuminate\Http\Response
+     */
     public function reject(Request $request, Reservation $reservation)
     {
         Db::beginTransaction();
@@ -256,6 +332,40 @@ class ReservationController extends Controller
             return response()->json([
                 'status' => 0,
                 'message' => "Sewa Berhasil Ditolak."
+            ], 200);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return response()->json([
+                'status' => 1,
+                'message' => $th->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \App\Http\Requests\UpdateReservationRequest  $request
+     * @param  \App\Models\Reservation  $reservation
+     * @return \Illuminate\Http\Response
+     */
+    public function cancel(Request $request, Reservation $reservation)
+    {
+        Db::beginTransaction();
+        try {
+            $validated = $request->validate([
+                'description' => "required|string|max:200"
+            ]);
+
+            $validated['status'] = "DIBATALKAN";
+            $validated['canceled_by'] = auth()->user()->email;
+            $validated['canceled_at'] = new DateTime("now", new DateTimeZone('Asia/Jakarta'));
+            $reservation->update($validated);
+
+            DB::commit();
+            return response()->json([
+                'status' => 0,
+                'message' => "Sewa Berhasil Dibatalkan."
             ], 200);
         } catch (\Throwable $th) {
             DB::rollBack();

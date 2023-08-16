@@ -49,6 +49,7 @@ Route::get('/', [WebsiteController::class, 'index'])->name('website.index');
 Route::get('/rooms', [WebsiteController::class, 'rooms'])->name('website.rooms');
 Route::get('/rooms/{layanan:id}/detail', [WebsiteController::class, 'show_room'])->name('website.room.show');
 Route::get('/cars', [WebsiteController::class, 'cars'])->name('website.cars');
+Route::get('/cars/{layanan:id}/detail', [WebsiteController::class, 'show_car'])->name('website.car.show');
 Route::get('/report', [WebsiteController::class, 'report'])->name('website.report');
 Route::get('/status', [WebsiteController::class, 'status'])->name('website.status');
 Route::get('/status/calendar', [WebsiteController::class, 'status_calendar'])->name('website.status.calendar');
@@ -84,6 +85,7 @@ Route::middleware('auth')->group(function () {
             Route::delete('/{layanan:id}/delete', [LayananController::class, 'destroy'])->name('layanan.delete');
             Route::post('/gambar/upload', [LayananGambarController::class, 'upload'])->name('layanan-gambar.upload');
             Route::post('/gambar/delete', [LayananGambarController::class, 'delete'])->name('layanan-gambar.delete');
+            Route::post('/find', [LayananController::class, 'find'])->name('layanan.find');
         });
 
         // Facilities pages
@@ -103,7 +105,9 @@ Route::middleware('auth')->group(function () {
             Route::get('', [ReservationController::class, 'index'])->name('reservation.index');
             Route::get('/{reservation:id}/detail', [ReservationController::class, 'show'])->name('reservation.show');
             Route::post('/{reservation:id}/approve', [ReservationController::class, 'approve'])->name('reservation.approve');
+            Route::post('/{reservation:id}/move', [ReservationController::class, 'approve_move'])->name('reservation.move');
             Route::post('/{reservation:id}/reject', [ReservationController::class, 'reject'])->name('reservation.reject');
+            Route::post('/{reservation:id}/cancel', [ReservationController::class, 'cancel'])->name('reservation.cancel');
         });
 
         // report pages

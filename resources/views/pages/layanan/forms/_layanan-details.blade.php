@@ -97,12 +97,23 @@ $status_color = [
           <!--begin::Input group-->
           <div class="row mb-6">
             <!--begin::Label-->
-            <label class="col-lg-4 fw-bold text-muted">{{ __('Luas') }}</label>
+            @if ($layanan->type == 'RUANG')
+              <label class="col-lg-4 fw-bold text-muted">{{ __('Luas') }}</label>
+            @else
+              <label class="col-lg-4 fw-bold text-muted">{{ __('Jenis') }}</label>
+            @endif
             <!--end::Label-->
 
             <!--begin::Col-->
             <div class="col-lg-8 fv-row">
-              <span class="fw-bolder fs-6 text-dark">{{ $layanan->large }} m<sup>2</sup></span>
+              @if ($layanan->type == 'RUANG')
+                <span class="fw-bolder fs-6 text-dark">{{ $layanan->large }} m<sup>2</sup></span>
+              @else
+                @php
+                  $jenis = [1 => 'Mobil', 2 => 'Motor', 3 => 'Shuttle', 4 => 'Bis', 5 => 'Truk'];
+                @endphp
+                <span class="fw-bolder fs-6 text-dark">{{ $jenis[$layanan->large] }}</span>
+              @endif
             </div>
             <!--end::Col-->
           </div>

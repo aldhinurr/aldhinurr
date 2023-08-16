@@ -29,16 +29,9 @@
 
           <!--begin::Col-->
           <div class="col-lg-4 fv-row">
-            <select name="type" aria-label="{{ __('Pilih Jenis Layanan') }}" data-control="select2"
+            <select id="type" name="type" aria-label="{{ __('Pilih Jenis Layanan') }}"
               data-placeholder="{{ __('Pilih Jenis Layanan...') }}"
               class="form-select form-select-solid form-select-lg fw-bold">
-              <option value="">{{ __('Pilih Jenis...') }}</option>
-              <option value="RUANG" selected>
-                {{ __('Ruang') }}
-              </option>
-              <option value="KENDARAAN">
-                {{ __('Kendaraan') }}
-              </option>
             </select>
           </div>
           <!--end::Col-->
@@ -111,7 +104,7 @@
         <div class="row mb-6">
           <!--begin::Label-->
           <label class="col-lg-3 col-form-label fw-bold fs-6">
-            <span class="required">{{ __('Luas') }}</span>
+            <span class="required">{{ __('Kapasitas') }}</span>
           </label>
           <!--end::Label-->
 
@@ -122,25 +115,25 @@
               <!--begin::Col-->
               <div class="col-lg-4 fv-row mb-2">
                 <div class="input-group input-group-solid">
-                  <input type="number" min="1" id="large" name="large"
+                  <input type="number" min="1" id="capacity" name="capacity"
                     class="form-control form-control-lg form-control-solid mb-lg-0 mb-3" />
-                  <span class="input-group-text" id="basic-addon2">m<sup>2</sup></span>
+                  <span class="input-group-text" id="basic-addon2">Orang</span>
                 </div>
               </div>
               <!--end::Col-->
 
               <!--begin::Label-->
               <label class="col-lg-2 col-form-label fw-bold fs-6">
-                {{ __('Kapasitas') }}</span>
+                <span class="required" id="label-large">{{ __('Luas') }}</span>
               </label>
               <!--end::Label-->
 
               <!--begin::Col-->
               <div class="col-lg-4">
-                <div class="input-group input-group-solid fv-row mb-2">
-                  <input type="number" min="1" id="capacity" name="capacity"
+                <div class="input-group input-group-solid fv-row mb-2" id="div-large">
+                  <input type="number" min="1" id="large" name="large"
                     class="form-control form-control-lg form-control-solid mb-lg-0 mb-3" />
-                  <span class="input-group-text" id="basic-addon2">Orang</span>
+                  <span class="input-group-text" id="basic-addon2">m<sup>2</sup></span>
                 </div>
               </div>
               <!--end::Col-->

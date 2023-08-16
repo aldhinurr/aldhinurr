@@ -94,6 +94,47 @@ class WebsiteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function cars(Request $request)
+    {
+        $layanan = new Layanan;
+        $cars = $layanan->get_page_data('KENDARAAN', 18, $request);
+
+        // is_sewa
+        $now = new DateTime("now", new DateTimeZone('Asia/Jakarta'));
+        $addThreedays = $now->add(DateInterval::createFromDateString('3 days'));
+        $dateSewa = $addThreedays->format('Y-m-d');
+        if ($request->start_date) {
+            $start_date = strtotime(str_replace("/", "-", $request->start_date));
+            $dateSewa = date('Y-m-d', $start_date);
+        }
+
+        $sewa = Reservation::select('layanan_id')
+            ->whereNotIn('status', ['DITOLAK', 'DIBATALKAN', 'DIALIHKAN', 'SELESAI'])
+            ->where('start_date', '<=', $dateSewa . ' 23:59')
+            ->where('end_date', '>=', $dateSewa . ' 00:01')
+            ->get();
+
+        $is_sewa = array();
+        if (count($sewa) > 0) {
+            foreach ($sewa as $s => $val) {
+                array_push($is_sewa, $val->layanan_id);
+            }
+        }
+
+        if ($request->ajax()) {
+            $cars = $layanan->get_page_data('KENDARAAN', 18, $request);
+            $view = view('website.cars._data', compact('cars', 'is_sewa'))->render();
+            return response()->json(['html' => $view]);
+        }
+
+        return view('website.cars.index', compact('cars', 'is_sewa'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function status(Request $request)
     {
         $sewa = Reservation::with(["layanan", "user"])->paginate(10);
@@ -256,6 +297,28 @@ class WebsiteController extends Controller
             'room_pictures' => $layanan_gambars,
             'service_facilities' => $service_facilities,
             'other_rooms' => $other_rooms,
+        ]);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show_car(Layanan $layanan)
+    {
+        $layanan_gambars = $layanan->layanan_gambars()->get();
+        $service_facilities = $layanan->service_facilities()->with('facility')->get();
+
+        $layananModel = new Layanan;
+        $other_cars = $layananModel->get_other_data('KENDARAAN', 6, $layanan->id);
+
+        return view('website.cars.details', [
+            'data' => $layanan,
+            'car_pictures' => $layanan_gambars,
+            'service_facilities' => $service_facilities,
+            'other_cars' => $other_cars,
         ]);
     }
 

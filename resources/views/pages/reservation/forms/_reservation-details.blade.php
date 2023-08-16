@@ -6,7 +6,11 @@
       <!--begin: Pic-->
       <div class="me-7 mb-4">
         <div class="symbol symbol-200px symbol-lg-400px symbol-fixed position-relative">
-          <img src="{{ asset($reservation->layanan->layanan_gambars->first()->picture) }}" alt="image" />
+          @if ($reservation->layanan->layanan_gambars->first())
+            <img src="{{ asset($reservation->layanan->layanan_gambars->first()->picture) }}" alt="image" />
+          @else
+            <img src="" alt="Tidak ada gambar" />
+          @endif
         </div>
       </div>
       <!--end::Pic-->
@@ -95,7 +99,7 @@
       <a href="{{ route('reservation.index') }}"
         class="btn btn-sm btn-white btn-active-light-primary align-self-center me-2">{{ __('Kembali') }}</a>
 
-      @if ($reservation->status != 'EXPIRED')
+      @if (in_array($reservation->status, ['MENUNGGU UPLOAD', 'MENUNGGU VERIFIKASI']))
         <!--begin::Menu-->
         <div class="me-0 pt-1">
           <button class="btn btn-sm btn-bg-primary text-white" data-kt-menu-trigger="click"
@@ -118,7 +122,7 @@
 
             <!--begin::Menu item-->
             <div class="menu-item px-3">
-              <a href="#" id="approveMoveButton" class="menu-link px-3">
+              <a class="menu-link px-3" data-bs-toggle="modal" data-bs-target="#alihkan_layanan">
                 Setuju dan Alihkan
               </a>
             </div>

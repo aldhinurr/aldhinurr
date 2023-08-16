@@ -6,8 +6,17 @@
       'extraFacilities' => $extraFacilities,
   ]) }}
 
+  {{ theme()->getView('pages/reservation/forms/_modal-alihkan', [
+      'reservation' => $reservation,
+      'extraFacilities' => $extraFacilities,
+  ]) }}
+
+
   @section('scripts')
     {{ theme()->getView('pages/reservation/forms/_scripts-details', [
+        'reservation' => $reservation,
+    ]) }}
+    {{ theme()->getView('pages/reservation/forms/_scripts-alihkan', [
         'reservation' => $reservation,
     ]) }}
   @endsection

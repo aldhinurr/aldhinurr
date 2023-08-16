@@ -2,8 +2,8 @@
 
 @section('content')
   <!-- ================================
-                                                                                                                                                                                                                                                                                        START ABOUT AREA
-                                                                                                                                                                                                                                                                                    ================================= -->
+                                                                                                                                                                                                                                                                                                                                        START ABOUT AREA
+                                                                                                                                                                                                                                                                                                                                    ================================= -->
   <section class="about-area section--padding overflow-hidden">
     <div class="container">
       <div class="row">
@@ -37,12 +37,12 @@
     <!-- end container -->
   </section>
   <!-- ================================
-                                                                                                                                                                                                                                                                                        END ABOUT AREA
-                                                                                                                                                                                                                                                                                    ================================= -->
+                                                                                                                                                                                                                                                                                                                                        END ABOUT AREA
+                                                                                                                                                                                                                                                                                                                                    ================================= -->
 
   <!-- ================================
-                                                                                                                                                                                                                                                                                    START GALLERY AREA
-                                                                                                                                                                                                                                                                                ================================= -->
+                                                                                                                                                                                                                                                                                                                                    START GALLERY AREA
+                                                                                                                                                                                                                                                                                                                                ================================= -->
   <section class="gallery-area section-padding">
     <div class="container">
       <div class="full-width-slider padding-top-30px carousel-action">
@@ -68,12 +68,12 @@
     </div>
   </section><!-- end gallery-area -->
   <!-- ================================
-                                                                                                                                                                                                                                                                                    END GALLERY AREA
-                                                                                                                                                                                                                                                                                ================================= -->
+                                                                                                                                                                                                                                                                                                                                    END GALLERY AREA
+                                                                                                                                                                                                                                                                                                                                ================================= -->
 
   <!-- ================================
-                                                                                                                                                                                                                                                                                    START INFO AREA
-                                                                                                                                                                                                                                                                                ================================= -->
+                                                                                                                                                                                                                                                                                                                                    START INFO AREA
+                                                                                                                                                                                                                                                                                                                                ================================= -->
   <section class="info-area padding-bottom-20px">
     <div class="container">
       <div class="row padding-top-50px justify-content-md-center">
@@ -130,14 +130,14 @@
   </section>
   <!-- end info-area -->
   <!-- ================================
-                                                                                                                                                                                                                                                                                    END INFO AREA
-                                                                                                                                                                                                                                                                                ================================= -->
+                                                                                                                                                                                                                                                                                                                                    END INFO AREA
+                                                                                                                                                                                                                                                                                                                                ================================= -->
 
   <div class="section-block"></div>
 
   <!-- ================================
-                                                                                                                                                                                                                                                                                    START INFO AREA
-                                                                                                                                                                                                                                                                                ================================= -->
+                                                                                                                                                                                                                                                                                                                                    START INFO AREA
+                                                                                                                                                                                                                                                                                                                                ================================= -->
   <section class="info-area padding-top-30px padding-bottom-70px">
     <div class="container">
       <div class="row align-items-center">
@@ -214,12 +214,12 @@
   </section>
   <!-- end info-area -->
   <!-- ================================
-                                                                                                                                                                                                                                                                                    END INFO AREA
-                                                                                                                                                                                                                                                                                ================================= -->
+                                                                                                                                                                                                                                                                                                                                    END INFO AREA
+                                                                                                                                                                                                                                                                                                                                ================================= -->
 
   <!-- ================================
-                                                                                                                                                                                                                                                                                        START HOTEL AREA
-                                                                                                                                                                                                                                                                                    ================================= -->
+                                                                                                                                                                                                                                                                                                                                        START HOTEL AREA
+                                                                                                                                                                                                                                                                                                                                    ================================= -->
   <section class="hotel-area section-bg padding-top-40px padding-bottom-30px overflow-hidden">
     <div class="container">
       <div class="row">
@@ -253,6 +253,18 @@
                     <h3 class="card-title">
                       <a href="{{ route('website.room.show', $room->id) }}">{{ $room->name }}</a>
                     </h3>
+                    <div class="card-attributes">
+                      <ul class="d-flex align-items-center">
+                        <li class="d-flex align-items-center" data-toggle="tooltip" data-placement="top"
+                          title="Kapasitas">
+                          <i class="la la-users"></i><span>{{ $room->capacity }} Orang</span>
+                        </li>
+                        <li class="d-flex align-items-center" data-toggle="tooltip" data-placement="top"
+                          title="Luas">
+                          <i class="la la-expand"></i><span>{{ $room->large }} m<sup>2</sup></span>
+                        </li>
+                      </ul>
+                    </div>
                     <p class="card-meta">{{ $room->address }}</p>
                     <div class="card-price d-flex align-items-center justify-content-between">
                       <p>
@@ -293,12 +305,12 @@
   </section>
   <!-- end hotel-area -->
   <!-- ================================
-                                                                                                                                                                                                                                                                                        END HOTEL AREA
-                                                                                                                                                                                                                                                                                    ================================= -->
+                                                                                                                                                                                                                                                                                                                                        END HOTEL AREA
+                                                                                                                                                                                                                                                                                                                                    ================================= -->
 
   <!-- ================================
-                                                                                                                                                                                                                                                                                    START CAR AREA
-                                                                                                                                                                                                                                                                                ================================= -->
+                                                                                                                                                                                                                                                                                                                                    START CAR AREA
+                                                                                                                                                                                                                                                                                                                                ================================= -->
   <section class="car-area section-padding padding-bottom-30px overflow-hidden">
     <div class="container">
       <div class="row">
@@ -324,32 +336,35 @@
                 <div class="card-body">
                   {{-- <p class="card-meta">Compact SUV</p> --}}
                   <h3 class="card-title">
-                    <a href="#">{{ $car->name }}</a>
+                    <a href="{{ route('website.car.show', $car->id) }}">{{ $car->name }}</a>
                   </h3>
                   <div class="card-attributes">
                     <ul class="d-flex align-items-center">
                       <li class="d-flex align-items-center" data-toggle="tooltip" data-placement="top"
-                        title="Passenger">
-                        <i class="la la-users"></i><span>4</span>
-                      </li>
-                      <li class="d-flex align-items-center" data-toggle="tooltip" data-placement="top"
-                        title="Luggage">
-                        <i class="la la-suitcase"></i><span>1</span>
+                        title="Kapasitas">
+                        <i class="la la-users"></i><span>{{ $car->capacity }} Orang</span>
                       </li>
                     </ul>
                   </div>
+                  <p class="card-meta">{{ $car->address }}</p>
                   <div class="card-price d-flex align-items-center justify-content-between">
                     <p>
                       <span class="price__num">
-                        @if ($room->price == 0)
+                        @if ($car->price == 0)
                           Gratis
                         @else
-                          Rp. {{ number_format($room->price, 0) }}
+                          Rp. {{ number_format($car->price, 0) }}
                         @endif
                       </span>
-                      <span class="price__text">Per {{ $room->price_for }}</span>
+                      <span class="price__text">Per {{ $car->price_for }}</span>
                     </p>
-                    <a href="#" class="btn-text">See details<i class="la la-angle-right"></i></a>
+                    @if ($car->is_sewa == 1)
+                      <span class="price__text">Sedang Disewa</span>
+                    @else
+                      <a href="{{ route('website.car.show', $car->id) }}" class="btn-text">
+                        See details<i class="la la-angle-right"></i>
+                      </a>
+                    @endif
                   </div>
                 </div>
               </div>
@@ -362,21 +377,22 @@
       </div>
       <!-- end row -->
       <div class="btn-box pt-3 text-center">
-        <a href="about.html" class="theme-btn">Lihat Kendaraan Lainnya <i class="la la-arrow-right ml-1"></i></a>
+        <a href="{{ route('website.cars') }}" class="theme-btn">Lihat Kendaraan Lainnya <i
+            class="la la-arrow-right ml-1"></i></a>
       </div>
     </div>
     <!-- end container -->
   </section>
   <!-- end car-area -->
   <!-- ================================
-                                                                                                                                                                                                                                                                                    END CAR AREA
-                                                                                                                                                                                                                                                                                ================================= -->
+                                                                                                                                                                                                                                                                                                                                    END CAR AREA
+                                                                                                                                                                                                                                                                                                                                ================================= -->
 
   <div class="section-block"></div>
 
   <!-- ================================
-                                                                                                                                                                                                                                                                                    START INFO AREA
-                                                                                                                                                                                                                                                                                ================================= -->
+                                                                                                                                                                                                                                                                                                                                    START INFO AREA
+                                                                                                                                                                                                                                                                                                                                ================================= -->
   <section class="info-area padding-top-70px padding-bottom-70px">
     <div class="container">
       <div class="row align-items-center">
@@ -446,6 +462,6 @@
   </section>
   <!-- end info-area -->
   <!-- ================================
-                                                                                                                                                                                                                                                                                    END INFO AREA
-                                                                                                                                                                                                                                                                                ================================= -->
+                                                                                                                                                                                                                                                                                                                                    END INFO AREA
+                                                                                                                                                                                                                                                                                                                                ================================= -->
 @endsection

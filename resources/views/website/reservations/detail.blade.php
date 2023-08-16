@@ -2,8 +2,8 @@
 
 @section('content')
   <!-- ================================
-                                                                                                                                                                                                                                                                                                                                                                                        START CART AREA
-                                                                                                                                                                                                                                                                                                                                                                                    ================================= -->
+                                                                                                                                                                                                                                                                                                                                                                                                                      START CART AREA
+                                                                                                                                                                                                                                                                                                                                                                                                                  ================================= -->
   <section class="cart-area section-padding">
     <div class="container">
       <div class="row">
@@ -83,6 +83,15 @@
                                 <span class="product-info-value">{{ $reservation->description }}</span>
                               </div><!-- end product-info -->
                             @endif
+                            @if (strlen($reservation->new_layanan_id) > 0)
+                              <div class="product-info line-height-24">
+                                <span class="title">
+                                  <a href="{{ route('website.reservation.show', $reservation->new_layanan_id) }}">
+                                    Sewa dialihkan, klik disini untuk melihat detailnya.
+                                  </a>
+                                </span>
+                              </div><!-- end product-info -->
+                            @endif
                           </div>
                         </div>
                       </div>
@@ -131,8 +140,8 @@
     </div><!-- end container -->
   </section><!-- end cart-area -->
   <!-- ================================
-                                                                                                                                                                                                                                                                                                                                                                                        END CART AREA
-                                                                                                                                                                                                                                                                                                                                                                                    ================================= -->
+                                                                                                                                                                                                                                                                                                                                                                                                                      END CART AREA
+                                                                                                                                                                                                                                                                                                                                                                                                                  ================================= -->
 @endsection
 
 

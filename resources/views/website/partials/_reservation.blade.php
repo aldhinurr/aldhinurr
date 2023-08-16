@@ -86,7 +86,11 @@
   </div>
   <div class="footer-item text-center padding-top-20px">
     <ul class="list-items list--items">
-      <li><a href="{{ route('website.rooms') }}">Lihat Ruangan Lainnya</a></li>
+      @if ($data->type == 'RUANG')
+        <li><a href="{{ route('website.rooms') }}">Lihat Ruangan Lainnya</a></li>
+      @else
+        <li><a href="{{ route('website.cars') }}">Lihat Kendaraan Lainnya</a></li>
+      @endif
       <li><a href="{{ route('website.status') }}#my-sewa">Lihat Status Peminjaman</a></li>
     </ul>
   </div>
