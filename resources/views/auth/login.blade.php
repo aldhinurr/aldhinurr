@@ -8,7 +8,7 @@
     <!--begin::Input group-->
     <div class="fv-row mb-10">
       <!--begin::Label-->
-      <label class="form-label fs-6 fw-bolder text-dark">{{ __('Nama Pengguna') }}</label>
+      <label class="form-label fs-6 fw-bolder text-dark">{{ __('Akun Office ITB') }}</label>
       <!--end::Label-->
 
       <!--begin::Input-->
@@ -29,8 +29,8 @@
         <!--begin::Link-->
         {{-- @if (Route::has('password.request'))
           <a href="{{ theme()->getPageUrl('password.request') }}" class="link-primary fs-6 fw-bolder">
-            {{ __('Forgot Password ?') }}
-          </a>
+        {{ __('Forgot Password ?') }}
+        </a>
         @endif --}}
         <!--end::Link-->
       </div>
@@ -52,7 +52,7 @@
       <!--end::Submit button-->
 
       <!--begin::Microsoft link-->
-      <a href="#" id="login-itb" class="btn btn-flex flex-center btn-light btn-lg w-100 mb-5">
+      <a href="#" id="login-itb" class="btn btn-flex flex-center btn-dark btn-lg w-100 mb-5">
         <img alt="Logo" src="{{ asset(theme()->getMediaUrlPath() . 'svg/brand-logos/microsoft-5.svg') }}"
           class="h-20px me-3" />
         {{ __('Masuk dengan Akun Office ITB') }}

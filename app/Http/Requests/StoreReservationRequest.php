@@ -27,7 +27,7 @@ class StoreReservationRequest extends FormRequest
             'layanan_id' => 'required',
             'start_date' => 'required',
             'end_date' => 'required',
-            'catatan' => 'required|string|max:200',
+            'catatan' => 'nullable|string|max:200',
             'fee' => 'required|numeric|min:0',
             'fee_for' => 'required',
             'extra_fee' => 'required|numeric|min:0',

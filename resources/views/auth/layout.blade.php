@@ -5,7 +5,7 @@
     <!--begin::Authentication-->
     <div
       class="d-flex flex-column flex-column-fluid bgi-position-y-bottom position-x-center bgi-no-repeat bgi-size-contain bgi-attachment-fixed"
-      style="background-image: url({{ asset(theme()->getIllustrationUrl('14.png')) }})">
+      style="background-image: url({{ asset('efacility/images/login.png') }})">
 
       <!--begin::Content-->
       <div class="d-flex flex-center flex-column flex-column-fluid p-10 pb-lg-20">

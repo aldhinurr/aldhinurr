@@ -36,13 +36,17 @@ class WebsiteController extends Controller
         $cars = $layanan->get_home_data('KENDARAAN', 6);
 
         // Laporan
-        $count_reports = $report->get_count_data('SELESAI');
+        $report_done = $report->get_count_data(['SELESAI']);
+        $report_waiting = $report->get_count_data(['MENUNGGU']);
+        $report_process = $report->get_count_data(['SEDANG DIKERJAKAN', 'SEDANG DIPERIKSA']);
 
 
         return view('website.index', [
             'count_rooms' => $count_rooms,
             'count_cars' => $count_cars,
-            'count_reports' => $count_reports,
+            'report_done' => $report_done,
+            'report_waiting' => $report_waiting,
+            'report_process' => $report_process,
             'rooms' => $rooms,
             'cars' => $cars,
         ]);

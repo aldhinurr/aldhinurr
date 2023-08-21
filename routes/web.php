@@ -114,8 +114,7 @@ Route::middleware('auth')->group(function () {
         Route::prefix('report')->group(function () {
             Route::get('', [ReportServiceController::class, 'index'])->name('report.index');
             Route::get('/{reportService:id}/detail', [ReportServiceController::class, 'show'])->name('report.show');
-            Route::post('/{reportservice:id}/approve', [ReportServiceController::class, 'approve'])->name('report.approve');
-            Route::post('/{reportservice:id}/reject', [ReportServiceController::class, 'reject'])->name('report.reject');
+            Route::put('/{reportService:id}/update', [ReportServiceController::class, 'update'])->name('report.update');
         });
     });
 });

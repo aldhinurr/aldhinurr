@@ -60,17 +60,6 @@
                 }
               }
             },
-            large: {
-              validators: {
-                notEmpty: {
-                  message: 'Luas belum diisi'
-                },
-                greaterThan: {
-                  min: 1,
-                  message: 'Minimal diisi 1'
-                }
-              }
-            },
             capacity: {
               validators: {
                 notEmpty: {
@@ -116,21 +105,16 @@
       var titleInput = "Luas";
       var htmlInput = `
         <input type="number" min="1" id="large" name="large"
-          class="form-control form-control-lg form-control-solid mb-lg-0 mb-3" value="{{ old('large', $layanan->large ?? '') }}" />
+          class="form-control form-control-lg form-control-solid mb-lg-0 mb-3" value="1" />
         <span class="input-group-text" id="basic-addon2">m<sup>2</sup></span>
         `
 
       if (type == "KENDARAAN") {
         titleInput = "Jenis";
         htmlInput = `
-          <select id="large" name="large" aria-label="{{ __('Pilih Kendaraan') }}" data-control="select2"
+          <select id="large" name="large" aria-label="{{ __('Pilih Kendaraan') }}"
             data-placeholder="{{ __('Pilih Kendaraan...') }}"
             class="form-select form-select-solid form-select-lg fw-bold">
-            <option value=1 {{ 1 == old('large', $layanan->large ?? '') ? 'selected' : '' }}>Mobil</option>
-            <option value=2 {{ 2 == old('large', $layanan->large ?? '') ? 'selected' : '' }}>Motor</option>
-            <option value=3 {{ 3 == old('large', $layanan->large ?? '') ? 'selected' : '' }}>Shuttle</option>
-            <option value=4 {{ 4 == old('large', $layanan->large ?? '') ? 'selected' : '' }}>Bis</option>
-            <option value=5 {{ 5 == old('large', $layanan->large ?? '') ? 'selected' : '' }}>Truk</option>
           </select>
           `
       }
@@ -138,9 +122,52 @@
       $('#label-large').text(titleInput);
       $('#div-large').empty();
       $('#div-large').append(htmlInput);
+
+      // init select2 large
+      if (type == "KENDARAAN") {
+        $('[id="large"]').select2({
+          data: [{
+              id: 1,
+              text: 'Mobil'
+            },
+            {
+              id: 2,
+              text: 'Motor'
+            },
+            {
+              id: 3,
+              text: 'Shuttle'
+            },
+            {
+              id: 4,
+              text: 'Bis'
+            },
+            {
+              id: 5,
+              text: 'Truk'
+            },
+          ]
+        });
+      }
     }
 
     var handleForm = function() {
+      $('[id="type"]').select2({
+        data: [{
+            id: "RUANG",
+            text: 'Ruangan'
+          },
+          {
+            id: "KENDARAAN",
+            text: 'Kendaraan'
+          },
+        ]
+      });
+
+      $('[id="type"]').on('select2:select', function(e) {
+        changeInputLarge();
+      });
+
 
       Inputmask("Rp. 999.999.999", {
         "numericInput": true
@@ -209,21 +236,6 @@
         },
       });
 
-      $('[id="type"]').select2({
-        data: [{
-            id: "RUANG",
-            text: 'Ruangan'
-          },
-          {
-            id: "KENDARAAN",
-            text: 'Kendaraan'
-          },
-        ]
-      });
-
-      $('[id="type"]').on('select2:select', function(e) {
-        changeInputLarge();
-      });
 
       $('#facility').repeater({
         initEmpty: false,
@@ -304,6 +316,11 @@
 
         // assign value fasilitas
         data.append('facility', JSON.stringify($('#facility').repeaterVal()));
+
+        // Display the key/value pairs
+        for (var pair of data.entries()) {
+          console.log(pair[0] + ', ' + pair[1]);
+        }
 
         // Validate form
         validation.validate().then(function(status) {

@@ -151,8 +151,8 @@
                 Link Terkait
               </h4>
               <ul class="list-items list--items">
-                <li><a href="https://ditsp.itb.ac.id">Website Dit. SP</a></li>
-                <li><a href="https://asrama.itb.ac.id">Asrama</a></li>
+                <li><a href="https://ditsp.itb.ac.id" target="_blank">Website Dit. SP</a></li>
+                <li><a href="https://asrama.itb.ac.id" target="_blank">Asrama</a></li>
               </ul>
             </div>
             <!-- end footer-item -->

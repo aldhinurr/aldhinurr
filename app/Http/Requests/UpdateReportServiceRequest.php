@@ -13,7 +13,7 @@ class UpdateReportServiceRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,10 @@ class UpdateReportServiceRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'status' => 'required',
+            'alasan_dialihkan' => 'nullable|string|max:200',
+            'tanggal_selesai' => 'nullable',
+            'report_images' => 'nullable|array',
         ];
     }
 }

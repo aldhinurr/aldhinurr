@@ -53,6 +53,13 @@
                 }
               }
             },
+            capacity: {
+              validators: {
+                notEmpty: {
+                  message: 'kapasitas belum diisi'
+                }
+              }
+            },
           },
           plugins: {
             trigger: new FormValidation.plugins.Trigger(),
@@ -70,16 +77,6 @@
         // Revalidate the color field when an option is chosen
         validation.revalidateField('type');
       });
-
-      $(form.querySelector('[name="language"]')).on('change', function() {
-        // Revalidate the color field when an option is chosen
-        validation.revalidateField('language');
-      });
-
-      $(form.querySelector('[name="timezone"]')).on('change', function() {
-        // Revalidate the color field when an option is chosen
-        validation.revalidateField('timezone');
-      });
     }
 
     var changeInputLarge = function() {
@@ -94,14 +91,9 @@
       if (type == "KENDARAAN") {
         titleInput = "Jenis";
         htmlInput = `
-          <select id="large" name="large" aria-label="{{ __('Pilih Kendaraan') }}" data-control="select2"
+          <select id="large" name="large" aria-label="{{ __('Pilih Kendaraan') }}"
             data-placeholder="{{ __('Pilih Kendaraan...') }}"
             class="form-select form-select-solid form-select-lg fw-bold">
-            <option value=1>Mobil</option>
-            <option value=2>Motor</option>
-            <option value=3>Shuttle</option>
-            <option value=4>Bis</option>
-            <option value=5>Truk</option>
           </select>
           `
       }
@@ -109,9 +101,53 @@
       $('#label-large').text(titleInput);
       $('#div-large').empty();
       $('#div-large').append(htmlInput);
+
+      // init select2 large
+      if (type == "KENDARAAN") {
+        $('[id="large"]').select2({
+          data: [{
+              id: 1,
+              text: 'Mobil'
+            },
+            {
+              id: 2,
+              text: 'Motor'
+            },
+            {
+              id: 3,
+              text: 'Shuttle'
+            },
+            {
+              id: 4,
+              text: 'Bis'
+            },
+            {
+              id: 5,
+              text: 'Truk'
+            },
+          ]
+        });
+      }
     }
 
     var handleForm = function() {
+      $('[id="type"]').select2({
+        data: [{
+            id: "RUANG",
+            text: 'Ruangan'
+          },
+          {
+            id: "KENDARAAN",
+            text: 'Kendaraan'
+          },
+        ]
+      });
+      $('[id="type"]').val("{{ $layanan->type }}");
+      $('[id="type"]').trigger('change');
+      $('[id="type"]').on('select2:select', function(e) {
+        changeInputLarge();
+      });
+
       Inputmask("Rp. 999.999.999", {
         "numericInput": true
       }).mask("#price");
@@ -183,8 +219,6 @@
           var files = <?= json_encode($gambars, JSON_PRETTY_PRINT) ?>;
           files.map((file) => {
             myDropzone.files.push(file);
-            // myDropzone.options.addedfile.call(myDropzone, file);
-            // myDropzone.options.thumbnail.call(myDropzone, file, file['path']);
             myDropzone.displayExistingFile(file, file['path'], null, null, true);
             myDropzone.emit("complete", file);
           })
@@ -194,23 +228,6 @@
             console.log("A file has been added");
           });
         },
-      });
-
-      $('[id="type"]').select2({
-        data: [{
-            id: "RUANG",
-            text: 'Ruangan'
-          },
-          {
-            id: "KENDARAAN",
-            text: 'Kendaraan'
-          },
-        ]
-      });
-      $('[id="type"]').val("{{ $layanan->type }}");
-      $('[id="type"]').trigger('change');
-      $('[id="type"]').on('select2:select', function(e) {
-        changeInputLarge();
       });
 
       myRepeater = $('#facility').repeater({

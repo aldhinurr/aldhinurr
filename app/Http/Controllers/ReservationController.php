@@ -58,9 +58,13 @@ class ReservationController extends Controller
 
             $validated['start_date'] = date('Y-m-d H:i', $start_date);
             $validated['end_date'] = date('Y-m-d H:i', $end_date);
-            $validated['status'] = "MENUNGGU UPLOAD";
-            $validated['expired_payment'] = $now->add(new DateInterval("P3D"));
+            $validated['status'] = "MENUNGGU VERIFIKASI";
             $validated['created_by'] = auth()->user()->email;
+
+            if (!auth()->user()->hasRole(["superadmin"])) {
+                $validated['status'] = "MENUNGGU UPLOAD";
+                $validated['expired_payment'] = $now->add(new DateInterval("P3D"));
+            }
 
             $reservation = Reservation::create($validated);
             if ($reservation) {
@@ -134,6 +138,7 @@ class ReservationController extends Controller
         return Reservation::where('layanan_id', $request->layanan)
             ->where('start_date', '<=', date('Y-m-d', $date) . ' 23:59')
             ->where('end_date', '>=', date('Y-m-d', $date) . ' 00:01')
+            ->whereNotIn("status", ["DITOLAK", "DIBATALKAN", "EXPIRED", "WAKTU HABIS"])
             ->count();
     }
 

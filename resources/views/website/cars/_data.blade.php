@@ -37,7 +37,7 @@
               <span class="price__text">Sedang Disewa</span>
             @else
               <a href="{{ route('website.car.show', $car->id) }}" id="link-detail" class="btn-text">
-                See details<i class="la la-angle-right"></i>
+                Lihat<i class="la la-angle-right"></i>
               </a>
             @endif
           </div>

@@ -10,6 +10,7 @@
   @section('scripts')
     {{ theme()->getView('pages/report/forms/_scripts-details', [
         'report' => $report,
+        'oldImages' => $oldImages,
     ]) }}
   @endsection
 

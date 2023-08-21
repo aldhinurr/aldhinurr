@@ -15,7 +15,7 @@ class ReportService extends Model
 
 
     /**
-     * User relation to layanan model
+     * User relation to ReportServiceImage model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -24,13 +24,13 @@ class ReportService extends Model
         return $this->HasMany(ReportServiceImage::class);
     }
 
-    public function get_count_data($status)
+    public function get_count_data(array $status)
     {
-        return Layanan::where('status', $status)->count();
+        return ReportService::whereIn('status', $status)->count();
     }
 
     /**
-     * Get the layanan that owns the LayananGambar
+     * Get the user that owns the ReportService
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

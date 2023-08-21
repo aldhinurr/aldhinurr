@@ -5,7 +5,7 @@
     data-bs-target="#kt_layanan_layanan_create" aria-expanded="true" aria-controls="kt_layanan_layanan_create">
     <!--begin::Card title-->
     <div class="card-title m-0">
-      <h3 class="fw-bolder m-0">{{ __('New Layanan') }}</h3>
+      <h3 class="fw-bolder m-0">{{ __('Tambah Layanan') }}</h3>
     </div>
     <!--end::Card title-->
   </div>
@@ -116,7 +116,7 @@
               <div class="col-lg-4 fv-row mb-2">
                 <div class="input-group input-group-solid">
                   <input type="number" min="1" id="capacity" name="capacity"
-                    class="form-control form-control-lg form-control-solid mb-lg-0 mb-3" />
+                    class="form-control form-control-lg form-control-solid mb-lg-0 mb-3" value="1" />
                   <span class="input-group-text" id="basic-addon2">Orang</span>
                 </div>
               </div>
@@ -132,7 +132,7 @@
               <div class="col-lg-4">
                 <div class="input-group input-group-solid fv-row mb-2" id="div-large">
                   <input type="number" min="1" id="large" name="large"
-                    class="form-control form-control-lg form-control-solid mb-lg-0 mb-3" />
+                    class="form-control form-control-lg form-control-solid mb-lg-0 mb-3" value="1" />
                   <span class="input-group-text" id="basic-addon2">m<sup>2</sup></span>
                 </div>
               </div>
@@ -174,9 +174,7 @@
                 <select name="price_for" aria-label="{{ __('Pilih Harga Per') }}" data-control="select2"
                   data-placeholder="{{ __('Pilih Harga Per...') }}"
                   class="form-select form-select-solid form-select-lg fw-bold">
-                  <option value="JAM">
-                    {{ __('Jam') }}
-                  </option>
+                  {{-- <option value="JAM">{{ __('Jam') }}</option> --}}
                   <option value="HARI" selected>
                     {{ __('Hari') }}
                   </option>

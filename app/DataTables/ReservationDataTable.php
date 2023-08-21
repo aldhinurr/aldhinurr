@@ -53,7 +53,7 @@ class ReservationDataTable extends DataTable
                 $expired_payment = new DateTime($model->expired_payment, new DateTimeZone('Asia/Jakarta'));
 
                 if ($model->status == "MENUNGGU UPLOAD" && $now > $expired_payment) {
-                    $model->update(['status' => "EXPIRED"]);
+                    $model->update(['status' => "WAKTU HABIS"]);
                 }
                 return $model->status;
             })
@@ -85,7 +85,7 @@ class ReservationDataTable extends DataTable
             ->setTableId('reservation-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
-            ->orderBy(1, 'asc')
+            ->orderBy(1, 'desc')
             ->parameters([
                 "drawCallback" => "function() { KTMenu.createInstances(); }"
             ]);
@@ -100,7 +100,7 @@ class ReservationDataTable extends DataTable
     {
         return [
             Column::make('id')->title('#ID')->hidden(),
-            Column::make('created_at')->title('#DIbuat')->hidden(),
+            Column::make('created_at')->title('#Dibuat')->hidden(),
             Column::make('layanan_id')->title('Layanan')->data('layanan.name')->name('layanan.name'),
             Column::make('start_date')->title("Tgl. Mulai"),
             Column::make('end_date')->title("Tgl. Selesai"),

@@ -2,8 +2,8 @@
 
 @section('content')
   <!-- ================================
-                                                                                                                                          START FORM AREA
-                                                                                                                                      ================================= -->
+                                                                                                                                                          START FORM AREA
+                                                                                                                                                      ================================= -->
   <section class="listing-form section--padding">
     <div class="container">
       <div class="row">
@@ -13,7 +13,7 @@
           </div>
           <div class="form-box">
             <div class="form-title-wrap">
-              <h3 class="title"><i class="la la-building-o mr-2 text-gray"></i>Detail Laporan</h3>
+              <h3 class="title"><i class="la la-building-o mr-2 text-gray"></i>Form Laporan</h3>
             </div><!-- form-title-wrap -->
             <div class="form-content contact-form-action">
               <div class="alert alert-danger label-text" role="alert" style="display: none">
@@ -35,7 +35,7 @@
                     <div class="form-group select-contain w-100">
                       <select id="jenis" name="jenis" class="select-contain-select">
                         <option value="">--Jenis Laporan--</option>
-                        <option value="Laporan Kerusakan">Laporan Kerusakan</option>
+                        <option value="Laporan Kerusakan">Laporan Kerusakan (Minor)</option>
                         <option value="Laporan Kebersihan">Laporan Kebersihan</option>
                         <option value="Laporan Keamanan<">Laporan Keamanan</option>
                       </select>
@@ -67,12 +67,12 @@
               </form>
             </div><!-- end form-content -->
           </div><!-- end form-box -->
-          <div class="row submit-box">
+          <div class="row submit-box ml-1">
             <div class="btn-box">
-              <button type="button" id="submitButton" class="theme-btn">Simpan <i
+              <button type="button" id="submitButton" class="theme-btn theme-btn-small">Simpan <i
                   class="la la-arrow-right ml-1"></i></button>
             </div>
-            <ul class="list-items list--items ml-3 pt-2">
+            <ul class="list-items list--items ml-3 pt-1">
               <li><a href="{{ route('website.status') }}#my-laporan">Lihat Laporan Lainnya</a></li>
             </ul>
           </div><!-- end submit-box -->
@@ -81,8 +81,8 @@
     </div><!-- end container -->
   </section><!-- end listing-form -->
   <!-- ================================
-                                                                                                                                          END FORM AREA
-                                                                                                                                      ================================= -->
+                                                                                                                                                          END FORM AREA
+                                                                                                                                                      ================================= -->
 @endsection
 
 @section('scripts')

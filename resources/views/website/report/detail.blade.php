@@ -2,8 +2,8 @@
 
 @section('content')
   <!-- ================================
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            START CART AREA
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ================================= -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    START CART AREA
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ================================= -->
   <section class="cart-area section-padding">
     <div class="container">
       <div class="row">
@@ -62,6 +62,21 @@
                   </tr>
                   <tr>
                     <th scope="row" colspan="2">
+                      @if ($reportService->tanggal_selesai)
+                        <div class="container mb-3">
+                          <span class="title">
+                            Tanggal Selesai : {{ date('d-m-Y', strtotime($reportService->tanggal_selesai)) }}
+                          </span>
+                        </div>
+                      @endif
+                      @if ($reportService->alasan_dialihkan)
+                        <div class="container mb-3">
+                          <div class="title">
+                            Alasan : {{ $reportService->alasan_dialihkan }}
+                          </div>
+                          <a href="#">Silahkan klik disini untuk Pengajuan perbaikan.</a>
+                        </div>
+                      @endif
                       <div class="container">
                         <a href="#" class="title">Gambar Sesudah</a>
                         <div class="row padding-top-30px">
@@ -93,6 +108,6 @@
     </div><!-- end container -->
   </section><!-- end cart-area -->
   <!-- ================================
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            END CART AREA
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ================================= -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    END CART AREA
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ================================= -->
 @endsection

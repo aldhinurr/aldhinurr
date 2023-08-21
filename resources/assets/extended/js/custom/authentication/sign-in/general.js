@@ -16,10 +16,10 @@ var KTSigninGeneral = (function () {
                 email: {
                     validators: {
                         notEmpty: {
-                            message: "Nama Pengguna belum diisi",
+                            message: "Akun Office ITB belum diisi",
                         },
                         emailAddress: {
-                            message: "Nama Pengguna tidak valid.",
+                            message: "Akun Office ITB tidak valid.",
                         },
                     },
                 },

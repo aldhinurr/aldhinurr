@@ -41,7 +41,7 @@
                     <a href="#">{{ auth()->user()->name }} <i class="la la-angle-down"></i></a>
                     <ul class="dropdown-menu-item">
                       @if (auth()->user()->hasRole(['admin', 'superadmin']))
-                        <li><a href="{{ route('admin.index') }}">Halaman Admin</a></li>
+                        <li><a href="{{ route('admin.index') }}" target="_blank">Halaman Admin</a></li>
                       @endif
                       <li>
                         <a href="#" data-action="{{ theme()->getPageUrl('logout') }}" data-method="post"

@@ -19,6 +19,14 @@
   <!--end::Menu item-->
 
   <!--begin::Menu item-->
+  <div class="menu-item px-5 my-1">
+    <a href="{{ theme()->getPageUrl('website.index') }}" class="menu-link px-5" target="_blank">
+      {{ __('Halaman Website') }}
+    </a>
+  </div>
+  <!--end::Menu item-->
+
+  <!--begin::Menu item-->
   <div class="menu-item px-5">
     <a href="#" data-action="{{ theme()->getPageUrl('logout') }}" data-method="post" data-csrf="{{ csrf_token() }}"
       data-reload="true" class="button-ajax menu-link px-5">

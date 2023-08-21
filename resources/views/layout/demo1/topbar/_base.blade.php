@@ -20,7 +20,8 @@
       {{-- begin::Menu --}}
       <div class="cursor-pointer symbol {{ $toolbarUserAvatarHeightClass }}" data-kt-menu-trigger="click"
         data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
-        <img src="{{ auth()->user()->avatarUrl }}" alt="metronic" />
+        {{-- <img src="{{ auth()->user()->avatarUrl }}" alt="metronic" /> --}}
+        <img src="{{ asset('efacility/images/user_default.png') }}" alt="metronic" />
       </div>
       {{ theme()->getView('partials/topbar/_user-menu') }}
       {{-- end::Menu --}}
