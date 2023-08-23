@@ -186,6 +186,40 @@ return array(
                 ),
             ),
         ),
+
+        "building"  => array(
+            "*" => array(
+                "title"  => "Gedung",
+                "view"   => "building",
+                "assets" => array(
+                    "custom" => array(
+                        "css" => array(
+                            "plugins/custom/datatables/datatables.bundle.css",
+                        ),
+                        "js"  => array(
+                            "plugins/custom/datatables/datatables.bundle.js",
+                        ),
+                    ),
+                ),
+            ),
+        ),
+
+        "floor"  => array(
+            "*" => array(
+                "title"  => "Lantai dan Ruang",
+                "view"   => "floor",
+                "assets" => array(
+                    "custom" => array(
+                        "css" => array(
+                            "plugins/custom/datatables/datatables.bundle.css",
+                        ),
+                        "js"  => array(
+                            "plugins/custom/datatables/datatables.bundle.js",
+                        ),
+                    ),
+                ),
+            ),
+        ),
     )
 
 );

@@ -10,7 +10,9 @@ use App\Http\Controllers\Logs\SystemLogsController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\AnggaranController;
+use App\Http\Controllers\BuildingController;
 use App\Http\Controllers\FacilityController;
+use App\Http\Controllers\FloorController;
 use App\Http\Controllers\LayananController;
 use App\Http\Controllers\LayananGambarController;
 use App\Http\Controllers\ReportServiceController;
@@ -115,6 +117,27 @@ Route::middleware('auth')->group(function () {
             Route::get('', [ReportServiceController::class, 'index'])->name('report.index');
             Route::get('/{reportService:id}/detail', [ReportServiceController::class, 'show'])->name('report.show');
             Route::put('/{reportService:id}/update', [ReportServiceController::class, 'update'])->name('report.update');
+        });
+
+        // building pages
+        Route::prefix('building')->group(function () {
+            Route::get('', [BuildingController::class, 'index'])->name('building.index');
+            Route::get('/create', [BuildingController::class, 'create'])->name('building.create');
+            Route::post('/store', [BuildingController::class, 'store'])->name('building.store');
+            Route::get('/{building:id}/detail', [BuildingController::class, 'show'])->name('building.show');
+            Route::get('/{building:id}/edit', [BuildingController::class, 'edit'])->name('building.edit');
+            Route::put('/{building:id}/update', [BuildingController::class, 'update'])->name('building.update');
+            Route::get('/{building:id}/floors', [FloorController::class, 'index'])->name('building.floors');
+        });
+
+        // floor pages
+        Route::prefix('floor')->group(function () {
+            Route::get('/create/{building:id}', [FloorController::class, 'create'])->name('floor.create');
+            Route::post('/store', [FloorController::class, 'store'])->name('floor.store');
+            Route::get('/{floor:id}/detail', [FloorController::class, 'show'])->name('floor.show');
+            Route::get('/{floor:id}/edit', [FloorController::class, 'edit'])->name('floor.edit');
+            Route::put('/{floor:id}/update', [FloorController::class, 'update'])->name('floor.update');
+            Route::delete('/{floor:id}/delete', [FloorController::class, 'destroy'])->name('floor.delete');
         });
     });
 });

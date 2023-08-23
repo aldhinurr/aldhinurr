@@ -57,7 +57,7 @@ class FacilityController extends Controller
      */
     public function store(StoreFacilityRequest $request)
     {
-        $this->authorize("create layanan");
+        $this->authorize("create facility");
 
         DB::beginTransaction();
         try {
@@ -123,7 +123,7 @@ class FacilityController extends Controller
      */
     public function update(UpdateFacilityRequest $request, Facility $facility)
     {
-        $this->authorize("update layanan");
+        $this->authorize("update facility");
 
         DB::beginTransaction();
         try {

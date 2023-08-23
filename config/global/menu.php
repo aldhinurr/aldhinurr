@@ -10,10 +10,10 @@ return array(
             'icon'  => theme()->getSvgIcon("demo1/media/icons/duotune/art/art002.svg", "svg-icon-2"),
         ),
 
-        //// Modules
+        //// Fasilitas
         array(
             'classes' => array('content' => 'pt-8 pb-2'),
-            'content' => '<span class="menu-section text-muted text-uppercase fs-8 ls-1">Modules</span>',
+            'content' => '<span class="menu-section text-muted text-uppercase fs-8 ls-1">Fasilitas</span>',
         ),
 
         array(
@@ -44,6 +44,43 @@ return array(
             'role' => ["admin", "superadmin"],
         ),
 
+        //// Perbaikan
+        array(
+            'classes' => array('content' => 'pt-8 pb-2'),
+            'content' => '<span class="menu-section text-muted text-uppercase fs-8 ls-1">Perbaikan</span>',
+        ),
+
+        array(
+            'title' => 'Pengajuan',
+            'path'  => 'admin/report',
+            'icon'  => theme()->getSvgIcon("demo1/media/icons/duotune/general/gen025.svg", "svg-icon-2"),
+            'role' => ["admin", "superadmin"],
+        ),
+
+        // Master
+        array(
+            'title'      => 'Master',
+            'icon'       => array(
+                'svg'  => theme()->getSvgIcon("demo1/media/icons/duotune/general/gen017.svg", "svg-icon-2"),
+                'font' => '<i class="bi bi-person fs-2"></i>',
+            ),
+            'classes'    => array('item' => 'menu-accordion'),
+            'attributes' => array(
+                "data-kt-menu-trigger" => "click",
+            ),
+            'sub'        => array(
+                'class' => 'menu-sub-accordion menu-active-bg',
+                'items' => array(
+                    array(
+                        'title'  => 'Gedung',
+                        'path'   => 'admin/building',
+                        'bullet' => '<span class="bullet bullet-dot"></span>',
+                        'role' => ["admin", "superadmin"],
+
+                    ),
+                ),
+            ),
+        )
 
         //// User
         /* array(
