@@ -18,10 +18,11 @@
     </div> -->
     <!--end::Menu item-->
 
+
     <!--begin::Menu item-->
     <div class="menu-item px-3">
-      <a href="{{ route('building.floors', $model->id) }}" class="menu-link flex-stack px-3">
-        Lantai & Ruang
+      <a href="{{ route('building.edit', $model->id) }}" class="menu-link flex-stack px-3">
+        Ubah
       </a>
     </div>
     <!--end::Menu item-->
@@ -30,14 +31,14 @@
     <div class="separator my-2"></div>
     <!--end::Menu separator-->
 
+
     <!--begin::Menu item-->
     <div class="menu-item px-3">
-      <a href="{{ route('building.edit', $model->id) }}" class="menu-link flex-stack px-3">
-        Ubah Gedung
+      <a href="{{ route('building.floors', $model->id) }}" class="menu-link flex-stack px-3">
+        Lantai & Ruang
       </a>
     </div>
     <!--end::Menu item-->
-
     <!--begin::Menu item-->
     {{-- <div class="menu-item px-3">
       <a href="#" class="menu-link px-3 delete_menu_item">

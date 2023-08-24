@@ -76,6 +76,12 @@ return array(
                         'path'   => 'admin/building',
                         'bullet' => '<span class="bullet bullet-dot"></span>',
                         'role' => ["admin", "superadmin"],
+                    ),
+                    array(
+                        'title'  => 'Lantai & Ruang',
+                        'path'   => 'admin/floor',
+                        'bullet' => '<span class="bullet bullet-dot"></span>',
+                        'role' => ["admin", "superadmin"],
 
                     ),
                 ),

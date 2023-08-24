@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\FloorBuildingDataTable;
 use App\DataTables\FloorDataTable;
 use App\Models\Floor;
 use App\Http\Requests\StoreFloorRequest;
@@ -25,6 +26,16 @@ class FloorController extends Controller
                 "pages.floor.index",
                 ["building" => $building]
             );
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function building(FloorBuildingDataTable $dataTable)
+    {
+        $this->authorize("read floor");
+        return $dataTable->render("pages.floor.building");
     }
 
     /**

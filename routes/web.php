@@ -132,6 +132,7 @@ Route::middleware('auth')->group(function () {
 
         // floor pages
         Route::prefix('floor')->group(function () {
+            Route::get('', [FloorController::class, 'building'])->name('floor.building');
             Route::get('/create/{building:id}', [FloorController::class, 'create'])->name('floor.create');
             Route::post('/store', [FloorController::class, 'store'])->name('floor.store');
             Route::get('/{floor:id}/detail', [FloorController::class, 'show'])->name('floor.show');
