@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Building;
 use App\Models\Facility;
+use App\Models\Floor;
 use App\Models\Layanan;
 use App\Models\ReportService;
 use App\Models\Reservation;
@@ -371,8 +373,66 @@ class WebsiteController extends Controller
      */
     public function report()
     {
-
         return view('website.report.create');
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function repair()
+    {
+        return view('website.repair.create');
+    }
+
+    public function buildings(Request $request)
+    {
+        $search = $request->search;
+
+        $buildings = Building::where('buildings.status', 'AKTIF')
+            ->when($search != '', function ($q) use ($search) {
+                $q->where('buildings.name', 'like', '%' . $search . '%');
+            })
+            ->orderby('buildings.name', 'asc')
+            ->limit(20)->get();
+
+        $response = array();
+        foreach ($buildings as $building) {
+            $response[] = array(
+                "id" => $building->id,
+                "text" => $building->name,
+            );
+        }
+        return response()->json($response);
+    }
+
+    public function floors(Request $request)
+    {
+        $search = $request->search;
+        $building_id = $request->building_id;
+
+        $floors = Floor::where('floors.building_id', $building_id)
+            ->when($search != '', function ($q) use ($search) {
+                $q->where('floors.floor_classification', 'like', '%' . $search . '%')
+                    ->orWhere('floors.room_classification', 'like', '%' . $search . '%')
+                    ->orWhere('floors.room_description', 'like', '%' . $search . '%');
+            })
+            ->orderby('floors.floor_classification', 'asc')
+            ->limit(20)->get();
+
+        $response = array();
+        foreach ($floors as $floor) {
+            $response[] = array(
+                "id" => $floor->id,
+                "text" => $floor->floor_classification . " " . $floor->room_classification . " - " . $floor->room_description,
+                "number" => $floor->number,
+                "floor_classification" => $floor->floor_classification,
+                "room_classification" => $floor->room_classification,
+                "room_description" => $floor->room_description,
+            );
+        }
+        return response()->json($response);
     }
 
     /**

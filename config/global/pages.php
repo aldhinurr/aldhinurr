@@ -187,6 +187,23 @@ return array(
             ),
         ),
 
+        "repair"  => array(
+            "*" => array(
+                "title"  => "Pengajuan",
+                "view"   => "repair",
+                "assets" => array(
+                    "custom" => array(
+                        "css" => array(
+                            "plugins/custom/datatables/datatables.bundle.css",
+                        ),
+                        "js"  => array(
+                            "plugins/custom/datatables/datatables.bundle.js",
+                        ),
+                    ),
+                ),
+            ),
+        ),
+
         "building"  => array(
             "*" => array(
                 "title"  => "Gedung",

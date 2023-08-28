@@ -52,7 +52,7 @@ return array(
 
         array(
             'title' => 'Pengajuan',
-            'path'  => 'admin/report',
+            'path'  => 'admin/repair',
             'icon'  => theme()->getSvgIcon("demo1/media/icons/duotune/general/gen025.svg", "svg-icon-2"),
             'role' => ["admin", "superadmin"],
         ),

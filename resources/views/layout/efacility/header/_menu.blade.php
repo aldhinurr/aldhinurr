@@ -28,6 +28,7 @@
                     <li><a href="{{ route('website.rooms') }}">Ruangan</a></li>
                     <li><a href="{{ route('website.cars') }}">Kendaraan</a></li>
                     <li><a href="{{ route('website.report') }}">Laporan</a></li>
+                    <li><a href="{{ route('website.repair') }}">Perbaikan</a></li>
                   </ul>
                 </li>
                 <li>

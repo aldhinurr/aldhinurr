@@ -15,9 +15,11 @@ use App\Http\Controllers\FacilityController;
 use App\Http\Controllers\FloorController;
 use App\Http\Controllers\LayananController;
 use App\Http\Controllers\LayananGambarController;
+use App\Http\Controllers\RepairServiceController;
 use App\Http\Controllers\ReportServiceController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\WebsiteController;
+use App\Models\RepairService;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 
@@ -53,11 +55,14 @@ Route::get('/rooms/{layanan:id}/detail', [WebsiteController::class, 'show_room']
 Route::get('/cars', [WebsiteController::class, 'cars'])->name('website.cars');
 Route::get('/cars/{layanan:id}/detail', [WebsiteController::class, 'show_car'])->name('website.car.show');
 Route::get('/report', [WebsiteController::class, 'report'])->name('website.report');
+Route::get('/repair', [WebsiteController::class, 'repair'])->name('website.repair');
 Route::get('/status', [WebsiteController::class, 'status'])->name('website.status');
 Route::get('/status/calendar', [WebsiteController::class, 'status_calendar'])->name('website.status.calendar');
 Route::get('/status/report', [WebsiteController::class, 'status_report'])->name('website.status.report');
 Route::get('/status/report/calendar', [WebsiteController::class, 'status_report_calendar'])->name('website.status.report.calendar');
 Route::get('/facilities', [WebsiteController::class, 'facilities'])->name('website.facilities');
+Route::get('/buildings', [WebsiteController::class, 'buildings'])->name('website.buildings');
+Route::get('/floors', [WebsiteController::class, 'floors'])->name('website.floors');
 
 Route::get('/reservation/check', [ReservationController::class, 'check'])->name('website.reservation.check');
 Route::get('/report/{reportService:id}/detail', [ReportServiceController::class, 'detail'])->name('website.report.show');
@@ -69,6 +74,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/reservation/{reservation:id}/receipt/upload', [ReservationController::class, 'upload_receipt'])->name('website.reservation.receipt.upload');
 
     Route::post('/report/store', [ReportServiceController::class, 'store'])->name('website.report.store');
+    Route::post('/repair/store', [RepairServiceController::class, 'store'])->name('website.repair.store');
 
     // admin
     Route::prefix('admin')->group(function () {
@@ -139,6 +145,12 @@ Route::middleware('auth')->group(function () {
             Route::get('/{floor:id}/edit', [FloorController::class, 'edit'])->name('floor.edit');
             Route::put('/{floor:id}/update', [FloorController::class, 'update'])->name('floor.update');
             Route::delete('/{floor:id}/delete', [FloorController::class, 'destroy'])->name('floor.delete');
+        });
+
+        // repair pages
+        Route::prefix('repair')->group(function () {
+            Route::get('', [RepairServiceController::class, 'index'])->name('repair.index');
+            Route::get('/{repairService:id}/detail', [RepairServiceController::class, 'show'])->name('repair.show');
         });
     });
 });

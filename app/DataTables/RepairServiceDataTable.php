@@ -2,14 +2,15 @@
 
 namespace App\DataTables;
 
-use App\Models\Building;
+use App\Models\RepairService;
+use Carbon\Carbon;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class BuildingDataTable extends DataTable
+class RepairServiceDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -20,12 +21,18 @@ class BuildingDataTable extends DataTable
     public function dataTable($query)
     {
         return datatables()
-            ->eloquent($query->where('status', '!=', 'DIHAPUS'))
-            ->editColumn('status', function (Building $model) {
-                return view('pages.building.columns._status-column', compact('model'));
+            ->eloquent($query)
+            ->editColumn('created_at', function (RepairService $model) {
+                return Carbon::createFromFormat('Y-m-d H:i:s', $model->created_at)->format('d-m-Y');
             })
-            ->addColumn('action', function (Building $model) {
-                return view('pages.building.columns._action-menu', compact('model'));
+            ->editColumn('total', function (RepairService $model) {
+                return number_format($model->total, 2);
+            })
+            ->editColumn('status', function (RepairService $model) {
+                return view('pages.repair.columns._status-column', compact('model'));
+            })
+            ->addColumn('action', function (RepairService $model) {
+                return view('pages.repair.columns._action-menu', compact('model'));
             })
             ->skipTotalRecords();
     }
@@ -33,10 +40,10 @@ class BuildingDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Building $model
+     * @param \App\Models\RepairService $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Building $model)
+    public function query(RepairService $model)
     {
         return $model->newQuery();
     }
@@ -49,12 +56,12 @@ class BuildingDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-            ->setTableId('building-table')
+            ->setTableId('repairservice-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->orderBy(1, 'desc')
             ->parameters([
-                'drawCallback' => 'function() { handleDeleteRows(); KTMenu.createInstances(); }',
+                'drawCallback' => 'function() { KTMenu.createInstances(); }',
             ]);
     }
 
@@ -67,8 +74,10 @@ class BuildingDataTable extends DataTable
     {
         return [
             Column::make('id')->title('#ID')->hidden(),
-            Column::make('created_at')->title('#Dibuat')->hidden(),
-            Column::make('name')->title('Nama'),
+            Column::make('created_at')->title('Tanggal'),
+            Column::make('created_by')->title('Pengguna'),
+            Column::make('title')->title('Judul'),
+            Column::make('total')->title('Total'),
             Column::make('status')->title('Status'),
             Column::computed('action')->title('Kelola')
                 ->exportable(false)
@@ -85,6 +94,6 @@ class BuildingDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'Building_' . date('YmdHis');
+        return 'RepairService_' . date('YmdHis');
     }
 }
