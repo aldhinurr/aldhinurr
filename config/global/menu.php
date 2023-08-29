@@ -45,7 +45,7 @@ return array(
         ),
 
         //// Perbaikan
-        array(
+        /* array(
             'classes' => array('content' => 'pt-8 pb-2'),
             'content' => '<span class="menu-section text-muted text-uppercase fs-8 ls-1">Perbaikan</span>',
         ),
@@ -87,7 +87,7 @@ return array(
                 ),
             ),
         )
-
+         */
         //// User
         /* array(
             'classes' => array('content' => 'pt-8 pb-2'),
