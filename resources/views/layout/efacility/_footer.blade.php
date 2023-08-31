@@ -109,8 +109,9 @@
           <div class="col-lg-6 responsive-column">
             <div class="footer-item">
               <div class="footer-logo padding-bottom-30px">
-                <a href="index.html" class="foot__logo"><img
-                    src="{{ asset('efacility/images/logo-efacility-hitam.png') }}" alt="logo" /></a>
+                <a href="{{ route('website.index') }}" class="foot__logo"><img
+                    src="{{ asset('efacility/images/logo-efacility-hitam.png') }}" alt="logo"
+                    style="width: 20rem;" /></a>
               </div>
               <!-- end logo -->
               <p class="footer__desc">
@@ -138,8 +139,9 @@
               </h4>
               <ul class="list-items list--items">
                 <li><a href="{{ route('website.rooms') }}">Ruangan</a></li>
-                <li><a href="#">Kendaraan</a></li>
-                <li><a href="{{ route('website.report') }}">Laporan</a></li>
+                <li><a href="{{ route('website.cars') }}">Kendaraan</a></li>
+                {{-- <li><a href="{{ route('website.report') }}">Laporan</a></li> --}}
+                <li><a href="https://sipa.nrcn.itb.ac.id/listtools" target="_blank">Uji Laboratorium</a></li>
               </ul>
             </div>
             <!-- end footer-item -->

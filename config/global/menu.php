@@ -37,7 +37,7 @@ return array(
             'role' => ["admin", "superadmin"],
         ),
 
-        array(
+        /* array(
             'title' => 'Laporan',
             'path'  => 'admin/report',
             'icon'  => theme()->getSvgIcon("demo1/media/icons/duotune/communication/com004.svg", "svg-icon-2"),
@@ -45,7 +45,7 @@ return array(
         ),
 
         //// Perbaikan
-        /* array(
+        array(
             'classes' => array('content' => 'pt-8 pb-2'),
             'content' => '<span class="menu-section text-muted text-uppercase fs-8 ls-1">Perbaikan</span>',
         ),
@@ -86,8 +86,8 @@ return array(
                     ),
                 ),
             ),
-        )
-         */
+        ) */
+
         //// User
         /* array(
             'classes' => array('content' => 'pt-8 pb-2'),

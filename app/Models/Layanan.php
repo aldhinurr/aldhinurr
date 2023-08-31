@@ -100,6 +100,9 @@ class Layanan extends Model
             ->when($params->large != null, function ($q) use ($params) {
                 $q->where('large', $params->large);
             })
+            ->when($params->keyword != null, function ($q) use ($params) {
+                $q->where('layanans.name', "like", "%" . $params->keyword . "%");
+            })
             ->orderby('jml_sewa', 'desc')->orderby('layanans.name', 'asc')
             ->paginate($show);
     }

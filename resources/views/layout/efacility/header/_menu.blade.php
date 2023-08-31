@@ -27,8 +27,9 @@
                   <ul class="dropdown-menu-item">
                     <li><a href="{{ route('website.rooms') }}">Ruangan</a></li>
                     <li><a href="{{ route('website.cars') }}">Kendaraan</a></li>
-                    <li><a href="{{ route('website.report') }}">Laporan</a></li>
+                    {{-- <li><a href="{{ route('website.report') }}">Laporan</a></li> --}}
                     {{-- <li><a href="{{ route('website.repair') }}">Perbaikan</a></li> --}}
+                    <li><a href="https://sipa.nrcn.itb.ac.id/listtools" target="_blank">Uji Laboratorium</a></li>
                   </ul>
                 </li>
                 <li>
@@ -42,7 +43,7 @@
                     <a href="#">{{ auth()->user()->name }} <i class="la la-angle-down"></i></a>
                     <ul class="dropdown-menu-item">
                       @if (auth()->user()->hasRole(['admin', 'superadmin']))
-                        <li><a href="{{ route('admin.index') }}" target="_blank">Halaman Admin</a></li>
+                        <li><a href="{{ route('admin.index') }}" target="_blank">Halaman Pengelola</a></li>
                       @endif
                       <li>
                         <a href="#" data-action="{{ theme()->getPageUrl('logout') }}" data-method="post"

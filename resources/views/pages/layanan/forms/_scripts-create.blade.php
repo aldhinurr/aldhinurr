@@ -153,6 +153,7 @@
 
     var handleForm = function() {
       $('[id="type"]').select2({
+        placeholder: "Pilih Jenis...",
         data: [{
             id: "RUANG",
             text: 'Ruangan'

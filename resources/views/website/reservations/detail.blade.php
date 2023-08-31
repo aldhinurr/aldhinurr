@@ -2,8 +2,8 @@
 
 @section('content')
   <!-- ================================
-                                                                                                                                                                                                                                                                                                                                                                                                                              START CART AREA
-                                                                                                                                                                                                                                                                                                                                                                                                                          ================================= -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                        START CART AREA
+                                                                                                                                                                                                                                                                                                                                                                                                                                    ================================= -->
   <section class="cart-area section-padding">
     <div class="container">
       <div class="row">
@@ -99,7 +99,13 @@
                     <td>Rp. {{ number_format($reservation->fee, 2) }}</td>
                     <td>Rp. {{ number_format($reservation->extra_fee, 2) }}</td>
                     <td>Rp. {{ number_format($reservation->total, 2) }}</td>
-                    <td>{{ $reservation->status }}</td>
+                    <td class="text-center" width="60px">
+                      @if ($reservation->status == 'MENUNGGU UPLOAD')
+                        {{ __('Menunggu upload bukti pembayaran / pengalihan anggaran') }}
+                      @else
+                        {{ $reservation->status }}
+                      @endif
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -142,8 +148,8 @@
     </div><!-- end container -->
   </section><!-- end cart-area -->
   <!-- ================================
-                                                                                                                                                                                                                                                                                                                                                                                                                              END CART AREA
-                                                                                                                                                                                                                                                                                                                                                                                                                          ================================= -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                        END CART AREA
+                                                                                                                                                                                                                                                                                                                                                                                                                                    ================================= -->
 @endsection
 
 

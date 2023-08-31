@@ -2,8 +2,8 @@
 
 @section('content')
   <!-- ================================
-                                                                                                                                                                                                                                                      START BREADCRUMB AREA
-                                                                                                                                                                                                                                                  ================================= -->
+                                                                                                                                                                                                                                                                                                        START BREADCRUMB AREA
+                                                                                                                                                                                                                                                                                                    ================================= -->
   <section class="check-availability-area section-bg section-padding">
     <div class="breadcrumb-wrap">
       <div class="container">
@@ -16,7 +16,7 @@
               <div class="search-fields-container margin-top-30px">
                 <div class="contact-form-action">
                   <form action="#" class="row">
-                    <div class="col-lg-4 col-sm-6 pr-0">
+                    <div class="col-lg-3 col-sm-6 pr-0">
                       <div class="input-box">
                         <span class="la la-map-marker form-icon"></span>
                         <label class="label-text">Lokasi</label>
@@ -28,12 +28,24 @@
                               <option value="SARAGA">Saraga</option>
                               <option value="JATINANGOR">Jatinangor</option>
                               <option value="CIREBON">Cirebon</option>
+                              <option value="SBM JAKARTA">SBM Jakarta</option>
+                              <option value="BOSSCHA">Bosscha</option>
                             </select>
                           </div>
                         </div>
                       </div>
                     </div><!-- end col-lg-3 -->
                     <div class="col-lg-3 col-sm-6 pr-0">
+                      <div class="input-box">
+                        <span class="la la-building form-icon"></span>
+                        <label class="label-text">Ruangan</label>
+                        <div class="form-group">
+                          <input class="form-control" type="text" id="keyword" name="keyword"
+                            placeholder="Nama Ruangan" />
+                        </div>
+                      </div>
+                    </div><!-- end col-lg-3 -->
+                    <div class="col-lg-2 col-sm-6 pr-0">
                       <div class="input-box">
                         <span class="la la-calendar form-icon"></span>
                         <label class="label-text">Mulai</label>
@@ -42,7 +54,7 @@
                         </div>
                       </div>
                     </div><!-- end col-lg-3 -->
-                    <div class="col-lg-3 col-sm-6 pr-0">
+                    <div class="col-lg-2 col-sm-6 pr-0">
                       <div class="input-box">
                         <span class="la la-calendar form-icon"></span>
                         <label class="label-text">Selesai</label>
@@ -74,12 +86,12 @@
     </div><!-- end breadcrumb-wrap -->
   </section><!-- end breadcrumb-area -->
   <!-- ================================
-                                                                                                                                                                                                                                                    END BREADCRUMB AREA
-                                                                                                                                                                                                                                                  ================================= -->
+                                                                                                                                                                                                                                                                                                      END BREADCRUMB AREA
+                                                                                                                                                                                                                                                                                                    ================================= -->
 
   <!-- ================================
-                                                                                                                                                                                                                                                    START CARD AREA
-                                                                                                                                                                                                                                                  ================================= -->
+                                                                                                                                                                                                                                                                                                      START CARD AREA
+                                                                                                                                                                                                                                                                                                    ================================= -->
   <section class="card-area section--padding">
     <div class="container">
       <div class="row" id="data-wrapper">
@@ -110,8 +122,8 @@
     </div><!-- end container -->
   </section><!-- end card-area -->
   <!-- ================================
-                                                                                                                                                                                                                                                    END CARD AREA
-                                                                                                                                                                                                                                                  ================================= -->
+                                                                                                                                                                                                                                                                                                      END CARD AREA
+                                                                                                                                                                                                                                                                                                    ================================= -->
 @endsection
 
 @section('scripts')
@@ -148,12 +160,13 @@
     --------------------------------------------*/
     function infinteLoadMore(page) {
       var location = $('#location').val();
+      var keyword = $('#keyword').val();
       var start_date = $('#start_date').val();
       var end_date = $('#end_date').val();
 
       $.ajax({
           url: ENDPOINT + "?page=" + page + "&location=" + location + "&start_date=" +
-            start_date, // + "?end_date=" + end_date,
+            start_date + "&keyword=" + keyword,
           datatype: "html",
           type: "get",
           beforeSend: function() {
