@@ -2,8 +2,8 @@
 
 @section('content')
   <!-- ================================
-                                                                                                                                                                                                                                                                                      START BREADCRUMB AREA
-                                                                                                                                                                                                                                                                                  ================================= -->
+                                                                                                                                                                                                                                                                                                          START BREADCRUMB AREA
+                                                                                                                                                                                                                                                                                                      ================================= -->
   <section class="check-availability-area section-bg section-padding">
     <div class="breadcrumb-wrap">
       <div class="container">
@@ -16,7 +16,7 @@
               <div class="search-fields-container margin-top-30px">
                 <div class="contact-form-action">
                   <form action="#" class="row">
-                    <div class="col-lg-3 col-sm-6 pr-0">
+                    <div class="col-lg-2 col-sm-6 pr-0">
                       <div class="input-box">
                         <span class="la la-map-marker form-icon"></span>
                         <label class="label-text">Lokasi</label>
@@ -28,6 +28,26 @@
                               <option value="SARAGA">Saraga</option>
                               <option value="JATINANGOR">Jatinangor</option>
                               <option value="CIREBON">Cirebon</option>
+                              <option value="SBM JAKARTA">SBM Jakarta</option>
+                              <option value="BOSSCHA">Bosscha</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div><!-- end col-lg-3 -->
+                    <div class="col-lg-2 col-sm-6 pr-0">
+                      <div class="input-box">
+                        <span class="la la-car form-icon"></span>
+                        <label class="label-text">Jenis</label>
+                        <div class="form-group">
+                          <div class="select-contain select-contain-shadow w-auto">
+                            <select id="large" class="select-contain-select">
+                              <option value="">Pilih Jenis</option>
+                              <option value=1>Mobil</option>
+                              <option value=2>Motor</option>
+                              <option value=3>Shuttle</option>
+                              <option value=4>Bis</option>
+                              <option value=5>Truk</option>
                             </select>
                           </div>
                         </div>
@@ -38,16 +58,8 @@
                         <span class="la la-car form-icon"></span>
                         <label class="label-text">Kendaraan</label>
                         <div class="form-group">
-                          <div class="select-contain select-contain-shadow w-auto">
-                            <select id="large" class="select-contain-select">
-                              <option value="">Pilih Kendaraan</option>
-                              <option value=1>Mobil</option>
-                              <option value=2>Motor</option>
-                              <option value=3>Shuttle</option>
-                              <option value=4>Bis</option>
-                              <option value=5>Truk</option>
-                            </select>
-                          </div>
+                          <input class="form-control pl-3" type="text" id="keyword" name="keyword"
+                            placeholder="Nama Kendaraan" />
                         </div>
                       </div>
                     </div><!-- end col-lg-3 -->
@@ -69,7 +81,7 @@
                         </div>
                       </div>
                     </div><!-- end col-lg-3 -->
-                    <div class="col-lg-2 col-sm-6">
+                    <div class="col-lg-1 col-sm-6">
                       <div class="input-box">
                         <label class="label-text"></label>
                         <div class="form-group pt-2">
@@ -92,12 +104,12 @@
     </div><!-- end breadcrumb-wrap -->
   </section><!-- end breadcrumb-area -->
   <!-- ================================
-                                                                                                                                                                                                                                                                                    END BREADCRUMB AREA
-                                                                                                                                                                                                                                                                                  ================================= -->
+                                                                                                                                                                                                                                                                                                        END BREADCRUMB AREA
+                                                                                                                                                                                                                                                                                                      ================================= -->
 
   <!-- ================================
-                                                                                                                                                                                                                                                                                    START CARD AREA
-                                                                                                                                                                                                                                                                                  ================================= -->
+                                                                                                                                                                                                                                                                                                        START CARD AREA
+                                                                                                                                                                                                                                                                                                      ================================= -->
   <section class="card-area section--padding">
     <div class="container">
       <div class="row" id="data-wrapper">
@@ -120,16 +132,16 @@
           xml:space="preserve">
           <path fill="#000"
             d="M73,50c0-12.7-10.3-23-23-23S27,37.3,27,50 M30.9,50c0-10.5,8.5-19.1,19.1-19.1S69.1,39.5,69.1,50">
-            <animateTransform attributeName="transform" attributeType="XML" type="rotate" dur="1s" from="0 50 50"
-              to="360 50 50" repeatCount="indefinite" />
+            <animateTransform attributeName="transform" attributeType="XML" type="rotate" dur="1s"
+              from="0 50 50" to="360 50 50" repeatCount="indefinite" />
           </path>
         </svg>
       </div>
     </div><!-- end container -->
   </section><!-- end card-area -->
   <!-- ================================
-                                                                                                                                                                                                                                                                                    END CARD AREA
-                                                                                                                                                                                                                                                                                  ================================= -->
+                                                                                                                                                                                                                                                                                                        END CARD AREA
+                                                                                                                                                                                                                                                                                                      ================================= -->
 @endsection
 
 @section('scripts')
@@ -172,13 +184,14 @@
     --------------------------------------------*/
     function infinteLoadMore(page) {
       var location = $('#location').val();
+      var keyword = $('#keyword').val();
       var large = $('#large').val();
       var start_date = $('#start_date').val();
       var end_date = $('#end_date').val();
 
       $.ajax({
           url: ENDPOINT + "?page=" + page + "&location=" + location + "&large=" + large + "&start_date=" +
-            start_date, // + "?end_date=" + end_date,
+            start_date + "&keyword=" + keyword,
           datatype: "html",
           type: "get",
           beforeSend: function() {

@@ -28,10 +28,11 @@
           <!--end::Label-->
 
           <!--begin::Col-->
-          <div class="col-lg-4 fv-row">
+          <div class="col-lg-3 fv-row">
             <select id="type" name="type" aria-label="{{ __('Pilih Jenis Layanan') }}"
-              data-placeholder="{{ __('Pilih Jenis Layanan...') }}"
+              data-placeholder="{{ __('Pilih Jenis...') }}"
               class="form-select form-select-solid form-select-lg fw-bold">
+              <option value="">{{ __('Pilih Jenis...') }}</option>
             </select>
           </div>
           <!--end::Col-->
@@ -79,10 +80,10 @@
           <!--begin::Col-->
           <div class="col-lg-3 fv-row">
             <select name="location" aria-label="{{ __('Pilih Lokasi') }}" data-control="select2"
-              data-placeholder="{{ __('Pilih Lokasi Layanan...') }}"
+              data-placeholder="{{ __('Pilih Lokasi...') }}"
               class="form-select form-select-solid form-select-lg fw-bold">
-              <option value="">{{ __('Pilih Lokasi Layanan...') }}</option>
-              <option value="GANESHA" selected>
+              <option value="">{{ __('Pilih Lokasi...') }}</option>
+              <option value="GANESHA">
                 {{ __('GANESHA') }}
               </option>
               <option value="SARAGA">
@@ -93,6 +94,12 @@
               </option>
               <option value="CIREBON">
                 {{ __('CIREBON') }}
+              </option>
+              <option value="SBM JAKARTA">
+                {{ __('SBM JAKARTA') }}
+              </option>
+              <option value="BOSSCHA">
+                {{ __('BOSSCHA') }}
               </option>
             </select>
           </div>

@@ -84,13 +84,15 @@
       fasilitasButton.addEventListener("click", function(e) {
         e.preventDefault();
 
+        var days = $('#duration').val();
         var fasilitas = $('#fasilitas').select2('data')['0'];
+        var fasilitasFee = parseFloat(days) * parseFloat(fasilitas['fee']);
         var feeFasilitasHtml = `
           <div class="custom-checkbox">
-            <input type="hidden" class="extra-fee" value="${fasilitas['id']}" id="facility_${fasilitas['id']}" data-fee="${fasilitas['fee']}" />
+            <input type="hidden" class="extra-fee" value="${fasilitas['id']}" id="facility_${fasilitas['id']}" data-fee="${fasilitasFee}" />
             <label for="cleaningChb" class="d-flex justify-content-between align-items-center">
               ${fasilitas['name']} (${fasilitas['fee_for']} ${fasilitas['satuan']})<span onclick="javascript:removeFacility('facility_${fasilitas['id']}')" class="text-black font-weight-regular delete-facility">
-              Rp. ${parseFloat(fasilitas['fee'], 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString()}<i class="la la-trash form-icon text-danger"></i></span></label>
+              Rp. ${parseFloat(fasilitasFee, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString()}<i class="la la-trash form-icon text-danger"></i></span></label>
           </div>
         `
 
@@ -98,7 +100,7 @@
         $('#extraServiceList').append(feeFasilitasHtml);
 
         // hitung total
-        addFee = addFee + parseInt(fasilitas['fee']);
+        addFee = addFee + parseInt(fasilitasFee);
         sumFeeReservation();
 
         $('#fasilitas').empty();

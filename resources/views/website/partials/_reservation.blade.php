@@ -2,9 +2,6 @@
   <div class="sidebar-widget single-content-widget">
     <div class="row justify-content-between m-0">
       <h3 class="title stroke-shape">Sewa</h3>
-      <h4 id="is_available">
-        <span class="badge badge-success">Tersedia</span>
-      </h4>
     </div>
     <div class="sidebar-widget-item">
       <div class="contact-form-action">
@@ -29,6 +26,9 @@
               <input class="date-range form-control" type="text" name="daterange-single" id="end_date">
             </div>
           </div>
+          <h4 id="is_available" class="pb-2">
+            <span class="badge badge-success">Tersedia</span>
+          </h4>
           <div class="total-price">
             <label class="d-flex justify-content-between align-items-center">Duration
               <span class="text-black font-weight-regular"><input type="text" id="duration" name="duration"
@@ -51,7 +51,7 @@
             </div>
           </div>
           <div class="input-box">
-            <label class="label-text">Fasilitas</label>
+            <label class="label-text">Tambah Fasilitas</label>
             <div class="form-group">
               <select id="fasilitas" name="fasilitas" class="form-control w-100"></select>
               <div class="d-flex justify-content-end">
@@ -60,8 +60,8 @@
               </div>
             </div>
           </div>
-          <h3 class="title stroke-shape">Fasilitas Tambahan</h3>
-          <div id="extraServiceList">
+          <h3 class="title stroke-shape" hidden>Fasilitas Tambahan</h3>
+          <div id="extraServiceList" class="pt-3">
             <label for="info-extra-service" id="info-extra-service">Tidak ada fasilitas tambahan.</label>
             {{-- <div class="custom-checkbox">
               <input type="checkbox" name="cleaning" id="cleaningChb" value="15.00" />

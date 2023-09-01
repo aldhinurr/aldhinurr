@@ -19,7 +19,7 @@
                   Sewa
                 </a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item" hidden>
                 <a class="nav-link" id="my-laporan-tab" data-toggle="tab" href="#my-laporan" role="tab"
                   aria-controls="my-laporan" aria-selected="false">
                   Laporan
@@ -217,7 +217,7 @@
 
 @section('scripts')
   <script src="{{ asset('demo1/plugins/custom/fullcalendar/fullcalendar.bundle.js') }}"></script>
-  <script>
+  <script type="text/javascript">
     $(document).ready(function() {
       window.onload = function() {
 
