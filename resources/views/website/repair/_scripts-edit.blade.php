@@ -168,8 +168,8 @@
           <div class="row">
             <div class="px-3">${childDetail.number}.${idx + 1}</div>
             <div class="col-lg-9 mr-1">${e.name}</div>
-            <div class="col-lg-2 pl-2 pr-0" style="max-width:15%">Rp. ${parseFloat(e.cost, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString()}</div>
-            <span onclick="javascript:deleteChildRow('${id}_${idx}')"><i class="la la-trash text-danger"></i></span>
+            <div class="col-lg-2 px-3" style="max-width:15%">Rp. ${parseFloat(e.cost, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString()}</div>
+            <span class="px-2" onclick="javascript:deleteChildRow('${id}_${idx}')"><i class="la la-trash text-danger"></i></span>
           </div>
       </div>`);
     });
@@ -218,7 +218,6 @@
 
   function hitungTotal() {
     var cost = 0;
-    console.log(detail);
     if (Object.keys(detail)) {
       Object.keys(detail).forEach(id => {
         var fee = detail[id].total;
@@ -251,7 +250,6 @@
 
       // Display the key/value pairs
       for (var pair of data.entries()) {
-        console.log(pair[0] + ', ' + pair[1]);
         if (pair[0] == "unit" && pair[1] == "") {
           $('#pengajuan-message').html('Unit belum diisi.').fadeIn().delay(3000).fadeOut();
           $('#unit').focus();
@@ -276,7 +274,7 @@
 
       // Send ajax request
       $.ajax({
-        url: "{{ route('website.repair.store') }}",
+        url: "{{ route('website.repair.update', $repairService->id) }}",
         type: 'POST',
         data: data,
         dataType: 'json',
@@ -314,5 +312,41 @@
       button.disabled = false;
       $('#pengajuan-message').html(error).fadeIn().delay(3000).fadeOut();
     }
+  }
+
+  // set data edit
+  var details = <?= json_encode($repairServiceDetails, JSON_PRETTY_PRINT) ?>;
+  if (Object.keys(details)) {
+    Object.keys(details).forEach((id, idx) => {
+      var floor = details[id];
+      number = idx + 1;
+
+      // update detail
+      detail[id] = {
+        number: number,
+        total: parseFloat(floor.total),
+        data: floor.data
+      };
+
+      // update table
+      var rowAdd = detailTable.row.add([
+        floor.building_id,
+        id,
+        number,
+        floor.building,
+        floor.floor,
+        floor.classification,
+        floor.description,
+        floor.total,
+        `<span onclick="javascript:deleteRow('${id}')"><i class="la la-trash text-danger"></i></span>`
+      ]).draw(false)
+
+
+      // update child
+      rowAdd.child(formatSubRow(id)).show();
+
+      // update total
+      hitungTotal();
+    })
   }
 </script>

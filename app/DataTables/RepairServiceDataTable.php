@@ -21,15 +21,21 @@ class RepairServiceDataTable extends DataTable
     public function dataTable($query)
     {
         return datatables()
-            ->eloquent($query)
+            ->eloquent($query->where('status', "!=", "Draft"))
             ->editColumn('created_at', function (RepairService $model) {
                 return Carbon::createFromFormat('Y-m-d H:i:s', $model->created_at)->format('d-m-Y');
             })
-            ->editColumn('total', function (RepairService $model) {
-                return number_format($model->total, 2);
+            ->editColumn('created_by', function (RepairService $model) {
+                return view('pages.repair.columns._pengguna-column', compact('model'));
+            })
+            ->editColumn('title', function (RepairService $model) {
+                return view('pages.repair.columns._title-column', compact('model'));
             })
             ->editColumn('status', function (RepairService $model) {
                 return view('pages.repair.columns._status-column', compact('model'));
+            })
+            ->editColumn('total', function (RepairService $model) {
+                return number_format($model->total, 2);
             })
             ->addColumn('action', function (RepairService $model) {
                 return view('pages.repair.columns._action-menu', compact('model'));

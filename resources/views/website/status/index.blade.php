@@ -25,6 +25,12 @@
                   Laporan
                 </a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link" id="my-perbaikan-tab" data-toggle="tab" href="#my-perbaikan" role="tab"
+                  aria-controls="my-perbaikan" aria-selected="false">
+                  Pengajuan Perbaikan
+                </a>
+              </li>
             </ul>
           </div><!-- end section-tab -->
           <div class="tab-content padding-top-10px margin-bottom-40px" id="myTabcontent">
@@ -92,7 +98,8 @@
                     </div>
                   </div><!-- end form-box -->
                 </div>
-                <div class="tab-pane fade show" id="my-sewa-table" role="tabpanel" aria-labelledby="my-sewa-table-tab">
+                <div class="tab-pane fade show" id="my-sewa-table" role="tabpanel"
+                  aria-labelledby="my-sewa-table-tab">
                   <div class="form-box">
                     <div class="form-content">
                       <div class="table-form table-responsive">
@@ -207,6 +214,84 @@
                 </div>
               </div>
             </div><!-- end tab-pane -->
+            <div class="tab-pane fade" id="my-perbaikan" role="tabpanel" aria-labelledby="my-perbaikan-tab">
+              <div class="filter-wrap margin-bottom-30px">
+                <div class="filter-bar d-flex align-items-center justify-content-between">
+                  <div class="filter-bar-filter d-flex flex-wrap align-items-center">
+                    <div class="filter-option">
+                      <div class="checkbox-wrap pt-1">
+                        <div class="custom-checkbox">
+                          <input type="checkbox" id="only_me-repair" name="only_me-repair" value=1>
+                          <label for="only_me-repair">
+                            <h3 class="title font-size-16 pt-1">Saya</h3>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="filter-option">
+                      <div class="contact-form-action">
+                        <div class="form-group mb-0">
+                          <input class="form-control" type="text" id="search-repair" name="search-repair"
+                            placeholder="Cari" style="padding-left: 20px">
+                          <button class="search-btn"><i class="la la-search"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                  </div><!-- end filter-bar-filter -->
+                  <div class="section-tab section-tab-3">
+                    <ul class="nav nav-tabs" id="myTabDetail">
+                      <li class="nav-item" hidden>
+                        <a class="nav-link " id="my-repair-calendar-tab" data-toggle="tab" href="#my-repair-calendar"
+                          role="tab" aria-controls="my-repair-calendar" aria-selected="true">
+                          <i class="la la-calendar"></i>
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link active" id="my-repair-table-tab" data-toggle="tab" href="#my-repair-table"
+                          role="tab" aria-controls="my-repair-table" aria-selected="true">
+                          <i class="la la-th-list"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div><!-- end filter-bar -->
+              </div><!-- end filter-wrap -->
+
+              <div class="tab-content padding-top-10px margin-bottom-40px" id="myTabcontent">
+                <div class="tab-pane fade show" id="my-repair-calendar" role="tabpanel" hidden
+                  aria-labelledby="my-repair-calendar-tab">
+                  <div class="form-box">
+                    <div class="form-content">
+                      <div id="kt_docs_fullcalendar_repair"></div>
+                    </div>
+                  </div><!-- end form-box -->
+                </div>
+                <div class="tab-pane fade show active" id="my-repair-table" role="tabpanel"
+                  aria-labelledby="my-repair-table-tab">
+                  <div class="form-box">
+                    <div class="form-content">
+                      <div class="table-form table-responsive">
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th scope="col">Tanggal</th>
+                              <th scope="col">Pengguna</th>
+                              <th scope="col">Judul</th>
+                              <th scope="col">Total</th>
+                              <th scope="col">Status</th>
+                              <th scope="col">Opsi</th>
+                            </tr>
+                          </thead>
+                          <tbody id="repair-data">
+                            @include('website.status._data-repair')
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div><!-- end form-box -->
+                </div>
+              </div>
+            </div><!-- end tab-pane -->
           </div>
         </div><!-- end col-lg-9 -->
       </div><!-- end row -->
@@ -226,6 +311,7 @@
           $('.nav-tabs a[href="#' + url.split('#')[1] + '"]').tab('show');
           calendar.refetchEvents();
           calendarReport.refetchEvents();
+          // calendarRepair.refetchEvents();
         }
 
         //Change hash for page-reload
@@ -234,7 +320,7 @@
         });
       }
 
-      const fetch_data = (page, type, seach_term, only_me) => {
+      const fetch_data = (page, type, search_term, only_me) => {
         if (page === undefined) {
           page = 1;
         }
@@ -243,15 +329,15 @@
           type = "";
         }
 
-        if (seach_term === undefined) {
-          seach_term = "";
+        if (search_term === undefined) {
+          search_term = "";
         }
 
         if (only_me === undefined) {
           only_me = "";
         }
 
-        var url = "{{ route('website.status') }}?page=" + page + "&type=" + type + "&seach_term=" + seach_term +
+        var url = "{{ route('website.status') }}?page=" + page + "&type=" + type + "&search=" + search_term +
           "&only_me=" + only_me
         $.ajax({
           url: url,
@@ -265,20 +351,20 @@
       $('body').on('keyup', '#search-sewa', function() {
         var page = $('#hidden_page').val();
         var type = $('#type-sewa').val();
-        var seach_term = $('#search-sewa').val();
+        var search_term = $('#search-sewa').val();
         var only_me = $('#only_me:checked').val();
 
-        fetch_data(page, type, seach_term, only_me);
+        fetch_data(page, type, search_term, only_me);
         calendar.refetchEvents();
       });
 
       $('body').on('change', '#type-sewa', function() {
         var type = $('#type-sewa').val();
-        var seach_term = $('#search-sewa').val();
+        var search_term = $('#search-sewa').val();
         var page = $('#hidden_page').val();
         var only_me = $('#only_me:checked').val();
 
-        fetch_data(page, type, seach_term, only_me);
+        fetch_data(page, type, search_term, only_me);
         calendar.refetchEvents();
       });
 
@@ -289,10 +375,10 @@
         $('#hidden_page').val(page);
 
         var type = $('#type-sewa').val();
-        var seach_term = $('#search-sewa').val();
+        var search_term = $('#search-sewa').val();
         var only_me = $('#only_me:checked').val();
 
-        fetch_data(page, type, seach_term, only_me);
+        fetch_data(page, type, search_term, only_me);
       });
 
       $("input[name='only_me']").change(function() {
@@ -304,11 +390,11 @@
         }
 
         var type = $('#type-sewa').val();
-        var seach_term = $('#search-sewa').val();
+        var search_term = $('#search-sewa').val();
         var page = $('#hidden_page').val();
         var only_me = $('#only_me:checked').val();
 
-        fetch_data(page, type, seach_term, only_me);
+        fetch_data(page, type, search_term, only_me);
         calendar.refetchEvents();
       });
 
@@ -418,7 +504,7 @@
       calendar.render();
 
       // report
-      const fetch_data_report = (page, type, seach_term, only_me) => {
+      const fetch_data_report = (page, type, search_term, only_me) => {
         if (page === undefined) {
           page = 1;
         }
@@ -427,16 +513,16 @@
           type = "";
         }
 
-        if (seach_term === undefined) {
-          seach_term = "";
+        if (search_term === undefined) {
+          search_term = "";
         }
 
         if (only_me === undefined) {
           only_me = "";
         }
 
-        var url = "{{ route('website.status.report') }}?page=" + page + "&type=" + type + "&seach_term=" +
-          seach_term +
+        var url = "{{ route('website.status.report') }}?page=" + page + "&type=" + type + "&search=" +
+          search_term +
           "&only_me=" + only_me
         $.ajax({
           url: url,
@@ -450,20 +536,20 @@
       $('body').on('keyup', '#search-report', function() {
         var page = $('#hidden_page_report').val();
         var type = $('#type-report').val();
-        var seach_term = $('#search-report').val();
+        var search_term = $('#search-report').val();
         var only_me = $('#only_me-report:checked').val();
 
-        fetch_data_report(page, type, seach_term, only_me);
+        fetch_data_report(page, type, search_term, only_me);
         calendarReport.refetchEvents();
       });
 
       $('body').on('change', '#type-report', function() {
         var type = $('#type-report').val();
-        var seach_term = $('#search-report').val();
+        var search_term = $('#search-report').val();
         var page = $('#hidden_page_report').val();
         var only_me = $('#only_me-report:checked').val();
 
-        fetch_data_report(page, type, seach_term, only_me);
+        fetch_data_report(page, type, search_term, only_me);
         calendarReport.refetchEvents();
       });
 
@@ -474,10 +560,10 @@
         $('#hidden_page').val(page);
 
         var type = $('#type-report').val();
-        var seach_term = $('#search-report').val();
+        var search_term = $('#search-report').val();
         var only_me = $('#only_me:checked').val();
 
-        fetch_data_report(page, type, seach_term, only_me);
+        fetch_data_report(page, type, search_term, only_me);
       });
 
       $("input[name='only_me-report']").change(function() {
@@ -489,11 +575,11 @@
         }
 
         var type = $('#type-report').val();
-        var seach_term = $('#search-report').val();
+        var search_term = $('#search-report').val();
         var page = $('#hidden_page').val();
         var only_me = $('#only_me:checked').val();
 
-        fetch_data_report(page, type, seach_term, only_me);
+        fetch_data_report(page, type, search_term, only_me);
         calendarReport.refetchEvents();
       });
 
@@ -580,6 +666,153 @@
         }
       });
       calendarReport.render();
+
+
+      // repair
+      const fetch_data_repair = (page, search_term, only_me) => {
+        if (page === undefined) {
+          page = 1;
+        }
+
+        if (search_term === undefined) {
+          search_term = "";
+        }
+
+        if (only_me === undefined) {
+          only_me = "";
+        }
+
+        var url = "{{ route('website.status.repair') }}?page=" + page + "&search=" + search_term +
+          "&only_me=" +
+          only_me
+        $.ajax({
+          url: url,
+          success: function(data) {
+            $('#repair-data').html('');
+            $('#repair-data').html(data);
+          }
+        })
+      };
+
+      $('body').on('keyup', '#search-repair', function() {
+        var page = $('#hidden_page_repair').val();
+        var search_term = $('#search-repair').val();
+        var only_me = $('#only_me-repair:checked').val();
+
+        fetch_data_repair(page, search_term, only_me);
+        // calendarRepair.refetchEvents();
+      });
+
+      $('body').on('click', '#pagination-repair a', function(event) {
+        event.preventDefault();
+
+        var page = $(this).attr('href').split('page=')[1];
+        $('#hidden_page_repair').val(page);
+
+        var search_term = $('#search-repair').val();
+        var only_me = $('#only_me:checked').val();
+
+        fetch_data_repair(page, search_term, only_me);
+      });
+
+      $("input[name='only_me-repair']").change(function() {
+        if (this.checked) {
+          @if (!Auth::check())
+            alert("Silahkan masuk ke akun Anda terlebih dahulu.");
+            window.location = "{{ route('login') }}";
+          @endif
+        }
+
+        var search_term = $('#search-repair').val();
+        var page = $('#hidden_page').val();
+        var only_me = $('#only_me-repair:checked').val();
+
+        fetch_data_repair(page, search_term, only_me);
+        // calendarRepair.refetchEvents();
+      });
+
+      $('#my-repair-tab').on('click', function() {
+        calendarRepair.refetchEvents().render();
+      });
+
+      var calendarRepairEl = document.getElementById("kt_docs_fullcalendar_repair");
+      var calendarRepair = new FullCalendar.Calendar(calendarRepairEl, {
+        headerToolbar: {
+          left: "prev,next today",
+          center: "title",
+          right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth"
+        },
+
+        height: 760,
+        contentHeight: 700,
+        // aspectRatio: 3, // see: https://fullcalendar.io/docs/aspectRatio
+
+        nowIndicator: true,
+        now: TODAY,
+
+        views: {
+          dayGridMonth: {
+            buttonText: "month"
+          },
+          timeGridWeek: {
+            buttonText: "week"
+          },
+          timeGridDay: {
+            buttonText: "day"
+          }
+        },
+
+        initialView: "dayGridMonth",
+        initialDate: TODAY,
+
+        editable: false,
+        dayMaxEvents: true, // allow "more" link when too many events
+        navLinks: true,
+        displayEventTime: false,
+        selectable: true,
+        events: {
+          url: "{{ route('website.status.repair.calendar') }}",
+          method: 'GET',
+          extraParams: function() {
+            /*
+              Here we will grab the values of each of our filter input
+              These will then be sent to the server
+            */
+
+            var only_me = $('#only_me-repair:checked').val();
+            if (only_me === undefined) {
+              only_me = "";
+            }
+
+            return {
+              search: $('[name="search-repair"]').val(),
+              only_me: only_me
+            };
+          }
+        },
+        eventContent: function(info) {
+          var element = $(info.el);
+
+          if (info.event.extendedProps && info.event.extendedProps.description) {
+            if (element.hasClass("fc-day-grid-event")) {
+              element.data("content", info.event.extendedProps.description);
+              element.data("placement", "top");
+              KTApp.initPopover(element);
+            } else if (element.hasClass("fc-time-grid-event")) {
+              element.find(".fc-title").append("<div class='fc-description'>" + info.event.extendedProps
+                .description + "</div>");
+            } else if (element.find(".fc-list-item-title").lenght !== 0) {
+              element.find(".fc-list-item-title").append("<div class='fc-description'>" + info.event
+                .extendedProps.description + "</div>");
+            }
+          }
+        },
+        eventClick: function(info) {
+          var redirect_url = "{{ route('website.repair.show', ':id') }}"
+          window.location = redirect_url.replace(':id', info.event.id)
+        }
+      });
+      // calendarRepair.render();
     });
   </script>
 @endsection

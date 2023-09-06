@@ -1,7 +1,7 @@
 <?php
 $status_color = [
   'Ajukan' => 'warning',
-  'Draf' => 'secondary',
+  'Draft' => 'secondary',
   'Tolak' => 'danger',
   'Setuju' => 'success',
 ];
@@ -9,7 +9,7 @@ $status_color = [
 
 <!--begin::Action--->
 <td class="text-center">
-  <span class="badge badge-light-{{ $status_color[$model->status] }}">
+  <span class="badge badge-{{ $status_color[$model->status] }}">
     {{ $model->status }}
   </span>
 </td>

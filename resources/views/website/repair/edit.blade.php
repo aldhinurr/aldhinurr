@@ -12,8 +12,8 @@
 
 @section('content')
   <!-- ================================
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        START FORM AREA
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ================================= -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            START FORM AREA
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ================================= -->
   <section class="cart-area section-padding">
     <div class="container">
       <div class="row">
@@ -31,6 +31,7 @@
               </div>
               <form method="post" class="row" id="form-repair" enctype="multipart/form-data">
                 @csrf
+                @method('PUT')
                 <div class="col-lg-6">
                   <div class="col-lg-8 input-box">
                     <label class="label-text">Tanggal</label>
@@ -44,8 +45,8 @@
                   <div class="col-lg-8 input-box">
                     <label class="label-text">Status</label>
                     <div class="form-group">
-                      <input type="text" class="form-control pl-3" id="status" name="status" value="Baru"
-                        readonly>
+                      <input type="text" class="form-control pl-3" id="status" name="status"
+                        value="{{ $repairService->status }}" readonly>
                     </div>
                   </div>
                 </div><!-- end col-lg-6 -->
@@ -53,7 +54,8 @@
                   <div class="col-lg-8 input-box">
                     <label class="label-text">Unit Kerja</label>
                     <div class="form-group">
-                      <input type="text" class="form-control pl-3" id="unit" name="unit" required>
+                      <input type="text" class="form-control pl-3" id="unit" name="unit"
+                        value="{{ $repairService->unit }}">
                     </div>
                   </div>
                 </div><!-- end col-lg-6 -->
@@ -65,8 +67,8 @@
                         <div class="input-group-prepend">
                           <span class="input-group-text label-text" id="basic-addon1">Rp</span>
                         </div>
-                        <input type="text" class="form-control pl-3" id="total" name="total" value="0"
-                          aria-describedby="basic-addon1" readonly required>
+                        <input type="text" class="form-control pl-3" id="total" name="total"
+                          value="{{ $repairService->total }}" aria-describedby="basic-addon1" readonly required>
                       </div>
                     </div>
                   </div>
@@ -75,7 +77,7 @@
                   <div class="col-lg input-box">
                     <label class="label-text">Judul</label>
                     <div class="form-group">
-                      <textarea class="form-control pl-3" rows="2" id="title" name="title" required></textarea>
+                      <textarea class="form-control pl-3" rows="2" id="title" name="title" required>{!! $repairService->title !!}</textarea>
                     </div>
                   </div>
                 </div><!-- end col-lg-6 -->
@@ -91,6 +93,11 @@
                         </div>
                       </div>
                     </div>
+                    @if ($repairService->attachment != null)
+                      <ul class="list-items list--items pl-3">
+                        <li><a href="{{ asset($repairService->attachment) }}" target="_blank">Download attachment</a></li>
+                      </ul>
+                    @endif
                   </div>
                 </div><!-- end col-lg-6 -->
                 <div class="col-lg-12 pt-3 pb-3">
@@ -188,11 +195,11 @@
     </div><!-- end container -->
   </section><!-- end cart-area -->
   <!-- ================================
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        END FORM AREA
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ================================= -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            END FORM AREA
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ================================= -->
 @endsection
 
 @section('scripts')
   <script src="{{ asset('demo1/plugins/custom/datatables/datatables.bundle.js') }}"></script>
-  @include('website.repair._scripts-create')
+  @include('website.repair._scripts-edit')
 @endsection

@@ -27,8 +27,8 @@
                   <ul class="dropdown-menu-item">
                     <li><a href="{{ route('website.rooms') }}">Ruangan</a></li>
                     <li><a href="{{ route('website.cars') }}">Kendaraan</a></li>
-                    {{-- <li><a href="{{ route('website.report') }}">Laporan</a></li> --}}
-                    {{-- <li><a href="{{ route('website.repair') }}">Perbaikan</a></li> --}}
+                    <li><a href="{{ route('website.report') }}" hidden>Laporan</a></li>
+                    <li><a href="{{ route('website.repair') }}">Perbaikan</a></li>
                     <li><a href="https://sipa.nrcn.itb.ac.id/listtools" target="_blank">Uji Laboratorium</a></li>
                   </ul>
                 </li>

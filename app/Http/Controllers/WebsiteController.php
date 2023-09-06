@@ -6,6 +6,7 @@ use App\Models\Building;
 use App\Models\Facility;
 use App\Models\Floor;
 use App\Models\Layanan;
+use App\Models\RepairService;
 use App\Models\ReportService;
 use App\Models\Reservation;
 use App\Models\ServiceFacility;
@@ -145,6 +146,7 @@ class WebsiteController extends Controller
     {
         $sewa = Reservation::with(["layanan", "user"])->paginate(10);
         $report = ReportService::with(["report_service_images", "user"])->paginate(10);
+        $repair = RepairService::with(["RepairServiceDetails", "user"])->paginate(10);
         if ($request->ajax()) {
             // Reservation::;
             $sewa = Reservation::select(
@@ -172,7 +174,7 @@ class WebsiteController extends Controller
             return view('website.status._data-sewa', compact('sewa'))->render();
         }
 
-        return view('website.status.index', compact('sewa', 'report'));
+        return view('website.status.index', compact('sewa', 'report', 'repair'));
     }
 
     /**
@@ -217,7 +219,6 @@ class WebsiteController extends Controller
 
         return response()->json($data);
     }
-
 
     /**
      * Display a listing of the resource.
@@ -282,6 +283,62 @@ class WebsiteController extends Controller
 
         return response()->json($data);
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function status_repair(Request $request)
+    {
+        if ($request->ajax()) {
+            $repair = RepairService::select(
+                'repair_services.*',
+                'users.first_name',
+                'users.last_name',
+                'users.email'
+            )
+                ->join('users', 'users.email', '=', 'repair_services.created_by')
+                ->when($request->search != null, function ($q) use ($request) {
+                    $q->where('repair_services.title', 'like', '%' . $request->search . '%');
+                })
+                ->when($request->only_me != null, function ($q) {
+                    $q->where('repair_services.created_by', '=', auth()->user()->email);
+                })
+                ->paginate(10);
+            return view('website.status._data-repair', compact('repair'))->render();
+        }
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function status_repair_calendar(Request $request)
+    {
+        $data = RepairService::select(
+            'repair_services.id',
+            'repair_services.title',
+            'repair_services.created_at as start',
+            'repair_services.created_at as end',
+            'repair_services.status'
+        )
+            ->join('users', 'users.email', '=', 'repair_services.created_by')
+            ->whereNotIn('repair_services.status', ['Draft'])
+            ->whereDate('repair_services.created_at', '>=', $request->start)
+            ->whereDate('repair_services.created_at',   '<=', $request->end)
+            ->when($request->search != null, function ($q) use ($request) {
+                $q->where('repair_services.title', 'like', '%' . $request->search . '%');
+            })
+            ->when($request->only_me != null, function ($q) {
+                $q->where('repair_services.created_by', '=', auth()->user()->email);
+            })
+            ->get();
+
+        return response()->json($data);
+    }
+
 
 
     /**

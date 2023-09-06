@@ -1,6 +1,6 @@
 @if ($paginator->hasPages())
-  <ul class="pagination" id="pagination-report">
-    <input type="hidden" name="hidden_page_report" id="hidden_page_report" value=1>
+  <ul class="pagination" id="pagination-repair">
+    <input type="hidden" name="hidden_page_repair" id="hidden_page_repair" value=1>
     <li class="page-item">
       @if ($paginator->onFirstPage())
         <a class="page-link page-link-nav disabled" aria-label="Previous">

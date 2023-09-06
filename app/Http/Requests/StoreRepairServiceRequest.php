@@ -13,7 +13,7 @@ class StoreRepairServiceRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,11 @@ class StoreRepairServiceRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            "title" => "required|string|max:200",
+            "status" => "required|string",
+            "unit" => "required|string",
+            "total" => "required|numeric",
+            "pengajuan_detail" => "required"
         ];
     }
 }
