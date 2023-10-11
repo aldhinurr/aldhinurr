@@ -32,7 +32,7 @@
                 @include('partials.general._button-indicator')
             </button>
 
-            <a href="{{ theme()->getPageUrl('login') }}" class="btn btn-lg btn-light-primary fw-bolder">{{ __('Cancel') }}</a>
+            <a href="{{ theme()->getPageUrl('login-page') }}" class="btn btn-lg btn-light-primary fw-bolder">{{ __('Cancel') }}</a>
         </div>
         <!--end::Actions-->
     </form>

@@ -8,50 +8,34 @@
         <div class="text-center mb-10">
             <!--begin::Title-->
             <h1 class="text-dark mb-3">
-                {{ __('Create an Account') }}
+                {{ __('Daftar menggunakan ITB Account') }}
             </h1>
             <!--end::Title-->
-
-            <!--begin::Link-->
-            <div class="text-gray-400 fw-bold fs-4">
-                {{ __('Already have an account?') }}
-
-                <a href="{{ theme()->getPageUrl('login-page') }}" class="link-primary fw-bolder">
-                    {{ __('Sign in here') }}
-                </a>
-            </div>
-            <!--end::Link-->
         </div>
         <!--end::Heading-->
-
-        <!--begin::Action-->
-        <button type="button" class="btn btn-light-primary fw-bolder w-100 mb-10">
-            <img alt="Logo" src="{{ asset(theme()->getMediaUrlPath() . 'svg/brand-logos/google-icon.svg') }}" class="h-20px me-3"/>
-            {{ __('Sign in with Google') }}
-        </button>
-        <!--end::Action-->
-
+    
         <!--begin::Separator-->
-        <div class="d-flex align-items-center mb-10">
-            <div class="border-bottom border-gray-300 mw-50 w-100"></div>
-            <span class="fw-bold text-gray-400 fs-7 mx-2">{{ __('OR') }}</span>
-            <div class="border-bottom border-gray-300 mw-50 w-100"></div>
-        </div>
+        <hr><br>
         <!--end::Separator-->
 
         <!--begin::Input group-->
         <div class="row fv-row mb-7">
             <!--begin::Col-->
             <div class="col-xl-6">
-                <label class="form-label fw-bolder text-dark fs-6">{{ __('First Name') }}</label>
-                <input class="form-control form-control-lg form-control-solid" type="text" name="first_name" autocomplete="off" value="{{ old('first_name') }}"/>
+                <label class="form-label fw-bolder text-dark fs-6">{{ __('Nama Depan') }}</label>
+                @php
+                $nameParts = explode(' ', $user->name, 2);
+                $first_name = $nameParts[0];
+                $last_name = isset($nameParts[1]) ? $nameParts[1] : '';
+                @endphp
+                <input class="form-control form-control-lg form-control-solid" type="text" name="first_name" autocomplete="off" value="{{ old('first_name', $first_name) }}" required/>
             </div>
             <!--end::Col-->
 
             <!--begin::Col-->
             <div class="col-xl-6">
-                <label class="form-label fw-bolder text-dark fs-6">{{ __('Last Name') }}</label>
-                <input class="form-control form-control-lg form-control-solid" type="text" name="last_name" autocomplete="off" value="{{ old('last_name') }}"/>
+                <label class="form-label fw-bolder text-dark fs-6">{{ __('Nama Belakang') }}</label>
+                <input class="form-control form-control-lg form-control-solid" type="text" name="last_name" autocomplete="off" value="{{ old('last_name', $last_name) }}"/>
             </div>
             <!--end::Col-->
         </div>
@@ -59,10 +43,30 @@
 
         <!--begin::Input group-->
         <div class="fv-row mb-7">
-            <label class="form-label fw-bolder text-dark fs-6">{{ __('Email') }}</label>
-            <input class="form-control form-control-lg form-control-solid" type="email" name="email" autocomplete="off" value="{{ old('email') }}"/>
+            <label class="form-label fw-bolder text-dark fs-6">{{ __('ITB Account') }}</label>
+            <input class="form-control form-control-lg form-control-solid" type="email" name="email" autocomplete="off" value="{{ $user->ITBmail }}" required/>
         </div>
         <!--end::Input group-->
+
+        <!--begin::Input group-->
+        <div class="fv-row mb-7">
+            <label class="form-label fw-bolder text-dark fs-6">{{ __('Unit ') }}</label>
+            <input class="form-control form-control-lg form-control-solid" type="unit" name="unit" autocomplete="off" value="{{ $user->unit }}" required/>
+            <small> *Jika mahasiswa, bisa diisi dengan jurusan/prodi. </small>
+        </div>
+        <!--end::Input group-->
+
+        <!--begin::Input group-->
+        <div class="fv-row mb-7">
+            <label class="form-label fw-bolder text-dark fs-6">{{ __('Status') }}</label>
+            <input class="form-control form-control-lg form-control-solid" type="status" name="status" autocomplete="off" value="{{ $user->status }}" required/>
+            <small> *Jika mahasiswa, bisa diisi dengan "Mahasiswa". </small>
+        </div>
+        <!--end::Input group-->
+
+        <!--begin::Separator-->
+        <hr><br>
+        <!--end::Separator-->
 
         <!--begin::Input group-->
         <div class="mb-10 fv-row" data-kt-password-meter="true">
@@ -98,7 +102,7 @@
 
             <!--begin::Hint-->
             <div class="text-muted">
-                {{ __('Use 8 or more characters with a mix of letters, numbers & symbols.') }}
+                {{ __('Gunakan 8 atau lebih karakter dengan campuran kata, nomor, dan simbol. (Misal: P4sword!)') }}
             </div>
             <!--end::Hint-->
         </div>
@@ -106,7 +110,7 @@
 
         <!--begin::Input group-->
         <div class="fv-row mb-5">
-            <label class="form-label fw-bolder text-dark fs-6">{{ __('Confirm Password') }}</label>
+            <label class="form-label fw-bolder text-dark fs-6">{{ __('Konfirmasi Password') }}</label>
             <input class="form-control form-control-lg form-control-solid" type="password" name="password_confirmation" autocomplete="off"/>
         </div>
         <!--end::Input group-->
@@ -116,47 +120,22 @@
             <label class="form-check form-check-custom form-check-solid form-check-inline">
                 <input class="form-check-input" type="checkbox" name="toc" value="1"/>
                 <span class="form-check-label fw-bold text-gray-700 fs-6">
-                {{ __('I Agree &') }} <a href="#" class="ms-1 link-primary">{{ __('Terms and conditions') }}</a>.
+                {{ __('Saya setuju &') }} <a href="#" class="ms-1 link-primary">{{ __('Syarat dan Ketentuan') }}</a>.
             </span>
             </label>
         </div>
         <!--end::Input group-->
 
-        <!-- begin::Actions-->
-        <div class="text-center">
-            <button type="submit" id="kt_sign_up_submit" class="btn btn-lg btn-primary">
-                @include('partials.general._button-indicator')
-            </button>
-        </div>
-        <!--end::Actions-->
-    </form>
-    <!--end::Signup Form -->
-
-    <br><hr>
         <!--begin::Actions-->
         <div class="text-center">
-      <!--begin::SSO ITB link-->
-    <span style="display: inline-block; margin: 0 10px;"><small>
-    ----- Masuk menggunakan -----</small></span><br>
-      <a href="{{ route('login-sso') }}" class="btn btn-flex flex-center btn btn-outline-primary btn-sm">
-        {{ __('Akun ITB') }}
-      </a>
-        <!--begin::Microsoft link / id="login-itb"-->
-      <a href="{{ route('login-azure') }}" class="btn btn-flex flex-center btn btn-outline-primary btn-sm">
-        <img alt="Logo" src="{{ asset(theme()->getMediaUrlPath() . 'svg/brand-logos/microsoft-5.svg') }}"
-          class="h-20px me-3" />
-        {{ __('Microsoft') }}
-      </a>
-      <!--begin::Google link-->
-      <a href="https://e-facility.itb.ac.id/auth/redirect/google" class="btn btn-flex flex-center btn-outline-primary btn-sm">
-        <img alt="Logo" src="{{ asset(theme()->getMediaUrlPath() . 'svg/brand-logos/google-icon.svg') }}"
-          class="h-20px me-3" />
-        {{ __('Google') }}
-      </a>
-      <!--end::Google link-->
-    </div>
-    <!--end::Actions-->
-  </form>
-  <!--end::Signin Form-->
+        <button type="submit" id="kt_sign_up_submit" class="btn btn-lg btn-primary">
+                @include('partials.general._button-indicator')
+            </button><br>
+            <a href="{{ url('logout-sso') }}">Logout SSO</a>
+        </div>
+        <!--end::Actions-->
+        
+    </form>
+    <!--end::Signup Form-->
 
 </x-auth-layout>
