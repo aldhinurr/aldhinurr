@@ -24,30 +24,45 @@ class ReservationDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->editColumn('layanan.name', function (Reservation $model) {
+            ->editColumn('layanans.name', function (Reservation $model) {
                 return $model->layanan->name;
             })
             ->editColumn('start_date', function (Reservation $model) {
-                return Carbon::createFromFormat('Y-m-d H:i:s', $model->start_date)->format('d-m-Y');
+                return Carbon::createFromFormat('Y-m-d H:i:s', $model->start_date)->format('d-m-Y H:i:s');
             })
             ->editColumn('end_date', function (Reservation $model) {
-                return Carbon::createFromFormat('Y-m-d H:i:s', $model->end_date)->format('d-m-Y');
+                return Carbon::createFromFormat('Y-m-d H:i:s', $model->end_date)->format('d-m-Y H:i:s');
             })
+
+
             ->editColumn('created_at', function (Reservation $model) {
                 return Carbon::createFromFormat('Y-m-d H:i:s', $model->created_at)->format('d-m-Y H:i:s');
             })
-            ->editColumn('fee', function (Reservation $model) {
+            /*->editColumn('fee', function (Reservation $model) {
                 return number_format($model->fee, 2);
             })
+            */
+
             ->editColumn('fee_for', function (Reservation $model) {
                 return $model->fee_for . " " . $model->layanan->price_for;
             })
+
+            /*
             ->editColumn('extra_fee', function (Reservation $model) {
                 return number_format($model->extra_fee, 2);
             })
+            */
+
             ->editColumn('total', function (Reservation $model) {
                 return number_format($model->total, 2);
             })
+            ->editColumn('diskon', function (Reservation $model) {
+                return number_format($model->diskon, 2);
+            })
+            ->editColumn('bayar', function (Reservation $model) {
+                return number_format($model->bayar, 2);
+            })
+
             ->editColumn('status', function (Reservation $model) {
                 $now = new DateTime("now", new DateTimeZone('Asia/Jakarta'));
                 $expired_payment = new DateTime($model->expired_payment, new DateTimeZone('Asia/Jakarta'));
@@ -71,7 +86,10 @@ class ReservationDataTable extends DataTable
      */
     public function query(Reservation $model)
     {
-        return $model->newQuery();
+        return $model->newQuery()
+            ->join('layanans', 'reservations.layanan_id', '=', 'layanans.id')
+            ->select('reservations.*', \DB::raw('reservations.total - reservations.diskon AS bayar'))
+            ->where('layanans.location', auth()->user()->location);
     }
 
     /**
@@ -101,13 +119,16 @@ class ReservationDataTable extends DataTable
         return [
             Column::make('id')->title('#ID')->hidden(),
             Column::make('created_at')->title('#Dibuat')->hidden(),
-            Column::make('layanan_id')->title('Layanan')->data('layanan.name')->name('layanan.name'),
+            Column::make('kode_sewa')->title("Kode Sewa"),
+            Column::make('layanan_id')->title('Layanan')->data('layanans.name')->name('layanans.name'),
             Column::make('start_date')->title("Tgl. Mulai"),
             Column::make('end_date')->title("Tgl. Selesai"),
-            Column::make('fee')->title("Harga"),
+            Column::make('fee')->title("#Harga")->hidden(),
             Column::make('fee_for')->title("Per"),
-            Column::make('extra_fee')->title("Biaya"),
+            Column::make('extra_fee')->title("#Biaya")->hidden(),
             Column::make('total')->title("Total"),
+            Column::make('diskon')->title("Diskon"),
+            Column::make('bayar')->title("Bayar")->searchable(false),
             Column::make('created_at')->title("Dibuat"),
             Column::make('status')->title("Status"),
             Column::computed('action')->title("Kelola")

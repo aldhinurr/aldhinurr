@@ -41,4 +41,17 @@ return [
         'client_secret' => env('FACEBOOK_CLIENT_SECRET'),
         'redirect'      => '/auth/redirect/facebook',
     ],
+
+    'azure' => [
+        'client_id' => env('AZURE_AD_CLIENT_ID'),
+        'client_secret' => env('AZURE_AD_CLIENT_SECRET'),
+        'redirect' => env('AZURE_AD_REDIRECT_URI'),
+        'tenant' => env('AZURE_AD_TENANT_ID')
+    ],
+
+    'google' => [
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect' => env('GOOGLE_REDIRECT_URI'),
+    ],
 ];
