@@ -53,6 +53,8 @@
                         <select id="type-sewa" name="type-sewa" class="select-contain-select">
                           <option value="RUANG">Ruangan</option>
                           <option value="KENDARAAN">Kendaraan</option>
+                          <option value="SELASAR">Selasar</option>
+                          <option value="LAPANGAN">Lapangan</option>
                         </select>
                       </div><!-- end select-contain -->
                     </div>
@@ -107,6 +109,7 @@
                           <thead>
                             <tr>
                               <th scope="col">Type</th>
+                              <th scope="col">Kode Sewa</th>
                               <th scope="col">Nama</th>
                               <th scope="col">Lokasi</th>
                               <th scope="col">Mulai</th>
@@ -385,7 +388,7 @@
         if (this.checked) {
           @if (!Auth::check())
             alert("Silahkan masuk ke akun Anda terlebih dahulu.");
-            window.location = "{{ route('login') }}";
+            window.location = "{{ route('login-page') }}";
           @endif
         }
 
@@ -570,7 +573,7 @@
         if (this.checked) {
           @if (!Auth::check())
             alert("Silahkan masuk ke akun Anda terlebih dahulu.");
-            window.location = "{{ route('login') }}";
+            window.location = "{{ route('login-page') }}";
           @endif
         }
 
@@ -719,7 +722,7 @@
         if (this.checked) {
           @if (!Auth::check())
             alert("Silahkan masuk ke akun Anda terlebih dahulu.");
-            window.location = "{{ route('login') }}";
+            window.location = "{{ route('login-page') }}";
           @endif
         }
 

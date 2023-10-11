@@ -1,4 +1,4 @@
-  @if ($sewa->total() > 0)
+@if ($sewa->total() > 0)
     @foreach ($sewa as $data)
       <tr>
         <th scope="row">
