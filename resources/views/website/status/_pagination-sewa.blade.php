@@ -1,6 +1,6 @@
 @if ($paginator->hasPages())
   <ul class="pagination" id="pagination-sewa">
-    <input type="hidden" name="hidden_page" value=1>
+    <input type="hidden" name="hidden_page" id="hidden_page" value=1>
     <li class="page-item">
       @if ($paginator->onFirstPage())
         <a class="page-link page-link-nav disabled" aria-label="Previous">

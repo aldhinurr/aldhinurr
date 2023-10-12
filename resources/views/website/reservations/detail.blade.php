@@ -42,19 +42,26 @@
                           <a href="{{ route('website.room.show', $reservation->layanan->id) }}"
                             class="title">{{ $reservation->layanan->name }}</a>
                           <div class="product-info-wrap">
+                          <div class="product-info line-height-24">
+                              <span class="product-info-label">Kode Sewa:</span>
+                              <span class="product-info-value">
+                                <span
+                                  class="product-check-in">{{ $reservation->kode_sewa }}</span>
+                              </span>
+                            </div><!-- end product-info -->
                             <div class="product-info line-height-24">
                               <span class="product-info-label">Sewa:</span>
                               <span class="product-info-value">
                                 <span
-                                  class="product-check-in">{{ date('d-m-Y', strtotime($reservation->start_date)) }}</span>
-                                <span class="product-mark">/</span>
+                                  class="product-check-in">{{ date('d-m-Y H:i', strtotime($reservation->start_date)) }}</span>
+                                <span class="product-mark">s/d</span>
                                 <span
-                                  class="product-check-out">{{ date('d-m-Y', strtotime($reservation->end_date)) }}</span>
+                                  class="product-check-out">{{ date('d-m-Y H:i', strtotime($reservation->end_date)) }}</span>
                                 {{-- <span class="product-nights">(1 night)</span> --}}
                               </span>
                             </div><!-- end product-info -->
                             <div class="product-info line-height-24">
-                              <span class="product-info-label">Durasi:</span>
+                              <span class="product-info-label">Durasi Tarif Sewa:</span>
                               <span class="product-info-value">{{ $reservation->fee_for }}
                                 {{ $reservation->layanan->price_for }}</span>
                             </div><!-- end product-info -->
@@ -109,20 +116,33 @@
                   </tr>
                 </tbody>
               </table>
-              @if ($reservation->status == 'MENUNGGU UPLOAD')
-                <div class="title d-flex justify-content-end align-items-center">
-                  <p>Waktu tersisa:
-                  <h6 id="countdown-expired">0</h6>
-                  </p>
-                </div>
-              @endif
             </div>
-            <div class="section-block"></div>
+            <div class="section-block"></div><br>
+            <div class="row">
+              <div class="col-md-6">
+                @if ($reservation->status == 'MENUNGGU UPLOAD')
+                  <p>Silahkan transfer total pembayaran ke <strong>BNI Virtual Account </strong> di bawah:</p>
+                  <h6>9880031157000800 (Bank Negara Indonesia Cabang ITB)</h6>
+                  <br>Batas waktu pembayaran: <span style="display: inline-block;"><h6 id="countdown-expired">0</h6></span>
+                @endif
+            </div>
+            <div class="col-md-6">
             @if (!auth()->user()->hasRole(['superadmin']))
               @if (auth()->user()->email == $reservation->created_by && $reservation->status != 'WAKTU HABIS')
                 <div class="cart-actions d-flex justify-content-end align-items-center pt-4 pb-5">
                   <div id="form-upload" class="contact-form-action">
-                    <form method="post" enctype="multipart/form-data" id="upload-receipt">
+                   <!--  <form method="post" enctype="multipart/form-data" id="sumber-dana">
+                      @csrf
+                       <div class="form-container" style="font-weight: bold;">
+                        <label for="sumberDana">Pilih Sumber Dana:</label>
+                          <select id="sumberDana" name="sumberDana">
+                            <option value="" disabled selected>~ Pilih ~</option>
+                            <option value="pendanaanITB">Pendanaan ITB</option>
+                            <option value="pendanaanNonITB">Pendanaan Non-ITB</option>
+                          </select><br>
+                          <button type="button" class="btn btn-primary" style="float: right;" id=submitDana>Submit</button>
+                      </div> -->   
+                    <form method="post" enctype="multipart/form-data" id="upload-receipt">  
                       @csrf
                       <div class="input-group d-flex justify-content-end">
                         <div class="custom-file">
@@ -138,10 +158,12 @@
                         <button class="btn btn-primary" type="button" id="uploadButton">Upload</button>
                       </div>
                     </form>
-                  </div><!-- end contact-form-action -->
+                  </div>
+                  <!-- end contact-form-action -->
                 </div>
               @endif
             @endif
+          </div>
           </div><!-- end cart-wrap -->
         </div><!-- end col-lg-12 -->
       </div><!-- end row -->
@@ -237,5 +259,23 @@
         $('.alert').html(error).fadeIn().delay(3000).fadeOut()
       }
     });
+
+    //SELECTED BOX SUMBER DANA
+    document.addEventListener("DOMContentLoaded", function () {
+            const submitButton = document.getElementById("submitDana");
+            const sumberDanaComboBox = document.getElementById("sumberDana");
+
+            submitButton.addEventListener("click", function () {
+                const selectedValue = sumberDanaComboBox.value;
+
+                if (selectedValue === "pendanaanITB") {
+                    alert("Pendanaan ITB masih dalam pengembangan.");
+                } else if (selectedValue === "pendanaanNonITB") {
+                    alert("Pendanaan Non-ITB masih dalam pengembangan.");
+                } else {
+                    alert("Silakan pilih sumber dana terlebih dahulu.");
+                }
+            });
+        });
   </script>
 @endsection

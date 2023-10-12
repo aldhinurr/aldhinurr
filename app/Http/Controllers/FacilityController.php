@@ -63,6 +63,7 @@ class FacilityController extends Controller
         try {
             $validated = $request->validate($request->rules());
             $validated['created_by'] = auth()->user()->email;
+            $validated['location'] = auth()->user()->location;
 
             // create layanan
             Facility::create($validated);
@@ -181,9 +182,9 @@ class FacilityController extends Controller
         $search = $request->search;
 
         if ($search == '') {
-            $facilities = Facility::orderby('name', 'asc')->select('id', 'name')->where('status', 'AKTIF')->limit(5)->get();
+            $facilities = Facility::orderby('name', 'asc')->select('id', 'name')->where('status', 'AKTIF')->where('location', auth()->user()->location)->limit(5)->get();
         } else {
-            $facilities = Facility::orderby('name', 'asc')->select('id', 'name')->where('status', 'AKTIF')->where('name', 'like', '%' . $search . '%')->limit(5)->get();
+            $facilities = Facility::orderby('name', 'asc')->select('id', 'name')->where('status', 'AKTIF')->where('name', 'like', '%' . $search . '%')->where('location', auth()->user()->location)->limit(5)->get();
         }
 
         $response = array();

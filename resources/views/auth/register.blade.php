@@ -16,7 +16,7 @@
             <div class="text-gray-400 fw-bold fs-4">
                 {{ __('Already have an account?') }}
 
-                <a href="{{ theme()->getPageUrl('login') }}" class="link-primary fw-bolder">
+                <a href="{{ theme()->getPageUrl('login-page') }}" class="link-primary fw-bolder">
                     {{ __('Sign in here') }}
                 </a>
             </div>
@@ -26,7 +26,7 @@
 
         <!--begin::Action-->
         <button type="button" class="btn btn-light-primary fw-bolder w-100 mb-10">
-            <img alt="Logo" src="{{ asset('media/svg/brand-logos/google-icon.svg') }}" class="h-20px me-3"/>
+            <img alt="Logo" src="{{ asset(theme()->getMediaUrlPath() . 'svg/brand-logos/google-icon.svg') }}" class="h-20px me-3"/>
             {{ __('Sign in with Google') }}
         </button>
         <!--end::Action-->
@@ -122,7 +122,7 @@
         </div>
         <!--end::Input group-->
 
-        <!--begin::Actions-->
+        <!-- begin::Actions-->
         <div class="text-center">
             <button type="submit" id="kt_sign_up_submit" class="btn btn-lg btn-primary">
                 @include('partials.general._button-indicator')
@@ -130,6 +130,33 @@
         </div>
         <!--end::Actions-->
     </form>
-    <!--end::Signup Form-->
+    <!--end::Signup Form -->
+
+    <br><hr>
+        <!--begin::Actions-->
+        <div class="text-center">
+      <!--begin::SSO ITB link-->
+    <span style="display: inline-block; margin: 0 10px;"><small>
+    ----- Masuk menggunakan -----</small></span><br>
+      <a href="{{ route('login-sso') }}" class="btn btn-flex flex-center btn btn-outline-primary btn-sm">
+        {{ __('Akun ITB') }}
+      </a>
+        <!--begin::Microsoft link / id="login-itb"-->
+      <a href="{{ route('login-azure') }}" class="btn btn-flex flex-center btn btn-outline-primary btn-sm">
+        <img alt="Logo" src="{{ asset(theme()->getMediaUrlPath() . 'svg/brand-logos/microsoft-5.svg') }}"
+          class="h-20px me-3" />
+        {{ __('Microsoft') }}
+      </a>
+      <!--begin::Google link-->
+      <a href="https://e-facility.itb.ac.id/auth/redirect/google" class="btn btn-flex flex-center btn-outline-primary btn-sm">
+        <img alt="Logo" src="{{ asset(theme()->getMediaUrlPath() . 'svg/brand-logos/google-icon.svg') }}"
+          class="h-20px me-3" />
+        {{ __('Google') }}
+      </a>
+      <!--end::Google link-->
+    </div>
+    <!--end::Actions-->
+  </form>
+  <!--end::Signin Form-->
 
 </x-auth-layout>

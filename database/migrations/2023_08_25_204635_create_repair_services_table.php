@@ -18,7 +18,7 @@ class CreateRepairServicesTable extends Migration
             $table->string('title', 200)->nullable(false);
             $table->string('status', 50)->default("Baru");
             $table->string('unit', 100)->nullable();
-            $table->float('total')->nullable()->default(0);
+            $table->float('total', 12)->nullable()->default(0);
             $table->text('attachment')->nullable();
             $table->string('description', 200)->nullable();
             $table->string('created_by', 50)->nullable();

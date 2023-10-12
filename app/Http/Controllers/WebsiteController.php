@@ -6,6 +6,7 @@ use App\Models\Building;
 use App\Models\Facility;
 use App\Models\Floor;
 use App\Models\Layanan;
+use App\Models\RepairService;
 use App\Models\ReportService;
 use App\Models\Reservation;
 use App\Models\ServiceFacility;
@@ -37,6 +38,14 @@ class WebsiteController extends Controller
         $count_cars = $layanan->get_count_data('KENDARAAN');
         $cars = $layanan->get_home_data('KENDARAAN', 6);
 
+        // Ruangan
+        $count_selasar = $layanan->get_count_data('SELASAR');
+        $selasar = $layanan->get_home_data('SELASAR', 6);
+
+        // Lapangan
+        $count_lapangan = $layanan->get_count_data('LAPANGAN');
+        $lapangan = $layanan->get_home_data('LAPANGAN', 6);
+
         // Laporan
         $report_done = $report->get_count_data(['SELESAI']);
         $report_waiting = $report->get_count_data(['MENUNGGU']);
@@ -46,11 +55,15 @@ class WebsiteController extends Controller
         return view('website.index', [
             'count_rooms' => $count_rooms,
             'count_cars' => $count_cars,
+            'count_selasar' => $count_selasar,
+            'count_lapangan' => $count_lapangan,
             'report_done' => $report_done,
             'report_waiting' => $report_waiting,
             'report_process' => $report_process,
             'rooms' => $rooms,
             'cars' => $cars,
+            'selasar' => $selasar,
+            'lapangan' => $lapangan,
         ]);
     }
 
@@ -100,6 +113,49 @@ class WebsiteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function rooms_untukdiweb(Request $request)
+    {
+        $layanan = new Layanan;
+        $rooms = $layanan->get_page_data('RUANG', 18, $request);
+
+        // is_sewa
+        $now = new DateTime("now", new DateTimeZone('Asia/Jakarta'));
+        $addThreedays = $now->add(DateInterval::createFromDateString('3 days'));
+        $dateSewa = $addThreedays->format('Y-m-d');
+        if ($request->start_date) {
+            $start_date = strtotime(str_replace("/", "-", $request->start_date));
+            $dateSewa = date('Y-m-d', $start_date);
+        }
+
+        $sewa = Reservation::select('layanan_id')
+            ->join('layanans', 'reservations.layanan_id', '=', 'layanans.id')
+            ->whereNotIn('reservations.status', ['DITOLAK', 'DIBATALKAN', 'DIALIHKAN', 'SELESAI'])
+            ->where('reservations.start_date', '<=', $dateSewa . ' 23:59')
+            ->where('reservations.end_date', '>=', $dateSewa . ' 00:01')
+            ->where('layanans.location', '=', 'GANESHA')
+            ->get();
+
+        $is_sewa = array();
+        if (count($sewa) > 0) {
+            foreach ($sewa as $s => $val) {
+                array_push($is_sewa, $val->layanan_id);
+            }
+        }
+
+        if ($request->ajax()) {
+            $rooms = $layanan->get_page_data('RUANG', 18, $request);
+            $view = view('website.rooms._data_untukdiweb', compact('rooms', 'is_sewa'))->render();
+            return response()->json(['html' => $view]);
+        }
+
+        return view('website.rooms.index_untukdiweb', compact('rooms', 'is_sewa'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function cars(Request $request)
     {
         $layanan = new Layanan;
@@ -136,6 +192,78 @@ class WebsiteController extends Controller
         return view('website.cars.index', compact('cars', 'is_sewa'));
     }
 
+    public function selasar(Request $request)
+    {
+        $layanan = new Layanan;
+        $selasar = $layanan->get_page_data('SELASAR', 18, $request);
+
+        // is_sewa
+        $now = new DateTime("now", new DateTimeZone('Asia/Jakarta'));
+        $addThreedays = $now->add(DateInterval::createFromDateString('3 days'));
+        $dateSewa = $addThreedays->format('Y-m-d');
+        if ($request->start_date) {
+            $start_date = strtotime(str_replace("/", "-", $request->start_date));
+            $dateSewa = date('Y-m-d', $start_date);
+        }
+
+        $sewa = Reservation::select('layanan_id')
+            ->whereNotIn('status', ['DITOLAK', 'DIBATALKAN', 'DIALIHKAN', 'SELESAI'])
+            ->where('start_date', '<=', $dateSewa . ' 23:59')
+            ->where('end_date', '>=', $dateSewa . ' 00:01')
+            ->get();
+
+        $is_sewa = array();
+        if (count($sewa) > 0) {
+            foreach ($sewa as $s => $val) {
+                array_push($is_sewa, $val->layanan_id);
+            }
+        }
+
+        if ($request->ajax()) {
+            $selasar = $layanan->get_page_data('SELASAR', 18, $request);
+            $view = view('website.selasar._data', compact('selasar', 'is_sewa'))->render();
+            return response()->json(['html' => $view]);
+        }
+
+        return view('website.selasar.index', compact('selasar', 'is_sewa'));
+    }
+
+    public function lapangan(Request $request)
+    {
+        $layanan = new Layanan;
+        $lapangan = $layanan->get_page_data('LAPANGAN', 18, $request);
+
+        // is_sewa
+        $now = new DateTime("now", new DateTimeZone('Asia/Jakarta'));
+        $addThreedays = $now->add(DateInterval::createFromDateString('3 days'));
+        $dateSewa = $addThreedays->format('Y-m-d');
+        if ($request->start_date) {
+            $start_date = strtotime(str_replace("/", "-", $request->start_date));
+            $dateSewa = date('Y-m-d', $start_date);
+        }
+
+        $sewa = Reservation::select('layanan_id')
+            ->whereNotIn('status', ['DITOLAK', 'DIBATALKAN', 'DIALIHKAN', 'SELESAI'])
+            ->where('start_date', '<=', $dateSewa . ' 23:59')
+            ->where('end_date', '>=', $dateSewa . ' 00:01')
+            ->get();
+
+        $is_sewa = array();
+        if (count($sewa) > 0) {
+            foreach ($sewa as $s => $val) {
+                array_push($is_sewa, $val->layanan_id);
+            }
+        }
+
+        if ($request->ajax()) {
+            $lapangan = $layanan->get_page_data('LAPANGAN', 18, $request);
+            $view = view('website.lapangan._data', compact('lapangan', 'is_sewa'))->render();
+            return response()->json(['html' => $view]);
+        }
+
+        return view('website.lapangan.index', compact('lapangan', 'is_sewa'));
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -145,6 +273,7 @@ class WebsiteController extends Controller
     {
         $sewa = Reservation::with(["layanan", "user"])->paginate(10);
         $report = ReportService::with(["report_service_images", "user"])->paginate(10);
+        $repair = RepairService::with(["RepairServiceDetails", "user"])->paginate(10);
         if ($request->ajax()) {
             // Reservation::;
             $sewa = Reservation::select(
@@ -172,7 +301,7 @@ class WebsiteController extends Controller
             return view('website.status._data-sewa', compact('sewa'))->render();
         }
 
-        return view('website.status.index', compact('sewa', 'report'));
+        return view('website.status.index', compact('sewa', 'report', 'repair'));
     }
 
     /**
@@ -283,6 +412,62 @@ class WebsiteController extends Controller
         return response()->json($data);
     }
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function status_repair(Request $request)
+    {
+        if ($request->ajax()) {
+            $repair = RepairService::select(
+                'repair_services.*',
+                'users.first_name',
+                'users.last_name',
+                'users.email'
+            )
+                ->join('users', 'users.email', '=', 'repair_services.created_by')
+                ->when($request->search != null, function ($q) use ($request) {
+                    $q->where('repair_services.title', 'like', '%' . $request->search . '%');
+                })
+                ->when($request->only_me != null, function ($q) {
+                    $q->where('repair_services.created_by', '=', auth()->user()->email);
+                })
+                ->paginate(10);
+            return view('website.status._data-repair', compact('repair'))->render();
+        }
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function status_repair_calendar(Request $request)
+    {
+        $data = RepairService::select(
+            'repair_services.id',
+            'repair_services.title',
+            'repair_services.created_at as start',
+            'repair_services.created_at as end',
+            'repair_services.status'
+        )
+            ->join('users', 'users.email', '=', 'repair_services.created_by')
+            ->whereNotIn('repair_services.status', ['Draft'])
+            ->whereDate('repair_services.created_at', '>=', $request->start)
+            ->whereDate('repair_services.created_at',   '<=', $request->end)
+            ->when($request->search != null, function ($q) use ($request) {
+                $q->where('repair_services.title', 'like', '%' . $request->search . '%');
+            })
+            ->when($request->only_me != null, function ($q) {
+                $q->where('repair_services.created_by', '=', auth()->user()->email);
+            })
+            ->get();
+
+        return response()->json($data);
+    }
+
+
 
     /**
      * Display the specified resource.
@@ -325,6 +510,38 @@ class WebsiteController extends Controller
             'car_pictures' => $layanan_gambars,
             'service_facilities' => $service_facilities,
             'other_cars' => $other_cars,
+        ]);
+    }
+
+    public function show_selasar(Layanan $layanan)
+    {
+        $layanan_gambars = $layanan->layanan_gambars()->get();
+        $service_facilities = $layanan->service_facilities()->with('facility')->get();
+
+        $layananModel = new Layanan;
+        $other_selasar = $layananModel->get_other_data('SELASAR', 6, $layanan->id);
+
+        return view('website.selasar.details', [
+            'data' => $layanan,
+            'selasar_pictures' => $layanan_gambars,
+            'service_facilities' => $service_facilities,
+            'other_selasar' => $other_selasar,
+        ]);
+    }
+
+    public function show_lapangan(Layanan $layanan)
+    {
+        $layanan_gambars = $layanan->layanan_gambars()->get();
+        $service_facilities = $layanan->service_facilities()->with('facility')->get();
+
+        $layananModel = new Layanan;
+        $other_lapangan = $layananModel->get_other_data('LAPANGAN', 6, $layanan->id);
+
+        return view('website.lapangan.details', [
+            'data' => $layanan,
+            'lapangan_pictures' => $layanan_gambars,
+            'service_facilities' => $service_facilities,
+            'other_lapangan' => $other_lapangan,
         ]);
     }
 

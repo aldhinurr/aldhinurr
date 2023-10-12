@@ -162,6 +162,14 @@
             id: "KENDARAAN",
             text: 'Kendaraan'
           },
+          {
+            id: "SELASAR",
+            text: 'Selasar'
+          },
+          {
+            id: "LAPANGAN",
+            text: 'Lapangan'
+          },
         ]
       });
 

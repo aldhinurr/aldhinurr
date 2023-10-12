@@ -78,31 +78,40 @@
           <!--end::Label-->
 
           <!--begin::Col-->
+          <div class="col-lg-8 fv-row">
+            <input type="text" value="{{ auth()->user()->location }}" disabled="disabled" class="form-control form-control-lg form-control-solid" />
+            <input type="hidden" name="location" value="{{ auth()->user()->location }}">
+          </div>
+          <!--end::Col-->
+
+          <!--begin::Col-->
+          <!--
           <div class="col-lg-3 fv-row">
             <select name="location" aria-label="{{ __('Pilih Lokasi') }}" data-control="select2"
               data-placeholder="{{ __('Pilih Lokasi...') }}"
               class="form-select form-select-solid form-select-lg fw-bold">
               <option value="">{{ __('Pilih Lokasi...') }}</option>
               <option value="GANESHA">
-                {{ __('GANESHA') }}
+                {{ __('ITB KAMPUS GANESHA') }}
               </option>
               <option value="SARAGA">
                 {{ __('SARAGA') }}
               </option>
               <option value="JATINANGOR">
-                {{ __('JATINANGOR') }}
+                {{ __('ITB KAMPUS JATINANGOR') }}
               </option>
               <option value="CIREBON">
-                {{ __('CIREBON') }}
+                {{ __('ITB KAMPUS CIREBON') }}
               </option>
               <option value="SBM JAKARTA">
-                {{ __('SBM JAKARTA') }}
+                {{ __('ITB KAMPUS JAKARTA') }}
               </option>
               <option value="BOSSCHA">
                 {{ __('BOSSCHA') }}
               </option>
             </select>
           </div>
+          -->
           <!--end::Col-->
         </div>
         <!--end::Input group-->

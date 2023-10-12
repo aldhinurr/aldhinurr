@@ -18,7 +18,8 @@ class CreateRepairServiceDetailsTable extends Migration
             $table->uuid('repair_service_id')->nullable(false);
             $table->uuid('floor_id')->nullable(false);
             $table->string('name', 200)->nullable(false);
-            $table->float('cost')->nullable(false);
+            $table->float('cost', 12)->nullable(false);
+            $table->timestamps();
             $table->index('repair_service_id');
             $table->foreign('repair_service_id')->references('id')->on('repair_services')->onDelete('cascade');
             $table->index('floor_id');
