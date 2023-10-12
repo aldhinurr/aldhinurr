@@ -20,7 +20,9 @@ class FacilityDataTable extends DataTable
     public function dataTable($query)
     {
         return datatables()
-            ->eloquent($query->where('status', '!=', 'DIHAPUS'))
+            ->eloquent($query->where('status', '!=', 'DIHAPUS')
+            ->where('location', '=', auth()->user()->location)
+            )
             ->editColumn('icon', function (Facility $model) {
                 return view('pages.facility.columns._icon-column', compact('model'));
             })
