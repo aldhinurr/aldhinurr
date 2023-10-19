@@ -18,8 +18,10 @@
         timePicker: true,
         timePicker24Hour: true,
         opens: "right",
-        startDate: moment().add(3, "day"),
-        minDate: moment().add(3, "day"),
+        // startDate: moment().add(3, "day"),
+        // minDate: moment().add(3, "day"),
+        startDate: moment('2024-01-01', 'YYYY-MM-DD'),
+        minDate: moment('2024-01-01', 'YYYY-MM-DD'),
         locale: {
           format: "DD/MM/YYYY HH:mm",
         },
@@ -33,6 +35,7 @@
 
         if (days < 0) {
           $('.alert').html('Tanggal Mulai lebih dari Tanggal Akhir!').fadeIn().delay(3000).fadeOut();
+          is_sewa = 1;
           return
         }
 
@@ -49,6 +52,7 @@
 
         if (days < 0) {
           $('.alert').html('Tanggal Akhir kurang dari Tanggal Mulai!').fadeIn().delay(3000).fadeOut();
+          is_sewa = 1;
           return
         }
 
@@ -111,11 +115,10 @@
 
         // validate is_sewa        
         if (is_sewa > 0) {
-          $('.alert').html('Ruangan sedang disewa, silahkan pilih tanggal lain.').fadeIn().delay(3000)
+          $('.alert').html('Sewa gagal, silahkan pilih tanggal lain.').fadeIn().delay(3000)
             .fadeOut();
           return
         }
-
 
         var data = {}
         data["layanan_id"] = "{{ $data->id }}";
@@ -169,7 +172,7 @@
               $('.alert').html('Silahkan login terlebih dahulu untuk melanjutkan.').fadeIn().delay(3000)
                 .fadeOut();
               setTimeout(function() {
-                window.location = "{{ route('login') }}"
+                window.location = "{{ route('login-page') }}"
               }, 5000);
             } else {
               console.log(xhr.responseText);

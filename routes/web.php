@@ -3,7 +3,6 @@
 namespace App;
 
 use App\Http\Controllers\Account\SettingsController;
-use App\Http\Controllers\Auth\SocialiteLoginController;
 use App\Http\Controllers\Documentation\ReferencesController;
 use App\Http\Controllers\Logs\AuditLogsController;
 use App\Http\Controllers\Logs\SystemLogsController;
@@ -51,9 +50,14 @@ array_walk($menu, function ($val) {
 // web
 Route::get('/', [WebsiteController::class, 'index'])->name('website.index');
 Route::get('/rooms', [WebsiteController::class, 'rooms'])->name('website.rooms');
+Route::get('/rooms_untukdiweb', [WebsiteController::class, 'rooms_untukdiweb'])->name('website.rooms_untukdiweb');
 Route::get('/rooms/{layanan:id}/detail', [WebsiteController::class, 'show_room'])->name('website.room.show');
 Route::get('/cars', [WebsiteController::class, 'cars'])->name('website.cars');
 Route::get('/cars/{layanan:id}/detail', [WebsiteController::class, 'show_car'])->name('website.car.show');
+Route::get('/selasar', [WebsiteController::class, 'selasar'])->name('website.selasar');
+Route::get('/selasar/{layanan:id}/detail', [WebsiteController::class, 'show_selasar'])->name('website.selasar.show');
+Route::get('/lapangan', [WebsiteController::class, 'lapangan'])->name('website.lapangan');
+Route::get('/lapangan/{layanan:id}/detail', [WebsiteController::class, 'show_lapangan'])->name('website.lapangan.show');
 Route::get('/report', [WebsiteController::class, 'report'])->name('website.report');
 Route::get('/repair', [WebsiteController::class, 'repair'])->name('website.repair');
 Route::get('/status', [WebsiteController::class, 'status'])->name('website.status');
@@ -164,11 +168,5 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('users', UsersController::class);
-
-/**
- * Socialite login using Google service
- * https://laravel.com/docs/8.x/socialite
- */
-Route::get('/auth/redirect/{provider}', [SocialiteLoginController::class, 'redirect']);
 
 require __DIR__ . '/auth.php';

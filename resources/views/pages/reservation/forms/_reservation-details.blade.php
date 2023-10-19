@@ -96,15 +96,24 @@
     <div class="d-flex my-4">
       {{-- <a href="#" id="approveButton" class="btn btn-sm btn-success align-self-center me-2">{{ __('Setuju') }}</a>
         <a href="#" id="rejectButton" class="btn btn-sm btn-danger align-self-center">{{ __('Tolak') }}</a> --}}
+      
+      @if ($reservation->status === 'DISETUJUI')
+        <a href="#" id="cancelButton"
+          class="btn btn-sm btn-white btn-active-light-danger align-self-center me-2">
+          {{ __('Batalkan') }}
+        </a>
+      @endif
+      
       <a href="{{ route('reservation.index') }}"
-        class="btn btn-sm btn-white btn-active-light-primary align-self-center me-2">{{ __('Kembali') }}</a>
+        class="btn btn-sm btn-white btn-active-light-primary align-self-center me-2">{{ __('Kembali') }}
+      </a>
 
       @if (in_array($reservation->status, ['MENUNGGU UPLOAD', 'MENUNGGU VERIFIKASI']))
         <!--begin::Menu-->
         <div class="me-0 pt-1">
           <button class="btn btn-sm btn-bg-primary text-white" data-kt-menu-trigger="click"
             data-kt-menu-placement="bottom-end">
-            Update Status
+            Ubah Status
           </button>
 
           <!--begin::Menu 3-->
@@ -160,6 +169,18 @@
     <!--begin::Row-->
     <div class="row">
       <div class="col-lg-6">
+      <div class="row mb-4">
+          <!--begin::Label-->
+          <label class="col-lg-4 fw-bold text-muted">{{ __('Kode Sewa') }}</label>
+          <!--end::Label-->
+
+          <!--begin::Col-->
+          <div class="col-lg-4">
+            <span class="fw-bolder fs-6 text-dark">{{ $reservation->kode_sewa }}</span>
+          </div>
+          <!--end::Col-->
+        </div>
+
         <div class="row mb-4">
           <!--begin::Label-->
           <label class="col-lg-4 fw-bold text-muted">{{ __('Penyewa') }}</label>
@@ -304,6 +325,29 @@
         <h3 class="card-title align-items-start flex-column">
           <span class="card-label fw-bolder text-dark">Fasilitas Tambahan</span>
         </h3>
+
+
+        <div style="padding-top: 12px;">
+        <div class="row mb-4">
+          <!--begin::Label-->
+          <label class="col-lg-4 fw-bold text-muted">{{ __('Diskon') }}</label>
+          <!--end::Label-->
+
+          <!--begin::Col-->
+          <div class="col-lg-8">
+          @if ($reservation->diskon > 0)
+            <div class="fs-6 fw-bolder text-dark" data-kt-countup="true"
+              data-kt-countup-value="{{ $reservation->diskon }}" data-kt-countup-prefix="Rp. ">
+              0
+            </div>
+          @else
+            <input type="text" id="diskon" class="form-control form-control-lg form-control-solid" value="0">
+          @endif
+          </div>
+          <!--end::Col-->
+        </div>
+        </div>
+
         @if (count($extraFacilities) > 0)
           @foreach ($extraFacilities as $extraFacility)
             <!--begin::Section-->
@@ -326,6 +370,25 @@
         @else
           <span class="fw-bolder fs-6 text-dark">Tidak Ada.</span>
         @endif
+
+
+        <div style="padding-top: 12px;">
+        <div class="row mb-4">
+          <!--begin::Label-->
+          <label class="col-lg-4 fw-bold text-muted">{{ __('Bayar') }}</label>
+          <!--end::Label-->
+
+          <!--begin::Col-->
+          <div class="col-lg-8">
+            <div class="fs-6 fw-bolder text-dark" data-kt-countup="true"
+              data-kt-countup-value="{{ $reservation->total - $reservation->diskon }}" data-kt-countup-prefix="Rp. ">
+              0
+            </div>
+          </div>
+          <!--end::Col-->
+        </div>
+        </div>
+
       </div>
     </div>
     <!--end::Row-->

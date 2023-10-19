@@ -1,6 +1,11 @@
 @extends('layout.efacility.master')
 
 @section('content')
+@if(session('alert'))
+    <div class="alert alert-danger text-center">
+        <strong>{!! session('alert') !!}</strong>
+    </div>
+@endif
   <!-- ================================
                                                                                                                                                                                                                                                                                                                                                                                                     START ABOUT AREA
                                                                                                                                                                                                                                                                                                                                                                                                 ================================= -->
@@ -107,6 +112,36 @@
           <!-- end icon-box -->
         </div>
         <!-- end col-lg-4 -->
+        <div class="col-lg-3 responsive-column">
+          <div class="icon-box icon-layout-4 d-flex-center">
+            <div class="info-icon flex-shrink-0">
+              <i class="la la-camera"></i>
+            </div>
+            <!-- end info-icon-->
+            <div class="info-content text-center">
+              <h4 class="info__title" style="font-size: 45px;">{{ $count_selasar }}</h4>
+              <h3 class="info__title">Selasar</h3>
+            </div>
+            <!-- end info-content -->
+          </div>
+          <!-- end icon-box -->
+        </div>
+        <!-- end col-lg-4 -->
+        <div class="col-lg-3 responsive-column">
+          <div class="icon-box icon-layout-4 d-flex-center">
+            <div class="info-icon flex-shrink-0">
+              <i class="la la-futbol-o"></i>
+            </div>
+            <!-- end info-icon-->
+            <div class="info-content text-center">
+              <h4 class="info__title" style="font-size: 45px;">{{ $count_lapangan }}</h4>
+              <h3 class="info__title">Lapangan</h3>
+            </div>
+            <!-- end info-content -->
+          </div>
+          <!-- end icon-box -->
+        </div>
+        <!-- end col-lg-4 -->
         {{-- <div class="col-lg-3 responsive-column">
           <div class="icon-box icon-layout-4 d-flex-center">
             <div class="info-icon flex-shrink-0">
@@ -158,7 +193,21 @@
             </div>
             <!-- end info-icon-->
             <div class="info-content mt-4">
-              <h3 class="sec__title">Ganesha</h3>
+              <h3 class="sec__title">ITB Kampus Ganesha</h3>
+            </div>
+            <!-- end info-content -->
+          </div>
+          <!-- end icon-box -->
+        </div>
+        <!-- end col-lg-3 -->
+        {{--<div class="col-lg-3 responsive-column">
+          <div class="icon-box icon-layout-3 d-flex">
+            <div class="info-icon flex-shrink-0">
+              <i class="la la-university"></i>
+            </div>
+            <!-- end info-icon-->
+            <div class="info-content mt-4">
+              <h3 class="sec__title">ITB Kampus Jatinangor</h3>
             </div>
             <!-- end info-content -->
           </div>
@@ -172,7 +221,7 @@
             </div>
             <!-- end info-icon-->
             <div class="info-content mt-4">
-              <h3 class="sec__title">Saraga</h3>
+              <h3 class="sec__title">ITB Kampus Cirebon</h3>
             </div>
             <!-- end info-content -->
           </div>
@@ -186,21 +235,7 @@
             </div>
             <!-- end info-icon-->
             <div class="info-content mt-4">
-              <h3 class="sec__title">Jatinangor</h3>
-            </div>
-            <!-- end info-content -->
-          </div>
-          <!-- end icon-box -->
-        </div>
-        <!-- end col-lg-3 -->
-        <div class="col-lg-3 responsive-column">
-          <div class="icon-box icon-layout-3 d-flex">
-            <div class="info-icon flex-shrink-0">
-              <i class="la la-university"></i>
-            </div>
-            <!-- end info-icon-->
-            <div class="info-content mt-4">
-              <h3 class="sec__title">Cirebon</h3>
+              <h3 class="sec__title">ITB Kampus Jakarta</h3>
             </div>
             <!-- end info-content -->
           </div>
@@ -217,26 +252,26 @@
             </div>
             <!-- end info-icon-->
             <div class="info-content mt-4">
-              <h3 class="sec__title">SBM Jakarta</h3>
-            </div>
-            <!-- end info-content -->
-          </div>
-          <!-- end icon-box -->
-        </div>
-        <!-- end col-lg-3 -->
-        <div class="col-lg-3 responsive-column">
-          <div class="icon-box icon-layout-3 d-flex">
-            <div class="info-icon flex-shrink-0">
-              <i class="la la-university"></i>
-            </div>
-            <!-- end info-icon-->
-            <div class="info-content mt-4">
               <h3 class="sec__title">Bosscha</h3>
             </div>
             <!-- end info-content -->
           </div>
           <!-- end icon-box -->
-        </div>
+        </div>--}}
+        <!-- end col-lg-3 -->
+        <!-- <div class="col-lg-3 responsive-column">
+          <div class="icon-box icon-layout-3 d-flex">
+            <div class="info-icon flex-shrink-0">
+              <i class="la la-university"></i>
+            </div> -->
+            <!-- end info-icon-->
+            <!-- <div class="info-content mt-4">
+              <h3 class="sec__title">Saraga</h3>
+            </div> -->
+            <!-- end info-content -->
+          <!-- </div> -->
+          <!-- end icon-box -->
+        <!-- </div> -->
         <!-- end col-lg-3 -->
       </div>
       <!-- end row -->
@@ -245,12 +280,13 @@
   </section>
   <!-- end info-area -->
   <!-- ================================
-                                                                                                                                                                                                                                                                                                                                                                                                END INFO AREA
-                                                                                                                                                                                                                                                                                                                                                                                            ================================= -->
+  END INFO AREA
+  ================================= -->
+
 
   <!-- ================================
-                                                                                                                                                                                                                                                                                                                                                                                                    START HOTEL AREA
-                                                                                                                                                                                                                                                                                                                                                                                                ================================= -->
+  START ROOMS AREA
+  ================================= -->
   <section class="hotel-area section-bg padding-top-40px padding-bottom-30px overflow-hidden">
     <div class="container">
       <div class="row">
@@ -334,15 +370,16 @@
     </div>
     <!-- end container-fluid -->
   </section>
-  <!-- end hotel-area -->
+  <!-- end rooms-area -->
   <!-- ================================
-                                                                                                                                                                                                                                                                                                                                                                                                    END HOTEL AREA
-                                                                                                                                                                                                                                                                                                                                                                                                ================================= -->
+  END RROMS AREA
+  ================================= -->
 
-  <!-- ================================
-                                                                                                                                                                                                                                                                                                                                                                                                START CAR AREA
-                                                                                                                                                                                                                                                                                                                                                                                            ================================= -->
-  <section class="car-area section-padding padding-bottom-30px overflow-hidden">
+
+  <!-- ================================ 
+  START CAR AREA 
+  ================================= -->
+  <section class="car-area section-padding padding-top-40px padding-bottom-30px overflow-hidden">
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
@@ -369,7 +406,7 @@
                   </a>
                 </div>
                 <div class="card-body">
-                  {{-- <p class="card-meta">Compact SUV</p> --}}
+                  <!-- <p class="card-meta">Compact SUV</p> -->
                   <h3 class="card-title">
                     <a href="{{ route('website.car.show', $car->id) }}">{{ $car->name }}</a>
                   </h3>
@@ -417,17 +454,200 @@
       </div>
     </div>
     <!-- end container -->
-  </section>
+  </section> 
   <!-- end car-area -->
-  <!-- ================================
-                                                                                                                                                                                                                                                                                                                                                                                                END CAR AREA
-                                                                                                                                                                                                                                                                                                                                                                                            ================================= -->
+<!-- ================================
+END CAR AREA
+================================= -->
 
-  <div class="section-block"></div>
 
-  <!-- ================================
-                                                                                                                                                                                                                                                                                                                                                                                                START INFO AREA
-                                                                                                                                                                                                                                                                                                                                                                                            ================================= -->
+<div class="section-block"></div>
+
+
+<!-- ================================
+START SELASAR AREA
+================================= -->
+<section class="hotel-area section-bg padding-top-40px padding-bottom-30px overflow-hidden">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="section-heading">
+            <h2 class="sec__title line-height-55">
+              Selasar
+            </h2>
+          </div>
+          <!-- end section-heading -->
+        </div>
+        <!-- end col-lg-12 -->
+      </div>
+      <!-- end row -->
+      <div class="row padding-top-20px">
+        <div class="col-lg-12">
+          <div class="hotel-card-wrap">
+            <div class="hotel-card-carousel-2 carousel-action">
+              @foreach ($selasar as $selasar)
+                <div class="card-item">
+                  <div class="card-img-top overflow-hidden" style="height: 247px; width: auto;">
+                    <a href="{{ route('website.selasar.show', $selasar->id) }}" class="d-block">
+                      @if ($selasar->layanan_gambars->first())
+                        <img src="{{ asset($selasar->layanan_gambars[0]['picture']) }}" alt="hotel-img" />
+                      @else
+                        <img src="https://source.unsplash.com/600x400?lobby" alt="hotel-img" />
+                      @endif
+                    </a>
+                  </div>
+                  <div class="card-body">
+                    <h3 class="card-title">
+                      <a href="{{ route('website.selasar.show', $selasar->id) }}">{{ $selasar->name }}</a>
+                    </h3>
+                    <div class="card-attributes">
+                      <ul class="d-flex align-items-center">
+                        <li class="d-flex align-items-center" data-toggle="tooltip" data-placement="top"
+                          title="Kapasitas">
+                          <i class="la la-users"></i><span>{{ $selasar->capacity }} Orang</span>
+                        </li>
+                        <li class="d-flex align-items-center" data-toggle="tooltip" data-placement="top"
+                          title="Luas">
+                          <i class="la la-expand"></i><span>{{ $selasar->large }} m<sup>2</sup></span>
+                        </li>
+                      </ul>
+                    </div>
+                    <p class="card-meta">{{ $selasar->address }}</p>
+                    <div class="card-price d-flex align-items-center justify-content-between">
+                      <p>
+                        <span class="price__num">
+                          @if ($selasar->price == 0)
+                            Gratis
+                          @else
+                            Rp. {{ number_format($room->price, 0) }}
+                          @endif
+                        </span>
+                        <span class="price__text">Per {{ $selasar->price_for }}</span>
+                      </p>
+                      @if ($selasar->is_sewa == 1)
+                        <span class="price__text">Sedang Disewa</span>
+                      @else
+                        <a href="{{ route('website.selasar.show', $selasar->id) }}" class="btn-text">
+                          Lihat<i class="la la-angle-right"></i>
+                        </a>
+                      @endif
+                    </div>
+                  </div>
+                </div>
+                <!-- end card-item -->
+              @endforeach
+            </div>
+            <!-- end hotel-card-carousel -->
+          </div>
+        </div>
+        <!-- end col-lg-12 -->
+      </div>
+      <!-- end row -->
+      <div class="btn-box pt-3 text-center">
+        <a href="{{ route('website.selasar') }}" class="theme-btn">Lihat Selasar Lainnya <i
+            class="la la-arrow-right ml-1"></i></a>
+      </div>
+    </div>
+    <!-- end container-fluid -->
+  </section>
+<!-- ================================
+END SELASAR AREA
+================================= -->
+
+
+<div class="section-block"></div>
+
+
+<!-- ================================
+START LAPANGAN AREA
+================================= -->
+  <section class="car-area section-padding padding-top-40px padding-bottom-30px overflow-hidden">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="section-heading">
+            <h2 class="sec__title">Lapangan</h2>
+          </div>
+          <!-- end section-heading -->
+        </div>
+        <!-- end col-lg-12 -->
+      </div>
+      <!-- end row -->
+      <div class="row padding-top-20px">
+        <div class="col-lg-12">
+          <div class="car-carousel carousel-action">
+            @foreach ($lapangan as $lapangan)
+              <div class="card-item car-card mb-0 border">
+                <div class="card-img-top overflow-hidden" style="height: 247px; width: auto;">
+                  <a href="#" class="d-block">
+                    @if ($lapangan->layanan_gambars->first())
+                      <img src="{{ asset($lapangan->layanan_gambars[0]['picture']) }}" alt="lapangan-img" />
+                    @else
+                      <img src="https://source.unsplash.com/600x400?football" alt="lapangan-img" />
+                    @endif
+                  </a>
+                </div>
+                <div class="card-body">
+                  <h3 class="card-title">
+                    <a href="{{ route('website.lapangan.show', $lapangan->id) }}">{{ $lapangan->name }}</a>
+                  </h3>
+                  <div class="card-attributes">
+                    <ul class="d-flex align-items-center">
+                      <li class="d-flex align-items-center" data-toggle="tooltip" data-placement="top"
+                        title="Kapasitas">
+                        <i class="la la-users"></i><span>{{ $lapangan->capacity }} Orang</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <p class="card-meta">{{ $lapangan->address }}</p>
+                  <div class="card-price d-flex align-items-center justify-content-between">
+                    <p>
+                      <span class="price__num">
+                        @if ($lapangan->price == 0)
+                          Gratis
+                        @else
+                          Rp. {{ number_format($lapangan->price, 0) }}
+                        @endif
+                      </span>
+                      <span class="price__text">Per {{ $lapangan->price_for }}</span>
+                    </p>
+                    @if ($lapangan->is_sewa == 1)
+                      <span class="price__text">Sedang Disewa</span>
+                    @else
+                      <a href="{{ route('website.lapangan.show', $lapangan->id) }}" class="btn-text">
+                        Lihat<i class="la la-angle-right"></i>
+                      </a>
+                    @endif
+                  </div>
+                </div>
+              </div>
+              <!-- end card-item -->
+            @endforeach
+          </div>
+          <!-- end lapangan-carousel -->
+        </div>
+        <!-- end col-lg-12 -->
+      </div>
+      <!-- end row -->
+      <div class="btn-box pt-3 text-center">
+        <a href="{{ route('website.lapangan') }}" class="theme-btn">Lihat Lapangan Lainnya <i
+            class="la la-arrow-right ml-1"></i></a>
+      </div>
+    </div>
+    <!-- end container -->
+  </section>
+  <!-- end lapangan-area -->
+<!-- ================================
+END LAPANGAN AREA
+================================= -->
+
+
+<div class="section-block"></div>
+
+
+<!-- ================================
+START LAPORAN AREA
+================================= -->
   <section class="info-area padding-top-70px padding-bottom-70px" hidden>
     <div class="container">
       <div class="row align-items-center">
@@ -497,6 +717,6 @@
   </section>
   <!-- end info-area -->
   <!-- ================================
-                                                                                                                                                                                                                                                                                                                                                                                                END INFO AREA
-                                                                                                                                                                                                                                                                                                                                                                                            ================================= -->
+  END INFO AREA
+  ================================= -->
 @endsection

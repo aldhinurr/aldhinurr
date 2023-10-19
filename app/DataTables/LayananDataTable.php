@@ -20,7 +20,10 @@ class LayananDataTable extends DataTable
     public function dataTable($query)
     {
         return datatables()
-            ->eloquent($query->where('status', '!=', 'DIHAPUS'))
+            ->eloquent(
+                $query->where('status', '!=', 'DIHAPUS')
+                    ->where('location', '=', auth()->user()->location)
+            )
             ->editColumn('price', function (layanan $model) {
                 return number_format($model->price, 2);
             })

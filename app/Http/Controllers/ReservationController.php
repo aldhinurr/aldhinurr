@@ -81,6 +81,10 @@ class ReservationController extends Controller
             }
 
             DB::commit();
+
+            // menjalankan query procedure untuk update kode_sewa
+            DB::select('CALL prc_ins_reservations(?)', [$reservation['id']]);
+
             return response()->json([
                 'status' => 0,
                 'message' => "Reservasi berhasil dibuat",
@@ -215,7 +219,8 @@ class ReservationController extends Controller
         Db::beginTransaction();
         try {
             $validated = $request->validate([
-                'description' => "required|string|max:200"
+                'description' => "required|string|max:200",
+                'diskon' => "numeric"
             ]);
 
             $validated['status'] = "DISETUJUI";

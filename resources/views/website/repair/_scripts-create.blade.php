@@ -298,7 +298,7 @@
                 3000)
               .fadeOut();
             setTimeout(function() {
-              window.location = "{{ route('login') }}"
+              window.location = "{{ route('login-page') }}"
             }, 5000);
           } else {
             console.log(xhr.responseText);

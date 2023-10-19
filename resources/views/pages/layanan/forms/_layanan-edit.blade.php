@@ -79,6 +79,14 @@
           <!--end::Label-->
 
           <!--begin::Col-->
+          <div class="col-lg-8 fv-row">
+            <input type="text" value="{{ auth()->user()->location }}" disabled="disabled" class="form-control form-control-lg form-control-solid" />
+            <input type="hidden" name="location" value="{{ auth()->user()->location }}">
+          </div>
+          <!--end::Col-->
+
+          <!--begin::Col-->
+          <!--
           <div class="col-lg-4 fv-row">
             <select name="location" aria-label="{{ __('Pilih Lokasi') }}" data-control="select2"
               data-placeholder="{{ __('Pilih Lokasi Layanan...') }}"
@@ -99,6 +107,7 @@
               </option>
             </select>
           </div>
+          -->
           <!--end::Col-->
         </div>
         <!--end::Input group-->

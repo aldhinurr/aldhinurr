@@ -3,15 +3,15 @@
     <div class="row justify-content-between m-0">
       <h3 class="title stroke-shape">Sewa</h3>
     </div>
+    <div class="2024-box">
+      <div class="alert alert-primary label-text">
+          Penyewaan di e-Facility hanya bisa dilakukan pada tahun 2024.
+      </div>
+    </div>
     <div class="sidebar-widget-item">
       <div class="contact-form-action">
         <form action="#" id="sewa">
           @csrf
-          <div class="input-box">
-            <div class="alert alert-danger label-text" id="alert" role="alert" style="display: none">
-              A simple danger alert—check it out!
-            </div>
-          </div>
           <div class="input-box">
             <label class="label-text">Mulai</label>
             <div class="form-group">
@@ -44,7 +44,7 @@
           </div>
           <hr>
           <div class="input-box">
-            <label class="label-text">Catatan</label>
+            <label class="label-text">Catatan/Nama Kegiatan</label>
             <div class="form-group">
               <span class="la la-pencil form-icon"></span>
               <textarea class="message-control form-control" id="catatan" name="catatan"></textarea>
@@ -84,12 +84,21 @@
   <div class="btn-box">
     <a href="#" id="submit-sewa" class="theme-btn text-center w-100 mb-2">Sewa</a>
   </div>
+  <div class="input-box">
+      <div class="alert alert-danger label-text" id="alert" role="alert" style="display: none">
+          A simple danger alert—check it out!
+      </div>
+  </div>
   <div class="footer-item text-center padding-top-20px">
-    <ul class="list-items list--items">
+  <ul class="list-items list--items">
       @if ($data->type == 'RUANG')
         <li><a href="{{ route('website.rooms') }}">Lihat Ruangan Lainnya</a></li>
-      @else
+      @elseif ($data->type == 'KENDARAAN')
         <li><a href="{{ route('website.cars') }}">Lihat Kendaraan Lainnya</a></li>
+      @elseif ($data->type == 'SELASAR')
+        <li><a href="{{ route('website.selasar') }}">Lihat Selasar Lainnya</a></li>
+      @elseif ($data->type == 'LAPANGAN')
+        <li><a href="{{ route('website.lapangan') }}">Lihat Lapangan Lainnya</a></li>
       @endif
       <li><a href="{{ route('website.status') }}#my-sewa">Lihat Status Peminjaman</a></li>
     </ul>

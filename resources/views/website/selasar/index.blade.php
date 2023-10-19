@@ -11,7 +11,7 @@
           <div class="col-lg-12">
             <div class="search-result-content">
               <div class="section-heading">
-                <h2 class="sec__title text-dark">Cari Ruangan</h2>
+                <h2 class="sec__title text-dark">Cari Selasar</h2>
               </div>
               <div class="search-fields-container margin-top-30px">
                 <div class="contact-form-action">
@@ -25,31 +25,30 @@
                             <select id="location" class="select-contain-select">
                               <option value="">Pilih Lokasi</option>
                               <option value="GANESHA">ITB Kampus Ganesha</option>
-                              {{-- <option value="SARAGA">Saraga</option> 
+                              <!-- <option value="SARAGA">Saraga</option> -->
                               <option value="JATINANGOR">ITB Kampus Jatinangor</option>
                               <option value="CIREBON">ITB Kampus Cirebon</option>
                               <option value="SBM JAKARTA">ITB Kampus Jakarta</option>
-                              <option value="BOSSCHA">Bosscha</option> --}}
+                              <option value="BOSSCHA">Bosscha</option>
                             </select>
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <!-- end col-lg-3 -->
+                    </div><!-- end col-lg-3 -->
                     <div class="col-lg-3 col-sm-6 pr-0">
                       <div class="input-box">
                         <span class="la la-building form-icon"></span>
-                        <label class="label-text">Ruangan</label>
+                        <label class="label-text">Selasar</label>
                         <div class="form-group">
                           <input class="form-control" type="text" id="keyword" name="keyword"
-                            placeholder="Nama Ruangan" />
+                            placeholder="Nama Selasar" />
                         </div>
                       </div>
                     </div><!-- end col-lg-3 -->
                     <div class="col-lg-2 col-sm-6 pr-0">
                       <div class="input-box">
                         <span class="la la-calendar form-icon"></span>
-                        <label class="label-text">Mulai</label>
+                        <label class="label-text">Mulai!</label>
                         <div class="form-group">
                           <input class="date-range form-control" type="text" name="daterange-single" id="start_date" />
                         </div>
@@ -96,12 +95,12 @@
   <section class="card-area section--padding">
     <div class="container">
       <div class="row" id="data-wrapper">
-        @include('website.rooms._data')
+        @include('website.selasar._data')
       </div><!-- end row -->
       <div class="row">
         <div class="col-lg-12">
           <div class="btn-box mt-3 text-center">
-            <button type="button" class="theme-btn load-more-data"><i class="la la-refresh mr-1"></i>Lihat Ruangan
+            <button type="button" class="theme-btn load-more-data"><i class="la la-refresh mr-1"></i>Lihat Selasar
               Lainnya</button>
           </div><!-- end btn-box -->
         </div><!-- end col-lg-12 -->
@@ -129,7 +128,7 @@
 
 @section('scripts')
   <script type="text/javascript">
-    var ENDPOINT = "{{ route('website.rooms') }}";
+    var ENDPOINT = "{{ route('website.selasar') }}";
     var page = 1;
 
     $(".load-more-data").click(function() {
