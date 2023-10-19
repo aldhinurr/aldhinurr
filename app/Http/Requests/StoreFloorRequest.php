@@ -25,11 +25,11 @@ class StoreFloorRequest extends FormRequest
     {
         return [
             'building_id' => 'required',
-            'number' => 'required',
-            'floor_classification' => 'required',
-            'room_classification' => 'required',
-            'room_description' => 'required',
-            'large' => 'required|numeric|min:1',
+            'number' => 'nullable',
+            'floor_classification' => 'nullable',
+            'room_classification' => 'nullable',
+            'room_description' => 'nullable',
+            'large' => 'nullable|numeric|min:1',
             'capacity' => 'nullable|numeric',
         ];
     }

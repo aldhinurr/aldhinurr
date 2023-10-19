@@ -12,18 +12,18 @@
 
 @section('content')
   <!-- ================================
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        START FORM AREA
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ================================= -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          START FORM AREA
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ================================= -->
   <section class="cart-area section-padding">
     <div class="container">
       <div class="row">
         <div class="col-lg-10 mx-auto">
           <div class="listing-header pb-4">
-            <h3 class="title font-size-28 pb-2">Perbaikan</h3>
+            <h3 class="title font-size-28 pb-2">Pemeliharaan / Perawatan</h3>
           </div>
           <div class="form-box">
             <div class="form-title-wrap">
-              <h3 class="title"><i class="la la-building-o mr-2 text-gray"></i>Form Pengajuan Perbaikan</h3>
+              <h3 class="title"><i class="la la-building-o mr-2 text-gray"></i>Form Izin Pemeliharaan / Perawatan</h3>
             </div><!-- form-title-wrap -->
             <div class="form-content contact-form-action">
               <div class="alert alert-danger label-text" role="alert" style="display: none">
@@ -90,6 +90,14 @@
                           <label class="custom-file-label label-text" for="attachment">Pilih File...</label>
                         </div>
                       </div>
+                    </div>
+                  </div>
+                </div><!-- end col-lg-6 -->
+                <div class="col-lg-6">
+                  <div class="col-lg-8 input-box">
+                    <label class="label-text">No Surat</label>
+                    <div class="form-group">
+                      <input type="text" class="form-control pl-3" id="nomor_surat" name="nomor_surat">
                     </div>
                   </div>
                 </div><!-- end col-lg-6 -->
@@ -188,8 +196,8 @@
     </div><!-- end container -->
   </section><!-- end cart-area -->
   <!-- ================================
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        END FORM AREA
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ================================= -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          END FORM AREA
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ================================= -->
 @endsection
 
 @section('scripts')

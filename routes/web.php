@@ -163,6 +163,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/{repairService:id}/detail', [RepairServiceController::class, 'show'])->name('repair.show');
             Route::post('/{repairService:id}/approve', [RepairServiceController::class, 'approve'])->name('repair.approve');
             Route::post('/{repairService:id}/reject', [RepairServiceController::class, 'reject'])->name('repair.reject');
+            Route::post('/{repairService:id}/review', [RepairServiceController::class, 'review'])->name('repair.review');
         });
     });
 });
