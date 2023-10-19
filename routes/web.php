@@ -77,6 +77,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/reservation/{reservation:id}/receipt/upload', [ReservationController::class, 'upload_receipt'])->name('website.reservation.receipt.upload');
 
     Route::post('/report/store', [ReportServiceController::class, 'store'])->name('website.report.store');
+    Route::post('/repair/store', [RepairServiceController::class, 'store'])->name('website.repair.store');
     Route::get('/repair/{repairService:id}/edit', [RepairServiceController::class, 'edit'])->name('website.repair.edit');
     Route::put('/repair/{repairService:id}/update', [RepairServiceController::class, 'update'])->name('website.repair.update');
 
@@ -157,6 +158,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/{repairService:id}/detail', [RepairServiceController::class, 'show'])->name('repair.show');
             Route::post('/{repairService:id}/approve', [RepairServiceController::class, 'approve'])->name('repair.approve');
             Route::post('/{repairService:id}/reject', [RepairServiceController::class, 'reject'])->name('repair.reject');
+            Route::post('/{repairService:id}/review', [RepairServiceController::class, 'review'])->name('repair.review');
         });
     });
 });

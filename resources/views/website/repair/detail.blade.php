@@ -2,8 +2,8 @@
 
 @section('content')
   <!-- ================================
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                START CART AREA
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ================================= -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            START CART AREA
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ================================= -->
   <section class="cart-area section-padding">
     <div class="container">
       <div class="row">
@@ -77,6 +77,15 @@
                     </div>
                   </div>
                 </div><!-- end col-lg-6 -->
+                <div class="col-lg-6">
+                  <div class="col-lg input-box">
+                    <label class="label-text">Nomor Surat</label>
+                    <div class="form-group">
+                      <input type="text" class="form-control-plaintext pl-3" id="nomor_surat" name="nomor_surat"
+                        value="{{ $repairService->nomor_surat }}">
+                    </div>
+                  </div>
+                </div><!-- end col-lg-6 -->
                 <div class="col-lg-12 pt-3 pb-3">
                   <div class="col-lg-8 input-box">
                     <h6 class="text-black">Detil Pengajuan Perbaikan</h6>
@@ -134,6 +143,6 @@
     </div><!-- end container -->
   </section><!-- end cart-area -->
   <!-- ================================
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                END CART AREA
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ================================= -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            END CART AREA
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ================================= -->
 @endsection

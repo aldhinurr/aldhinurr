@@ -482,7 +482,7 @@ class WebsiteController extends Controller
         foreach ($floors as $floor) {
             $response[] = array(
                 "id" => $floor->id,
-                "text" => $floor->floor_classification . " " . $floor->room_classification . " - " . $floor->room_description,
+                "text" => "Lantai " . $floor->number . " - " . $floor->floor_classification . " " . $floor->room_classification . " " . $floor->room_description,
                 "number" => $floor->number,
                 "floor_classification" => $floor->floor_classification,
                 "room_classification" => $floor->room_classification,

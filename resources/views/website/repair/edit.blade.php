@@ -12,8 +12,8 @@
 
 @section('content')
   <!-- ================================
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            START FORM AREA
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ================================= -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                START FORM AREA
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ================================= -->
   <section class="cart-area section-padding">
     <div class="container">
       <div class="row">
@@ -98,6 +98,14 @@
                         <li><a href="{{ asset($repairService->attachment) }}" target="_blank">Download attachment</a></li>
                       </ul>
                     @endif
+                  </div>
+                </div><!-- end col-lg-6 -->
+                <div class="col-lg-6">
+                  <div class="col-lg-8 input-box">
+                    <label class="label-text">No Surat</label>
+                    <div class="form-group">
+                      <input type="text" class="form-control pl-3" id="nomor_surat" name="nomor_surat">
+                    </div>
                   </div>
                 </div><!-- end col-lg-6 -->
                 <div class="col-lg-12 pt-3 pb-3">
@@ -195,8 +203,8 @@
     </div><!-- end container -->
   </section><!-- end cart-area -->
   <!-- ================================
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            END FORM AREA
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ================================= -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                END FORM AREA
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ================================= -->
 @endsection
 
 @section('scripts')

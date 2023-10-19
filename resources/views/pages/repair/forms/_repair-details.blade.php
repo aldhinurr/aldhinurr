@@ -2,6 +2,7 @@
   $status_color = [
       'Ajukan' => 'warning',
       'Draf' => 'secondary',
+      'Sedang Direview' => 'info',
       'Tolak' => 'danger',
       'Setuju' => 'success',
   ];
@@ -14,7 +15,7 @@
     data-bs-target="#kt_repair_details" aria-expanded="true" aria-controls="kt_repair_details">
     <!--begin::Card title-->
     <div class="card-title m-0">
-      <h3 class="fw-bolder m-0">{{ __('Lihat Pengajuan Perbaikan') }}</h3>
+      <h3 class="fw-bolder m-0">{{ __('Lihat Pengajuan Pemeliharaan / Perawatan') }}</h3>
     </div>
     <!--end::Card title-->
   </div>
@@ -136,6 +137,48 @@
         </div>
       </div>
 
+      <div class="row">
+        <div class="col-lg-6">
+          <!--begin::Input group-->
+          <div class="row mb-6">
+            <!--begin::Label-->
+            <label class="col-lg-4 fw-bold text-muted">{{ __('Nomor Surat') }}</label>
+            <!--end::Label-->
+
+            <!--begin::Col-->
+            <div class="col-lg-8 fv-row">
+              <!--begin::Options-->
+              <span class="fw-bolder fs-6 text-dark">{{ $repairService->nomor_surat }}</span>
+              <!--end::Options-->
+            </div>
+            <!--end::Col-->
+          </div>
+          <!--end::Input group-->
+        </div>
+        <div class="col-lg-6">
+          <!--begin::Input group-->
+          <div class="row mb-6">
+            <!--begin::Label-->
+            <label class="col-lg-4 fw-bold text-muted">{{ __('Attachment') }}</label>
+            <!--end::Label-->
+
+            <!--begin::Col-->
+            <div class="col-lg-8 fv-row">
+              <!--begin::Options-->
+              @if ($repairService->attachment != null)
+                <span class="fw-bolder fs-6 text-dark"><a href="{{ asset($repairService->attachment) }}"
+                    target="_blank">Download</a></span>
+              @else
+                <span class="fw-bolder fs-6 text-dark">{{ __('Tidak ada.') }}</span>
+              @endif
+              <!--end::Options-->
+            </div>
+            <!--end::Col-->
+          </div>
+          <!--end::Input group-->
+        </div>
+      </div>
+
       <!--begin::Label-->
       <label class="col-lg-4 mt-5 fw-bold text-muted">{{ __('Detail Pengajuan Perbaikan') }}</label>
       <!--end::Label-->
@@ -203,10 +246,15 @@
         class="btn btn-white btn-active-light-primary me-2">{{ __('Kembali') }}</a>
 
       {{-- button approve reject --}}
-      @if ($repairService->status == 'Ajukan')
+      @if ($repairService->status == 'Ajukan' || $repairService->status == 'Sedang Direview')
         <button type="button" class="btn btn-danger me-2" id="rejectButton">
           @include('partials.general._button-indicator', ['label' => __('Tolak')])
         </button>
+        @if ($repairService->status != 'Sedang Direview')
+          <button type="button" class="btn btn-info me-2" id="reviewButton">
+            @include('partials.general._button-indicator', ['label' => __('Sedang Direview')])
+          </button>
+        @endif
         <button type="button" class="btn btn-success" id="approveButton">
           @include('partials.general._button-indicator', ['label' => __('Setuju')])
         </button>

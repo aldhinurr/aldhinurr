@@ -343,4 +343,31 @@ class RepairServiceController extends Controller
             ], 500);
         }
     }
+
+    public function review(Request $request, RepairService $repairService)
+    {
+        Db::beginTransaction();
+        try {
+            $validated = $request->validate([
+                'description' => "required|string|max:200"
+            ]);
+
+            $validated['status'] = "Sedang Direview";
+            $validated['processed_by'] = auth()->user()->email;
+            $validated['processed_at'] = new DateTime("now", new DateTimeZone('Asia/Jakarta'));
+            $repairService->update($validated);
+
+            DB::commit();
+            return response()->json([
+                'status' => 0,
+                'message' => "Pengajuan Berhasil Direview."
+            ], 200);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return response()->json([
+                'status' => 1,
+                'message' => $th->getMessage()
+            ], 500);
+        }
+    }
 }

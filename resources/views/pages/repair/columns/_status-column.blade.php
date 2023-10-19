@@ -2,6 +2,7 @@
 $status_color = [
   'Ajukan' => 'warning',
   'Draft' => 'secondary',
+  'Sedang Direview' => 'info',
   'Tolak' => 'danger',
   'Setuju' => 'success',
 ];

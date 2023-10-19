@@ -28,6 +28,7 @@ class StoreRepairServiceRequest extends FormRequest
             "status" => "required|string",
             "unit" => "required|string",
             "total" => "required|numeric",
+            "nomor_surat" => "nullable|string|max:100",
             "pengajuan_detail" => "required"
         ];
     }

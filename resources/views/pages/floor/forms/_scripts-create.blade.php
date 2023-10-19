@@ -20,7 +20,7 @@
                 }
               }
             },
-            floor_classification: {
+            /* floor_classification: {
               validators: {
                 notEmpty: {
                   message: 'Klasifikasi Ruangan belum diisi'
@@ -47,7 +47,7 @@
                   message: 'Luas belum diisi'
                 }
               }
-            },
+            }, */
           },
           plugins: {
             trigger: new FormValidation.plugins.Trigger(),
