@@ -38,7 +38,7 @@
                   <a href="{{ route('website.status') }}">Status</a>
                 </li>
                 <li>
-                  <a href="http://ditsp.itb.ac.id/wp-content/uploads/sites/13/2023/10/Panduan-Penggunaan-Layanan-E-Facility-Versi-1.pdf"
+                  <a href="https://ditsp.itb.ac.id/wp-content/uploads/sites/13/2023/10/Panduan-Penggunaan-Layanan-E-Facility-Versi-13-10-2023.pdf"
                     target="_blank">Panduan</a>
                 </li>
                 <!-- <li><a href="https://asrama.itb.ac.id" target="_blank">Asrama</a></li> -->

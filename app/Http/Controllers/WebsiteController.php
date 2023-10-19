@@ -313,7 +313,8 @@ class WebsiteController extends Controller
     {
         $data = Reservation::select(
             'reservations.id',
-            DB::raw("concat(layanans.name, ' ', users.first_name) as title"),
+            DB::raw("concat(layanans.name, ' - ', users.itb_unit) as title"),
+            'reservations.kode_sewa',
             'reservations.start_date as start',
             'reservations.end_date as end',
             'reservations.fee_for',
@@ -327,6 +328,7 @@ class WebsiteController extends Controller
             'layanans.type',
             'users.first_name',
             'users.last_name',
+            'users.itb_unit',
         )
             ->join('layanans', 'layanans.id', '=', 'reservations.layanan_id')
             ->join('users', 'users.email', '=', 'reservations.created_by')

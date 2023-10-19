@@ -79,6 +79,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/reservation', [ReservationController::class, 'store'])->name('website.reservation');
     Route::get('/reservation/{reservation:id}/detail', [ReservationController::class, 'detail'])->name('website.reservation.show');
     Route::post('/reservation/{reservation:id}/receipt/upload', [ReservationController::class, 'upload_receipt'])->name('website.reservation.receipt.upload');
+    Route::post('/reservation/{reservation:id}/surat_permohonan/upload', [ReservationController::class, 'upload_permohonan'])->name('website.reservation.permohonan.upload');
 
     Route::post('/report/store', [ReportServiceController::class, 'store'])->name('website.report.store');
     Route::post('/repair/store', [RepairServiceController::class, 'store'])->name('website.repair.store');
