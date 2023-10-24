@@ -49,7 +49,7 @@
         <!--begin::Input group-->
         <div class="row mb-6">
           <!--begin::Label-->
-          <label class="col-lg-3 col-form-label required fw-bold fs-6">{{ __('Klasifikasi Ruangan') }}</label>
+          <label class="col-lg-3 col-form-label  fw-bold fs-6">{{ __('Klasifikasi Ruangan') }}</label>
           <!--end::Label-->
 
           <!--begin::Col-->
@@ -71,7 +71,7 @@
         <!--begin::Input group-->
         <div class="row mb-6">
           <!--begin::Label-->
-          <label class="col-lg-3 col-form-label required fw-bold fs-6">{{ __('Uraian Ruangan') }}</label>
+          <label class="col-lg-3 col-form-label  fw-bold fs-6">{{ __('Uraian Ruangan') }}</label>
           <!--end::Label-->
 
           <!--begin::Col-->
@@ -88,7 +88,7 @@
         <div class="row mb-6">
           <!--begin::Label-->
           <label class="col-lg-3 col-form-label fw-bold fs-6">
-            <span class="required">{{ __('Luas') }}</span>
+            <span>{{ __('Luas') }}</span>
           </label>
           <!--end::Label-->
 

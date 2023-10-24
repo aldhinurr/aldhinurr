@@ -33,7 +33,7 @@
         var duration = moment.duration(end.diff(start));
         var days = duration.asDays() + 1;
 
-        if (days < 0) {
+        if (days <= 0) {
           $('.alert').html('Tanggal Mulai lebih dari Tanggal Akhir!').fadeIn().delay(3000).fadeOut();
           is_sewa = 1;
           return
@@ -50,7 +50,7 @@
         var duration = moment.duration(end.diff(start));
         var days = duration.asDays() + 1;
 
-        if (days < 0) {
+        if (days <= 0) {
           $('.alert').html('Tanggal Akhir kurang dari Tanggal Mulai!').fadeIn().delay(3000).fadeOut();
           is_sewa = 1;
           return
@@ -112,6 +112,17 @@
 
       submitButton.addEventListener('click', function(e) {
         e.preventDefault();
+
+        var start = moment($('#start_date').val(), 'DD/MM/YYYY');
+        var end = moment($('#end_date').val(), 'DD/MM/YYYY');
+        var duration = moment.duration(end.diff(start));
+        var days = duration.asDays() + 1;
+
+        if (days <= 0) {
+          $('.alert').html('Tanggal Akhir kurang dari Tanggal Mulai!').fadeIn().delay(3000).fadeOut();
+          is_sewa = 1;
+          return
+        }
 
         // validate is_sewa        
         if (is_sewa > 0) {
@@ -198,12 +209,13 @@
   function checkReservation() {
     var endpoint = "{{ route('website.reservation.check') }}"
     var layanan = "{{ $data->id }}"
-    var date = $('#start_date').val()
+    var start_date = $('#start_date').val();
+    var end_date = $('#end_date').val();
     var availableInfo = $('#is_available');
 
     // Send ajax request
     $.ajax({
-      url: endpoint + "?layanan=" + layanan + "&date=" + date,
+      url: endpoint + "?layanan=" + layanan + "&start_date=" + start_date + "&end_date=" + end_date,
       type: 'GET',
       success: function(response) {
         is_sewa = response;
