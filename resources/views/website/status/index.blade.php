@@ -19,7 +19,7 @@
                   Sewa
                 </a>
               </li>
-              <li class="nav-item" hidden>
+              <li class="nav-item">
                 <a class="nav-link" id="my-laporan-tab" data-toggle="tab" href="#my-laporan" role="tab"
                   aria-controls="my-laporan" aria-selected="false">
                   Laporan
@@ -114,7 +114,7 @@
                               <th scope="col">Lokasi</th>
                               <th scope="col">Mulai</th>
                               <th scope="col">Selesai</th>
-                              <th scope="col">Pengguna</th>
+                              <th scope="col">Unit Kerja</th>
                               <th scope="col">Status</th>
                               <th scope="col">Opsi</th>
                             </tr>
@@ -278,7 +278,7 @@
                           <thead>
                             <tr>
                               <th scope="col">Tanggal</th>
-                              <th scope="col">Pengguna</th>
+                              <th scope="col">Unit Kerja</th>
                               <th scope="col">Judul</th>
                               <th scope="col">Total</th>
                               <th scope="col">Status</th>
@@ -492,7 +492,10 @@
           $('#eventDetailTitle').text(info.event.extendedProps.layanan);
           $('#address').text(info.event.extendedProps.address);
           $('#location').text(info.event.extendedProps.location);
+          $('#kode_sewa').text(info.event.extendedProps.kode_sewa);
+          $('#location').text(info.event.extendedProps.location);
           $('#pengguna').text(`${info.event.extendedProps.first_name} ${info.event.extendedProps.last_name}`);
+          $('#itb_unit').text(info.event.extendedProps.itb_unit);
           $('#start_date').text(info.event.start.toLocaleString("id-ID"));
           $('#end_date').text(
             (info.event.end != null ? info.event.end.toLocaleString("id-ID") :

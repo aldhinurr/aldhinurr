@@ -37,6 +37,12 @@ return array(
             'role' => ["admin", "superadmin"],
         ),
 
+        //// Laporan
+        array(
+            'classes' => array('content' => 'pt-8 pb-2'),
+            'content' => '<span class="menu-section text-muted text-uppercase fs-8 ls-1">Laporan</span>',
+        ),
+
         array(
             'title' => 'Laporan',
             'path'  => 'admin/report',
@@ -47,7 +53,7 @@ return array(
         //// Perbaikan
         array(
             'classes' => array('content' => 'pt-8 pb-2'),
-            'content' => '<span class="menu-section text-muted text-uppercase fs-8 ls-1">Perbaikan</span>',
+            'content' => '<span class="menu-section text-muted text-uppercase fs-8 ls-1">Pemeliharaan / Perawatan</span>',
         ),
 
         array(

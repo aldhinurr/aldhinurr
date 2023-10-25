@@ -27,6 +27,9 @@ class ReservationDataTable extends DataTable
             ->editColumn('layanans.name', function (Reservation $model) {
                 return $model->layanan->name;
             })
+            ->editColumn('layanans.type', function (Reservation $model) {
+                return $model->layanan->type;
+            })
             ->editColumn('start_date', function (Reservation $model) {
                 return Carbon::createFromFormat('Y-m-d H:i:s', $model->start_date)->format('d-m-Y H:i:s');
             })
@@ -72,6 +75,15 @@ class ReservationDataTable extends DataTable
                 }
                 return $model->status;
             })
+            ->editColumn('jml_upload', function (Reservation $model) {
+                if ($model->receipt && $model->surat_permohonan) {
+                    return '2';
+                } elseif ($model->receipt || $model->surat_permohonan) {
+                    return '1';
+                } else {
+                    return '-';
+                }
+            })         
             ->addColumn('action', function (Reservation $model) {
                 return view('pages.reservation._action-menu', compact('model'));
             })
@@ -90,6 +102,12 @@ class ReservationDataTable extends DataTable
             ->join('layanans', 'reservations.layanan_id', '=', 'layanans.id')
             ->select('reservations.*', \DB::raw('reservations.total - reservations.diskon AS bayar'))
             ->where('layanans.location', auth()->user()->location);
+
+            if ($tipeLayanan) {
+                $query->where('layanans.type', $tipeLayanan);
+            }
+        
+            return $query;
     }
 
     /**
@@ -121,6 +139,7 @@ class ReservationDataTable extends DataTable
             Column::make('created_at')->title('#Dibuat')->hidden(),
             Column::make('kode_sewa')->title("Kode Sewa"),
             Column::make('layanan_id')->title('Layanan')->data('layanans.name')->name('layanans.name'),
+            Column::make('layanan_id')->title('Layanan')->data('layanans.type')->name('layanans.type')->hidden(),
             Column::make('start_date')->title("Tgl. Mulai"),
             Column::make('end_date')->title("Tgl. Selesai"),
             Column::make('fee')->title("#Harga")->hidden(),
@@ -130,6 +149,7 @@ class ReservationDataTable extends DataTable
             Column::make('diskon')->title("Diskon"),
             Column::make('bayar')->title("Bayar")->searchable(false),
             Column::make('created_at')->title("Dibuat"),
+            Column::make('jml_upload')->title("Upload")->searchable(false),
             Column::make('status')->title("Status"),
             Column::computed('action')->title("Kelola")
                 ->exportable(false)

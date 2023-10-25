@@ -88,9 +88,8 @@ Route::middleware('auth')->group(function () {
 
     // admin
     Route::prefix('admin')->group(function () {
-        Route::get('', function () {
-            return view('pages.index');
-        })->name('admin.index');
+        Route::get('', [ReservationController::class, 'admin_status'])->name('admin.index');
+
 
         // Layanan pages
         Route::prefix('layanan')->group(function () {

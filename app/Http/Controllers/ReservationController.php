@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use App\DataTables\ReservationDataTable;
 use App\Models\Reservation;
 use App\Http\Requests\StoreReservationRequest;
@@ -207,6 +208,37 @@ class ReservationController extends Controller
         }
     }
 
+    public function upload_permohonan(Request $request, Reservation $reservation)
+    {
+        Db::beginTransaction();
+        try {
+            $validated = $request->validate([
+                'surat_permohonan' => "required|file"
+            ]);
+
+            // upload surat_permohonan
+            $surat_permohonan = $request->surat_permohonan;
+            $fileName = $reservation->id . "-" . strtolower(Str::random(10)) . '.' . $surat_permohonan->extension();
+            $surat_permohonan->move(public_path('media/upload/surat_permohonan'), $fileName);
+
+            $validated['surat_permohonan'] = 'media/upload/surat_permohonan/' . $fileName;
+            $validated['status'] = "MENUNGGU VERIFIKASI";
+            $reservation->update($validated);
+
+            DB::commit();
+            return response()->json([
+                'status' => 0,
+                'message' => "Bukti Pembayaran Berhasil diupload."
+            ], 200);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return response()->json([
+                'status' => 1,
+                'message' => $th->getMessage()
+            ], 500);
+        }
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -269,6 +301,7 @@ class ReservationController extends Controller
                 'extra_fee' => $reservation['extra_fee'],
                 'total' => $reservation['total'],
                 'receipt' => $reservation['receipt'],
+                'surat_permohonan' => $reservation['surat_permohonan'],
                 'created_by' => $reservation['created_by'],
                 'created_at' => $reservation['created_at'],
                 'status' => "DISETUJUI",
@@ -386,6 +419,29 @@ class ReservationController extends Controller
         }
     }
 
+    public function admin_status()
+    {
+        $layanans = DB::table('reservations')
+            ->select('layanans.type', DB::raw('COUNT(*) as total'))
+            ->leftJoin('layanans', 'reservations.layanan_id', '=', 'layanans.id')
+            ->where('layanans.location', Auth::user()->location)
+            ->groupBy('layanans.type')
+            ->get();
+    
+        $reservations = DB::table('reservations')
+            ->select('layanans.type', 
+                DB::raw('SUM(CASE WHEN reservations.status = "MENUNGGU UPLOAD" THEN 1 ELSE 0 END) AS menunggu_upload'),
+                DB::raw('SUM(CASE WHEN reservations.status = "MENUNGGU VERIFIKASI" THEN 1 ELSE 0 END) AS menunggu_verifikasi'),
+                DB::raw('SUM(CASE WHEN reservations.status = "DISETUJUI" THEN 1 ELSE 0 END) AS disetujui'),
+                DB::raw('SUM(CASE WHEN reservations.status = "DITOLAK" THEN 1 ELSE 0 END) AS ditolak'))
+            ->leftJoin('layanans', 'reservations.layanan_id', '=', 'layanans.id')
+            ->where('layanans.location', Auth::user()->location)
+            ->groupBy('layanans.type')
+            ->get();
+    
+        return view('pages.index', compact('layanans', 'reservations'));
+    }
+    
     /**
      * Remove the specified resource from storage.
      *

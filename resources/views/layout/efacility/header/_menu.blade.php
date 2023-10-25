@@ -27,9 +27,9 @@
                   <ul class="dropdown-menu-item">
                     <li><a href="{{ route('website.rooms') }}">Ruangan</a></li>
                     <li><a href="{{ route('website.cars') }}">Kendaraan</a></li>
-                    <!-- <li><a href="{{ route('website.report') }}" hidden>Laporan</a></li> -->
                     <li><a href="{{ route('website.selasar') }}">Selasar</a></li>
                     <li><a href="{{ route('website.lapangan') }}">Lapangan</a></li>
+                    <li><a href="{{ route('website.report') }}">Laporan</a></li>
                     <li><a href="{{ route('website.repair') }}">Pemeliharaan / Perawatan</a></li>
                     <li><a href="https://sipa.nrcn.itb.ac.id/listtools" target="_blank">Uji Laboratorium</a></li>
                   </ul>
@@ -38,7 +38,7 @@
                   <a href="{{ route('website.status') }}">Status</a>
                 </li>
                 <li>
-                  <a href="https://ditsp.itb.ac.id/wp-content/uploads/sites/13/2023/10/Panduan-Penggunaan-Layanan-E-Facility-Versi-13-10-2023.pdf"
+                  <a href="http://ditsp.itb.ac.id/wp-content/uploads/sites/13/2023/10/Panduan-Penggunaan-Layanan-E-Facility-Versi-18-10-2023.pdf"
                     target="_blank">Panduan</a>
                 </li>
                 <!-- <li><a href="https://asrama.itb.ac.id" target="_blank">Asrama</a></li> -->

@@ -46,9 +46,16 @@
                               <span class="product-info-label">Kode Sewa:</span>
                               <span class="product-info-value">
                                 <span
-                                  class="product-check-in">{{ $reservation->kode_sewa }}</span>
+                                  class="product-info-value">{{ $reservation->kode_sewa }}</span>
                               </span>
                             </div><!-- end product-info -->
+                            <div class="product-info line-height-24">
+                              <span class="product-info-label">Unit Kerja:</span>
+                              <span class="product-info-value">
+                                <span
+                                  class="product-check-in">{{ $reservation->user->itb_unit }}</span>
+                              </span>
+                            </div>
                             <div class="product-info line-height-24">
                               <span class="product-info-label">Sewa:</span>
                               <span class="product-info-value">
@@ -117,12 +124,12 @@
                 </tbody>
               </table>
             </div>
-            <div class="section-block"></div><br>
+            <div class="section-block"></div>
             <div class="row">
-              <div class="col-md-6">
-                @if ($reservation->status == 'MENUNGGU UPLOAD')
+              <div class="col-md-6"><br>
                   <p>Silahkan transfer total pembayaran ke <strong>BNI Virtual Account </strong> di bawah:</p>
                   <h6>9880031157000800 (Bank Negara Indonesia Cabang ITB)</h6>
+                @if ($reservation->status == 'MENUNGGU UPLOAD')
                   <br>Batas waktu pembayaran: <span style="display: inline-block;"><h6 id="countdown-expired">0</h6></span>
                 @endif
             </div>
@@ -144,6 +151,7 @@
                       </div> -->   
                     <form method="post" enctype="multipart/form-data" id="upload-receipt">  
                       @csrf
+                      <strong>Upload Bukti Pembayaran</strong>
                       <div class="input-group d-flex justify-content-end">
                         <div class="custom-file">
                           <input type="file" class="custom-file-input" id="receipt" name="receipt"
@@ -152,10 +160,34 @@
                         </div>
                       </div>
                       <div class="d-flex justify-content-between pt-2">
+                      @if($reservation->receipt)
                         <ul class="list-items list--items ml-2 pt-2">
-                          <li><a href="{{ asset($reservation->receipt) }}">Download Bukti Pembayaran</a></li>
+                          <li><a href="{{ asset($reservation->receipt) }}" target="_blank">
+                            Download Bukti Pembayaran</a></li>
                         </ul>
+                      @endif
                         <button class="btn btn-primary" type="button" id="uploadButton">Upload</button>
+                      </div>
+                    </form>
+                    <br>
+                    <strong>Upload Surat Permohonan</strong>
+                    <form method="post" enctype="multipart/form-data" id="surat_permohonan">  
+                      @csrf
+                      <div class="input-group d-flex justify-content-end">
+                        <div class="custom-file">
+                          <input type="file" class="custom-file-input" id="surat_permohonan" name="surat_permohonan"
+                            aria-describedby="surat_permohonan">
+                          <label class="custom-file-label" for="surat_permohonan">Pilih File...</label>
+                        </div>
+                      </div>
+                      <div class="d-flex justify-content-between pt-2">
+                      @if($reservation->surat_permohonan)
+                        <ul class="list-items list--items ml-2 pt-2">
+                          <li><a href="{{ asset($reservation->surat_permohonan) }}" target="_blank">
+                            Download Surat Permohonan</a></li>
+                        </ul>
+                      @endif
+                        <button class="btn btn-primary" type="button" id="uploadButton2">Upload</button>
                       </div>
                     </form>
                   </div>
@@ -219,7 +251,7 @@
       }
     }, 1000);
 
-    // upload receipt
+    // UPLOAD BUKTI PEMBAYARAN ----------------------------------------------------
     $('#uploadButton').click(function() {
       try {
         var form = $('form')[0]; // You need to use standard javascript object here
@@ -260,7 +292,48 @@
       }
     });
 
-    //SELECTED BOX SUMBER DANA
+    // UPLOAD SURAT PERMOHONAN ------------------------------------------------
+    $('#uploadButton2').click(function() {
+  try {
+    var form = $('form')[1]; // You need to use standard javascript object here
+        var formData = new FormData(form);
+        var url = "{{ route('website.reservation.permohonan.upload', ':id') }}";
+        url = url.replace(':id', "{{ $reservation->id }}");
+
+        // Send ajax request
+        $.ajax({
+          url: url,
+          type: 'POST',
+          data: formData,
+          processData: false,
+          contentType: false,
+          headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+          },
+          success: function(response) {
+            $('.alert').removeClass('alert-danger')
+            $('.alert').addClass('alert-success')
+            $('.alert').html(response.message).fadeIn().delay(3000).fadeOut()
+            window.location = "{{ route('website.reservation.show', $reservation->id) }}"
+          },
+          error: function(xhr, ajaxOptions, thrownError) {
+            var contentType = xhr.getResponseHeader("Content-Type");
+            if (xhr.status === 200 && contentType.toLowerCase().indexOf("text/html") >= 0) {
+              // assume that our login has expired - reload our current page
+              window.location.reload();
+            } else {
+              $('.alert').addClass('alert-danger')
+              $('.alert').html(xhr.responseText).fadeIn().delay(3000).fadeOut()
+            };
+          }
+        });
+      } catch (error) {
+        $('.alert').addClass('alert-danger')
+        $('.alert').html(error).fadeIn().delay(3000).fadeOut()
+      }
+    });
+
+    //SELECTED BOX SUMBER DANA ----------------------------------------------
     document.addEventListener("DOMContentLoaded", function () {
             const submitButton = document.getElementById("submitDana");
             const sumberDanaComboBox = document.getElementById("sumberDana");

@@ -115,7 +115,7 @@
         <div class="col-lg-3 responsive-column">
           <div class="icon-box icon-layout-4 d-flex-center">
             <div class="info-icon flex-shrink-0">
-              <i class="la la-camera"></i>
+              <i class="la la-map-signs"></i>
             </div>
             <!-- end info-icon-->
             <div class="info-content text-center">
@@ -130,7 +130,7 @@
         <div class="col-lg-3 responsive-column">
           <div class="icon-box icon-layout-4 d-flex-center">
             <div class="info-icon flex-shrink-0">
-              <i class="la la-futbol-o"></i>
+              <i class="la la-road"></i>
             </div>
             <!-- end info-icon-->
             <div class="info-content text-center">
@@ -397,7 +397,7 @@
             @foreach ($cars as $car)
               <div class="card-item car-card mb-0 border">
                 <div class="card-img-top overflow-hidden" style="height: 247px; width: auto;">
-                  <a href="#" class="d-block">
+                  <a href="{{ route('website.car.show', $car->id) }}" class="d-block">
                     @if ($car->layanan_gambars->first())
                       <img src="{{ asset($car->layanan_gambars[0]['picture']) }}" alt="kendaraan-img" />
                     @else
@@ -579,7 +579,7 @@ START LAPANGAN AREA
             @foreach ($lapangan as $lapangan)
               <div class="card-item car-card mb-0 border">
                 <div class="card-img-top overflow-hidden" style="height: 247px; width: auto;">
-                  <a href="#" class="d-block">
+                  <a href="{{ route('website.lapangan.show', $lapangan->id) }}" class="d-block">
                     @if ($lapangan->layanan_gambars->first())
                       <img src="{{ asset($lapangan->layanan_gambars[0]['picture']) }}" alt="lapangan-img" />
                     @else

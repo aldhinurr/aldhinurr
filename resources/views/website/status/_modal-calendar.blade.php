@@ -18,8 +18,12 @@
           <div class="product-content">
             <div class="product-info-wrap">
               <div class="product-info line-height-30">
-                <span class="product-info-label title">Pengguna :</span>
-                <span class="product-info-value" id="pengguna">Admin</span>
+                <span class="product-info-label title">Kode Sewa :</span>
+                <span class="product-info-value" id="kode_sewa"></span>
+              </div><!-- end product-info -->
+              <div class="product-info line-height-30">
+                <span class="product-info-label title">Unit Kerja :</span>
+                <span class="product-info-value" id="itb_unit">Admin</span>
               </div><!-- end product-info -->
               <div class="product-info line-height-30">
                 <span class="product-info-label title">Sewa :</span>
@@ -30,7 +34,7 @@
                 </span>
               </div><!-- end product-info -->
               <div class="product-info line-height-30">
-                <span class="product-info-label title">Durasi :</span>
+                <span class="product-info-label title">Durasi Tarif Sewa :</span>
                 <span class="product-info-value" id="duration">1 Hari</span>
               </div><!-- end product-info -->
               <div class="product-info line-height-30">

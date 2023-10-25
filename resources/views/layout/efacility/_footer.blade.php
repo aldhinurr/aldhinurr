@@ -172,7 +172,7 @@
                 <li><a href="{{ route('website.cars') }}">Kendaraan</a></li>
                 <li><a href="{{ route('website.selasar') }}">Selasar</a></li>
                 <li><a href="{{ route('website.lapangan') }}">Lapangan</a></li>
-                {{-- <li><a href="{{ route('website.report') }}">Laporan</a></li> --}}
+                <li><a href="{{ route('website.report') }}">Laporan</a></li>
                 <li><a href="https://sipa.nrcn.itb.ac.id/listtools" target="_blank">Uji Laboratorium</a></li>
               </ul>
             </div>
@@ -186,7 +186,7 @@
               </h4>
               <ul class="list-items list--items">
                 <li><a href="https://ditsp.itb.ac.id" target="_blank">Website Dit. SP</a></li>
-                <li><a href="http://ditsp.itb.ac.id/wp-content/uploads/sites/13/2023/10/Panduan-Penggunaan-Layanan-E-Facility-Versi-1.pdf
+                <li><a href="http://ditsp.itb.ac.id/wp-content/uploads/sites/13/2023/10/Panduan-Penggunaan-Layanan-E-Facility-Versi-18-10-2023.pdf
                 " target="_blank">Panduan</a></li>
                 <!-- <li><a href="https://asrama.itb.ac.id" target="_blank">Asrama</a></li> -->
               </ul>
