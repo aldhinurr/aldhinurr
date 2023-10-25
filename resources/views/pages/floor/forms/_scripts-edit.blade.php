@@ -20,34 +20,34 @@
                 }
               }
             },
-            floor_classification: {
-              validators: {
-                notEmpty: {
-                  message: 'Klasifikasi Ruangan belum diisi'
-                }
-              }
-            },
-            room_classification: {
-              validators: {
-                notEmpty: {
-                  message: 'Klasifikasi Ruangan belum diisi'
-                }
-              }
-            },
-            room_description: {
-              validators: {
-                notEmpty: {
-                  message: 'Uraian Ruangan belum diisi'
-                }
-              }
-            },
-            large: {
-              validators: {
-                notEmpty: {
-                  message: 'Luas belum diisi'
-                }
-              }
-            },
+            // floor_classification: {
+            //   validators: {
+            //     notEmpty: {
+            //       message: 'Klasifikasi Ruangan belum diisi'
+            //     }
+            //   }
+            // },
+            // room_classification: {
+            //   validators: {
+            //     notEmpty: {
+            //       message: 'Klasifikasi Ruangan belum diisi'
+            //     }
+            //   }
+            // },
+            // room_description: {
+            //   validators: {
+            //     notEmpty: {
+            //       message: 'Uraian Ruangan belum diisi'
+            //     }
+            //   }
+            // },
+            // large: {
+            //   validators: {
+            //     notEmpty: {
+            //       message: 'Luas belum diisi'
+            //     }
+            //   }
+            // },
           },
           plugins: {
             trigger: new FormValidation.plugins.Trigger(),

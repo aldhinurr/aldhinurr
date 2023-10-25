@@ -82,10 +82,6 @@ class ReservationController extends Controller
             }
 
             DB::commit();
-
-            // menjalankan query procedure untuk update kode_sewa
-            DB::select('CALL prc_ins_reservations(?)', [$reservation['id']]);
-
             return response()->json([
                 'status' => 0,
                 'message' => "Reservasi berhasil dibuat",
@@ -138,11 +134,12 @@ class ReservationController extends Controller
      */
     public function check(Request $request)
     {
-        $date = strtotime(str_replace("/", "-", $request->date));
+        $start_date = strtotime(str_replace("/", "-", $request->start_date));
+        $end_date = strtotime(str_replace("/", "-", $request->end_date));
 
         return Reservation::where('layanan_id', $request->layanan)
-            ->where('start_date', '<=', date('Y-m-d', $date) . ' 23:59')
-            ->where('end_date', '>=', date('Y-m-d', $date) . ' 00:01')
+            ->where('start_date', '<=', date('Y-m-d H:i', $start_date))
+            ->where('end_date', '>=', date('Y-m-d H:i', $end_date))
             ->whereNotIn("status", ["DITOLAK", "DIBATALKAN", "EXPIRED", "WAKTU HABIS"])
             ->count();
     }
@@ -251,8 +248,7 @@ class ReservationController extends Controller
         Db::beginTransaction();
         try {
             $validated = $request->validate([
-                'description' => "required|string|max:200",
-                'diskon' => "numeric"
+                'description' => "required|string|max:200"
             ]);
 
             $validated['status'] = "DISETUJUI";

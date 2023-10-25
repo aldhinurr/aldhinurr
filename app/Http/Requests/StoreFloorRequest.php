@@ -29,7 +29,7 @@ class StoreFloorRequest extends FormRequest
             'floor_classification' => 'nullable',
             'room_classification' => 'nullable',
             'room_description' => 'nullable',
-            'large' => 'nullable|numeric|min:1',
+            'large' => 'nullable|numeric',
             'capacity' => 'nullable|numeric',
         ];
     }
