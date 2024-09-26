@@ -12,7 +12,7 @@
       // Init form validation rules. For more info check the FormValidation plugin's official documentation: https://formvalidation.io/
       validation = FormValidation.formValidation(
         form, {
-          fields: {
+          /* fields: {
             number: {
               validators: {
                 notEmpty: {
@@ -20,7 +20,7 @@
                 }
               }
             },
-            /* floor_classification: {
+            floor_classification: {
               validators: {
                 notEmpty: {
                   message: 'Klasifikasi Ruangan belum diisi'
@@ -47,8 +47,8 @@
                   message: 'Luas belum diisi'
                 }
               }
-            }, */
-          },
+            }, 
+          },*/
           plugins: {
             trigger: new FormValidation.plugins.Trigger(),
             bootstrap: new FormValidation.plugins.Bootstrap5({
@@ -91,8 +91,7 @@
                 }).then(function(result) {
                   form.reset();
                   if (result.isConfirmed) {
-                    var redirect_url = "{{ route('building.floors', ':id') }}"
-                    window.location = redirect_url.replace(':id', "{{ $building->id }}")
+                    window.location.href = "{{ route('floor.building') }}";
                   }
                 });
               })

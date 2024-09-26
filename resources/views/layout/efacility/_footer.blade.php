@@ -5,9 +5,10 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-12">
+          <div class="section-block mt-3 mb-5"></div>
             <div class="client-logo">
               <div class="client-logo-item">
-                <img src="{{ asset('efacility/images/banner-itb-100.png') }}" alt="brand image" />
+                <img src="{{ asset('efacility/images/ITB104-3.png') }}" alt="brand image" />
               </div>
               <!-- end client-logo-item -->
               <div class="client-logo-item">
@@ -70,7 +71,7 @@
                   class="flex-shrink-0 pt-2" style="width: 40px; height: auto;">
               </a>
               <div class="product-content">
-                <a href="#" class="title" style="font-size: 14px">ITB Kampus Jatinangor</a>
+                <a href="#" class="title" style="font-size: 14px">Direktorat ITB Kampus Jatinangor</a>
                 <div class="product-info-wrap">
                   <div class="product-info line-height-24">
                     <span class="product-info-value" style="font-size: 12px">
@@ -92,7 +93,7 @@
                   class="flex-shrink-0 pt-2" style="width: 40px; height: auto;">
               </a>
               <div class="product-content">
-                <a href="#" class="title" style="font-size: 14px">ITB Kampus Cirebon</a>
+                <a href="#" class="title" style="font-size: 14px">Direktorat ITB Kampus Cirebon</a>
                 <div class="product-info-wrap">
                   <div class="product-info line-height-24">
                     <span class="product-info-value" style="font-size: 12px">
@@ -114,7 +115,7 @@
                   class="flex-shrink-0 pt-2" style="width: 40px; height: auto;">
               </a>
               <div class="product-content">
-                <a href="#" class="title" style="font-size: 14px">ITB Kampus Jakarta</a>
+                <a href="#" class="title" style="font-size: 14px">Direktorat ITB Kampus Jakarta</a>
                 <div class="product-info-wrap">
                   <div class="product-info line-height-24">
                     <span class="product-info-value" style="font-size: 12px">
@@ -168,12 +169,11 @@
                 Layanan
               </h4>
               <ul class="list-items list--items">
-                <li><a href="{{ route('website.rooms') }}">Ruangan</a></li>
-                <li><a href="{{ route('website.cars') }}">Kendaraan</a></li>
-                <li><a href="{{ route('website.selasar') }}">Selasar</a></li>
-                <li><a href="{{ route('website.lapangan') }}">Lapangan</a></li>
-                <li><a href="{{ route('website.report') }}">Laporan</a></li>
-                <li><a href="https://sipa.nrcn.itb.ac.id/listtools" target="_blank">Uji Laboratorium</a></li>
+                <li><a href="https://asrama.itb.ac.id" target="_blank">Asrama</a></li>
+                <li><a href="{{ route('website.barang') }}">Informasi Barang Tidak Digunakan</a></li>
+                <li><a href="{{ route('resource.page') }}"><i>Resource Sharing</i></a></li>
+                <li><a href="{{ route('sewa.page') }}">Sewa Layanan</a></li>
+                <li><a href="{{ route('website.lab') }}">Uji Laboratorium</a></li>
               </ul>
             </div>
             <!-- end footer-item -->
@@ -186,9 +186,15 @@
               </h4>
               <ul class="list-items list--items">
                 <li><a href="https://ditsp.itb.ac.id" target="_blank">Website Dit. SP</a></li>
-                <li><a href="http://ditsp.itb.ac.id/wp-content/uploads/sites/13/2023/10/Panduan-Penggunaan-Layanan-E-Facility-Versi-18-10-2023.pdf
-                " target="_blank">Panduan</a></li>
-                <!-- <li><a href="https://asrama.itb.ac.id" target="_blank">Asrama</a></li> -->
+                    <li>
+                      <a href="https://e-facility.itb.ac.id/media/documents/User%20-%20Panduan%20Penggunaan%20Layanan%20E-Facility%20Versi%2008-Mar-2024.pdf" target="_blank">Panduan</a>
+                    </li>
+                    <!-- <li>
+                      <a href="/media/documents/SK%20Tarif.pdf" target="_blank">SK Tarif</a>
+                    </li> -->
+                    <!-- <li>
+                      <a href="#">SOP Layanan & Penyewaan</a>
+                    </li> -->
               </ul>
             </div>
             <!-- end footer-item -->
@@ -200,9 +206,9 @@
         <div class="row">
           <div class="col-lg-12">
             <div class="copy-right padding-top-30px text-center">
-              <p class="copy__desc">
-                &copy; Copyright 2023. Direktorat Sarana dan Prasarana
-              </p>
+            <p class="copy__desc" id="copyright">
+              &copy; Copyright 2023-<script>document.write(new Date().getFullYear())</script>. Direktorat Sarana dan Prasarana
+            </p>
             </div>
             <!-- end copy-right -->
           </div>

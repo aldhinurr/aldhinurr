@@ -2,11 +2,12 @@
 
   {{ theme()->getView('pages/floor/forms/_floor-create', [
       'class' => 'mb-5 mb-xl-10',
-      'building' => $building,
+      'buildings' => $buildings,
   ]) }}
 
   {{-- Inject Scripts --}}
   @section('scripts')
-    {{ theme()->getView('pages/floor/forms/_scripts-create', ['building' => $building]) }}
+    {{ theme()->getView('pages/floor/forms/_scripts-create') }}
   @endsection
+
 </x-base-layout>

@@ -28,7 +28,7 @@
 
           <!--begin::Col-->
           <div class="col-lg-8 fv-row">
-            <input type="text" name="name" class="form-control form-control-lg form-control-solid" />
+            <input type="text" name="name" class="form-control form-control-lg" />
           </div>
           <!--end::Col-->
         </div>
@@ -46,7 +46,7 @@
           <div class="col-lg-4 fv-row">
             <select name="satuan" aria-label="{{ __('Pilih Satuan') }}" data-control="select2"
               data-placeholder="{{ __('Pilih Satuan...') }}"
-              class="form-select form-select-solid form-select-lg fw-bold">
+              class="form-select form-select-lg fw-bold">
               {{-- <option value="">{{ __('Pilih Satuan...') }}</option> --}}
               <option value="UNIT">
                 {{ __('UNIT') }}
@@ -70,10 +70,10 @@
 
           <!--begin::Col-->
           <div class="col-lg-4 fv-row">
-            {{-- <input type="text" name="icon" class="form-control form-control-lg form-control-solid" placeholder="Nama Icon" /> --}}
+            {{-- <input type="text" name="icon" class="form-control form-control-lg" placeholder="Nama Icon" /> --}}
             <select id="icon" name="icon" aria-label="{{ __('Pilih Icon') }}" data-control="select2"
               data-placeholder="{{ __('Pilih Icon...') }}"
-              class="form-select form-select-solid form-select-lg fw-bold">
+              class="form-select form-select-lg fw-bold">
               @foreach ($icons as $icon)
                 <option value="{{ $icon['name'] }}" data-kt-select2-icon="{{ $icon['icon'] }}">
                   {{ $icon['name'] }}
@@ -98,7 +98,7 @@
             <!--begin::Options-->
             <div class="d-flex align-items-center mt-3">
               <!--begin::Option-->
-              <label class="form-check form-check-inline form-check-solid me-5">
+              <label class="form-check form-check-inline me-5">
                 <input class="form-check-input" name="status" type="radio" value="AKTIF" checked />
                 <span class="fw-bold fs-6 ps-2">
                   {{ __('AKTIF') }}
@@ -107,7 +107,7 @@
               <!--end::Option-->
 
               <!--begin::Option-->
-              <label class="form-check form-check-inline form-check-solid">
+              <label class="form-check form-check-inline">
                 <input class="form-check-input" name="status" type="radio" value="TIDAK AKTIF" />
                 <span class="fw-bold fs-6 ps-2">
                   {{ __('TIDAK AKTIF') }}

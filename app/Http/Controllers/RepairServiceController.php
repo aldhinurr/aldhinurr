@@ -48,15 +48,15 @@ class RepairServiceController extends Controller
         try {
             $now = new DateTime("now", new DateTimeZone('Asia/Jakarta'));
             $now->format('Y-m-d H:i:s');
-
+    
             $validated = $request->validate($request->rules());
             $validated['created_at'] = $now;
             $validated['created_by'] = auth()->user()->email;
-
-            // create layanan
+    
+            // Create layanan
             $repair = RepairService::create($validated);
             if ($repair) {
-                // save detail repair
+                // Save detail repair
                 $pengajuan_detail = json_decode($validated['pengajuan_detail']);
                 foreach ($pengajuan_detail as $floor_id => $detail) {
                     foreach ($detail->data as $key => $value) {
@@ -69,18 +69,20 @@ class RepairServiceController extends Controller
                         RepairServiceDetail::create($validated_detail);
                     }
                 }
-
-                // upload attachment
-                if ($request->attachment) {
-                    $attachment = $request->attachment;
+    
+                // Upload attachment
+                if ($request->hasFile('attachment')) {
+                    $attachment = $request->file('attachment');
                     $fileName = $repair->id . "-" . strtolower(Str::random(10)) . '.' . $attachment->extension();
-                    $attachment->move(public_path('media/upload/repair'), $fileName);
-
-                    $validated['attachment'] = 'media/upload/repair/' . $fileName;
+                    
+                    // Store the file in the private directory
+                    $path = $attachment->storeAs('private/upload/repair', $fileName);
+    
+                    $validated['attachment'] = $path;
                     $repair->update($validated);
                 }
             }
-
+    
             DB::commit();
             return response()->json([
                 'status' => 0,
@@ -113,7 +115,9 @@ class RepairServiceController extends Controller
 
             $floor['building'] = $value->floor->building->name;
             $floor['floor'] = $value->floor->number;
+            $floor['unit_itb'] = $value->floor->unit_itb;
             $floor['classification'] = $value->floor->floor_classification . " " . $value->floor->room_classification;
+            $floor['kategori_ruangan'] = $value->floor->kategori_ruangan;
             $floor['description'] = $value->floor->room_description;
             $floor['total'] = 0;
             $floor['data'] = array();
@@ -149,7 +153,9 @@ class RepairServiceController extends Controller
         foreach ($repairDetails as $key => $value) {
             $floor['building'] = $value->floor->building->name;
             $floor['floor'] = $value->floor->number;
+            $floor['unit_itb'] = $value->floor->unit_itb;
             $floor['classification'] = $value->floor->floor_classification . " " . $value->floor->room_classification;
+            $floor['kategori_ruangan'] = $value->floor->kategori_ruangan;
             $floor['description'] = $value->floor->room_description;
             $floor['total'] = 0;
             $floor['data'] = array();
@@ -186,7 +192,9 @@ class RepairServiceController extends Controller
             $floor['building_id'] = $value->floor->building_id;
             $floor['building'] = $value->floor->building->name;
             $floor['floor'] = $value->floor->number;
+            $floor['unit_itb'] = $value->floor->unit_itb;
             $floor['classification'] = $value->floor->floor_classification . " " . $value->floor->room_classification;
+            $floor['kategori_ruangan'] = $value->floor->kategori_ruangan;
             $floor['description'] = $value->floor->room_description;
             $floor['total'] = 0;
             $floor['data'] = array();

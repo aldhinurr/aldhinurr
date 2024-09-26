@@ -77,10 +77,20 @@ class Layanan extends Model
             ->limit($limit)->get();
     }
 
-    public function get_page_data($type, $show, $params = null)
+    public function get_page_data($type, $show, $params = null, $priceCondition = '!=')
+    {
+        return $this->getData($type, $show, $params, '!=', 0);
+    }
+    
+    public function get_resource_data($type, $show, $params = null, $priceCondition = '!=')
+    {
+        return $this->getData($type, $show, $params, '=', 0);
+    }
+    
+    protected function getData($type, $show, $params = null, $priceCondition = '!=', $priceValue = null)
     {
         return Layanan::with(['layanan_gambars'])
-            ->select('layanans.*', DB::raw("coalesce(b.jml_sewa, 0) as jml_sewa")) //, DB::raw("coalesce(c.sewa, 0) as sewa"))
+            ->select('layanans.*', DB::raw("coalesce(b.jml_sewa, 0) as jml_sewa"))
             ->distinct()
             ->leftJoin(
                 DB::raw(
@@ -93,9 +103,16 @@ class Layanan extends Model
                     $join->on('b.layanan_id', "=", "layanans.id");
                 }
             )
-            ->where('type', $type)->where('status', 'AKTIF')
+            ->where('type', $type)
+            ->where('status', 'AKTIF')
+            ->when($priceValue !== null, function ($q) use ($priceCondition, $priceValue) {
+                $q->where('price', $priceCondition, $priceValue);
+            })
             ->when($params->location != null, function ($q) use ($params) {
                 $q->where('location', $params->location);
+            })
+            ->when($params->unit_pengelola != null, function ($q) use ($params) {
+                $q->where('unit_pengelola', $params->unit_pengelola);
             })
             ->when($params->large != null, function ($q) use ($params) {
                 $q->where('large', $params->large);
@@ -103,9 +120,10 @@ class Layanan extends Model
             ->when($params->keyword != null, function ($q) use ($params) {
                 $q->where('layanans.name', "like", "%" . $params->keyword . "%");
             })
-            ->orderby('jml_sewa', 'desc')->orderby('layanans.name', 'asc')
+            ->orderby('jml_sewa', 'desc')
+            ->orderby('layanans.name', 'asc')
             ->paginate($show);
-    }
+    }    
 
     public function get_other_data($type, $show, $exceptId)
     {

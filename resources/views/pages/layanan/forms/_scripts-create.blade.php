@@ -105,7 +105,7 @@
       var titleInput = "Luas";
       var htmlInput = `
         <input type="number" min="1" id="large" name="large"
-          class="form-control form-control-lg form-control-solid mb-lg-0 mb-3" value="1" />
+          class="form-control form-control-lg form-control mb-lg-0 mb-3" value="1" />
         <span class="input-group-text" id="basic-addon2">m<sup>2</sup></span>
         `
 
@@ -114,8 +114,16 @@
         htmlInput = `
           <select id="large" name="large" aria-label="{{ __('Pilih Kendaraan') }}"
             data-placeholder="{{ __('Pilih Kendaraan...') }}"
-            class="form-select form-select-solid form-select-lg fw-bold">
+            class="form-select form-select form-select-lg fw-bold">
           </select>
+          `
+      }
+
+      if (type == "RKU") {
+        titleInput = "Lantai";
+        htmlInput = `
+        <input type="number" min="1" id="large" name="large"
+          class="form-control form-control-lg form-control mb-lg-0 mb-3" value="1" />
           `
       }
 
@@ -154,21 +162,34 @@
     var handleForm = function() {
       $('[id="type"]').select2({
         placeholder: "Pilih Jenis...",
-        data: [{
-            id: "RUANG",
-            text: 'Ruangan'
-          },
+        data: [
           {
             id: "KENDARAAN",
             text: 'Kendaraan'
+          },
+          {
+            id: "LAPANGAN",
+            text: 'Lapangan'
+          },
+          {
+            id: "RKU",
+            text: 'Ruang Kuliah Umum'
+          },
+          {
+            id: "RUANG",
+            text: 'Ruang'
+          },
+          {
+            id: "RUMAH SUSUN",
+            text: 'Rumah Susun / Transit'
           },
           {
             id: "SELASAR",
             text: 'Selasar'
           },
           {
-            id: "LAPANGAN",
-            text: 'Lapangan'
+            id: "PERALATAN",
+            text: 'Peralatan'
           },
         ]
       });
@@ -250,9 +271,12 @@
         initEmpty: false,
 
         defaultValues: {
-          'text-input': 'foo'
+          'text-input': 'foo',
+          'type': 'UTAMA',
+          'quantity': '1',
+          'fee': '0'
         },
-
+        
         show: function() {
           $(this).slideDown();
 
@@ -422,4 +446,28 @@
   KTUtil.onDOMContentLoaded(function() {
     KTALayananForms.init();
   });
+
+    // Script Location
+    document.addEventListener('DOMContentLoaded', function() {
+    // Define the locations
+    const locations = ['CIREBON', 'GANESHA', 'JAKARTA', 'JATINANGOR'];
+    
+    // Get the layanan's current location
+    const layananLocation = "{{ auth()->user()->location }}";
+    
+    // Get the select element
+    const selectElement = document.getElementById('location');
+    
+    // Populate the select element with options
+    locations.forEach(location => {
+      const option = document.createElement('option');
+      option.value = location;
+      option.text = location;
+      if (location === layananLocation) {
+        option.selected = true;
+      }
+      selectElement.appendChild(option);
+    });
+  });
+
 </script>

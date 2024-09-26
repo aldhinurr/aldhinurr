@@ -10,27 +10,27 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
-          <h3 class="title font-size-24">Status</h3>
+          <h3 class="title font-size-24">Cek Pesanan</h3>
           <div class="section-tab section-tab-3 pt-4">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <a class="nav-link active" id="my-sewa-tab" data-toggle="tab" href="#my-sewa" role="tab"
                   aria-controls="my-sewa" aria-selected="true">
                   Sewa
                 </a>
-              </li>
-              <li class="nav-item">
+              </li> -->
+              <!-- <li class="nav-item">
                 <a class="nav-link" id="my-laporan-tab" data-toggle="tab" href="#my-laporan" role="tab"
                   aria-controls="my-laporan" aria-selected="false">
                   Laporan
                 </a>
-              </li>
-              <li class="nav-item">
+              </li> -->
+              <!-- <li class="nav-item">
                 <a class="nav-link" id="my-perbaikan-tab" data-toggle="tab" href="#my-perbaikan" role="tab"
                   aria-controls="my-perbaikan" aria-selected="false">
-                  Pengajuan Perbaikan
+                  Pemeliharaan / Perawatan
                 </a>
-              </li>
+              </li> -->
             </ul>
           </div><!-- end section-tab -->
           <div class="tab-content padding-top-10px margin-bottom-40px" id="myTabcontent">
@@ -51,13 +51,44 @@
                     <div class="filter-option">
                       <div class="select-contain">
                         <select id="type-sewa" name="type-sewa" class="select-contain-select">
-                          <option value="RUANG">Ruangan</option>
-                          <option value="KENDARAAN">Kendaraan</option>
-                          <option value="SELASAR">Selasar</option>
+                          <option value="">~Jenis Layanan~</option>  
+                          <option value="KENDARAAN">Kendaraan</option>  
                           <option value="LAPANGAN">Lapangan</option>
+                          <option value="RKU">Ruang Kuliah Umum</option>
+                          <option value="RUANG">Ruangan</option>
+                          <option value="RUMAH SUSUN">Rumah Susun / Transit</option>
+                          <option value="SELASAR">Selasar</option>
+                          <option value="PERALATAN">Peralatan</option>
                         </select>
                       </div><!-- end select-contain -->
                     </div>
+                    <div class="filter-option">
+                      <div class="select-contain">
+                            <select id="location-unit" name="location-unit" class="select-contain-select">
+                              <option value="">~Pilih Lokasi~</option>
+                              <option value="GANESHA">ITB Kampus Ganesha</option>
+                              <!-- <option value="SARAGA">Saraga</option>  -->
+                              <option value="JATINANGOR">ITB Kampus Jatinangor</option>
+                              <option value="CIREBON">ITB Kampus Cirebon</option>
+                              <option value="SBM JAKARTA">ITB Kampus Jakarta</option>
+                              <!-- <option value="BOSSCHA">Bosscha</option> -->
+                            </select>
+                      </div><!-- end select-contain -->
+                    </div>
+                    <div class="filter-option">
+                      <div class="select-contain">
+                            <select id="unit-pengelola" name="unit-pengelola" class="select-contain-select">
+                              <option value="">~Pilih Unit~</option>
+                              <option value="Direktorat ITB Kampus Cirebon">Direktorat ITB Kampus Cirebon</option>
+                              <option value="Direktorat ITB Kampus Jatinangor">Direktorat ITB Kampus Jatinangor</option>
+                              <!-- <option value="Direktorat Pendidikan">Direktorat Pendidikan</option> -->
+                              <option value="Direktorat Sarana dan Prasarana">Direktorat Sarana dan Prasarana</option>
+                              <option value="Direktorat Teknologi Informasi">Direktorat Teknologi Informasi</option>
+                            </select>
+                      </div><!-- end select-contain -->
+                    </div>
+                    <div class="select-contain">
+                    </div><!-- end select-contain -->
                     <div class="filter-option">
                       <div class="contact-form-action">
                         <div class="form-group mb-0">
@@ -68,7 +99,9 @@
                       </div>
                     </div>
                   </div><!-- end filter-bar-filter -->
-                  <div class="section-tab section-tab-3">
+                </div><!-- end filter-bar -->
+              </div><!-- end filter-wrap -->
+              <div class="section-tab section-tab-3">
                     <ul class="nav nav-tabs" id="myTabDetail">
                       <li class="nav-item">
                         <a class="nav-link active" id="my-sewa-calendar-tab" data-toggle="tab" href="#my-sewa-calendar"
@@ -88,8 +121,6 @@
                     <a href="hotel-list.html" data-toggle="tooltip" data-placement="top" title="Kalender"><i
                         class="la la-calendar"></i></a> --}}
                   </div>
-                </div><!-- end filter-bar -->
-              </div><!-- end filter-wrap -->
 
               <div class="tab-content padding-top-10px margin-bottom-40px" id="myTabcontent">
                 <div class="tab-pane fade show active" id="my-sewa-calendar" role="tabpanel"
@@ -323,13 +354,21 @@
         });
       }
 
-      const fetch_data = (page, type, search_term, only_me) => {
+      const fetch_data = (page, type, unit, loc, search_term, only_me) => {
         if (page === undefined) {
           page = 1;
         }
 
         if (type === undefined) {
           type = "";
+        }
+
+        if (unit === undefined) {
+          unit = "";
+        }
+
+        if (loc === undefined) {
+          loc = "";
         }
 
         if (search_term === undefined) {
@@ -340,7 +379,7 @@
           only_me = "";
         }
 
-        var url = "{{ route('website.status') }}?page=" + page + "&type=" + type + "&search=" + search_term +
+        var url = "{{ route('website.status') }}?page=" + page + "&type=" + type + "&unit=" + unit + "&loc=" + loc + "&search=" + search_term +
           "&only_me=" + only_me
         $.ajax({
           url: url,
@@ -351,25 +390,23 @@
         })
       }
 
-      $('body').on('keyup', '#search-sewa', function() {
-        var page = $('#hidden_page').val();
-        var type = $('#type-sewa').val();
-        var search_term = $('#search-sewa').val();
-        var only_me = $('#only_me:checked').val();
+      $('body').on('keyup change', '#search-sewa, #type-sewa, #unit-pengelola, #location-unit', function() {
+          var page = $('#hidden_page').val();
+          var type = $('#type-sewa').val();
+          var loc = $('#location-unit').val();
+          var unit = $('#unit-pengelola').val();
+          var search_term = $('#search-sewa').val();
+          var only_me = $('#only_me:checked').val();
 
-        fetch_data(page, type, search_term, only_me);
-        calendar.refetchEvents();
+          // Mengubah nilai loc menjadi string kosong jika nilainya adalah "null" atau null
+          if (loc === "null" || loc === null) {
+              loc = '';
+          }
+
+          fetch_data(page, type, unit, loc, search_term, only_me);
+          calendar.refetchEvents();
       });
 
-      $('body').on('change', '#type-sewa', function() {
-        var type = $('#type-sewa').val();
-        var search_term = $('#search-sewa').val();
-        var page = $('#hidden_page').val();
-        var only_me = $('#only_me:checked').val();
-
-        fetch_data(page, type, search_term, only_me);
-        calendar.refetchEvents();
-      });
 
       $('body').on('click', '#pagination-sewa a', function(event) {
         event.preventDefault();
@@ -378,10 +415,13 @@
         $('#hidden_page').val(page);
 
         var type = $('#type-sewa').val();
+        var unit = $('#unit-pengelola').val();
+        var loc = $('#location-unit').val();
         var search_term = $('#search-sewa').val();
         var only_me = $('#only_me:checked').val();
 
-        fetch_data(page, type, search_term, only_me);
+        fetch_data(page, type, unit, loc, search_term, only_me);
+        calendar.refetchEvents();
       });
 
       $("input[name='only_me']").change(function() {
@@ -393,18 +433,19 @@
         }
 
         var type = $('#type-sewa').val();
+        var unit = $('#unit-pengelola').val();
+        var loc = $('#location-unit').val();
         var search_term = $('#search-sewa').val();
         var page = $('#hidden_page').val();
         var only_me = $('#only_me:checked').val();
 
-        fetch_data(page, type, search_term, only_me);
+        fetch_data(page, type, unit, loc, search_term, only_me);
         calendar.refetchEvents();
       });
 
       $('#my-sewa-tab').on('click', function() {
         calendar.refetchEvents();
       });
-
 
       var todayDate = moment().startOf("day");
       var YM = todayDate.format("YYYY-MM");
@@ -464,6 +505,8 @@
 
             return {
               type: $('[name="type-sewa"]').val(),
+              unit: $('[name="unit-pengelola"]').val(),
+              loc: $('[name="location-unit"]').val(),
               search: $('[name="search-sewa"]').val(),
               only_me: only_me
             };
@@ -495,7 +538,7 @@
           $('#kode_sewa').text(info.event.extendedProps.kode_sewa);
           $('#location').text(info.event.extendedProps.location);
           $('#pengguna').text(`${info.event.extendedProps.first_name} ${info.event.extendedProps.last_name}`);
-          $('#itb_unit').text(info.event.extendedProps.itb_unit);
+          $('#unit').text(info.event.extendedProps.unit);
           $('#start_date').text(info.event.start.toLocaleString("id-ID"));
           $('#end_date').text(
             (info.event.end != null ? info.event.end.toLocaleString("id-ID") :
@@ -510,13 +553,21 @@
       calendar.render();
 
       // report
-      const fetch_data_report = (page, type, search_term, only_me) => {
+      const fetch_data_report = (page, type, unit, loc, search_term, only_me) => {
         if (page === undefined) {
           page = 1;
         }
 
         if (type === undefined) {
           type = "";
+        }
+
+        if (unit === undefined) {
+          unit = "";
+        }
+
+        if (loc === undefined) {
+          loc = "";
         }
 
         if (search_term === undefined) {

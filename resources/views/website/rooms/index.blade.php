@@ -16,7 +16,7 @@
               <div class="search-fields-container margin-top-30px">
                 <div class="contact-form-action">
                   <form action="#" class="row">
-                    <div class="col-lg-3 col-sm-6 pr-0">
+                    <div class="col-lg-2 col-sm-6 pr-0">
                       <div class="input-box">
                         <span class="la la-map-marker form-icon"></span>
                         <label class="label-text">Lokasi</label>
@@ -25,11 +25,31 @@
                             <select id="location" class="select-contain-select">
                               <option value="">Pilih Lokasi</option>
                               <option value="GANESHA">ITB Kampus Ganesha</option>
-                              {{-- <option value="SARAGA">Saraga</option> 
+                              <!-- <option value="SARAGA">Saraga</option>  -->
                               <option value="JATINANGOR">ITB Kampus Jatinangor</option>
                               <option value="CIREBON">ITB Kampus Cirebon</option>
-                              <option value="SBM JAKARTA">ITB Kampus Jakarta</option>
-                              <option value="BOSSCHA">Bosscha</option> --}}
+                              <option value="JAKARTA">ITB Kampus Jakarta</option>
+                              <!-- <option value="BOSSCHA">Bosscha</option> -->
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- end col-lg-3 -->
+                    <div class="col-lg-2 col-sm-6 pr-0">
+                      <div class="input-box">
+                        <span class="la la-building form-icon"></span>
+                        <label class="label-text">Unit</label>
+                        <div class="form-group">
+                          <div class="select-contain select-contain-shadow w-auto">
+                            <select id="unit_pengelola" class="select-contain-select">
+                              <option value="">Pilih Unit</option>
+                              <option value="Direktorat ITB Kampus Cirebon">Direktorat ITB Kampus Cirebon</option>
+                              <option value="Direktorat ITB Kampus Jatinangor">Direktorat ITB Kampus Jatinangor</option>
+                              <!-- <option value="Direktorat Pendidikan">Direktorat Pendidikan</option> -->
+                              <option value="Direktorat Sarana dan Prasarana">Direktorat Sarana dan Prasarana</option>
+                              <option value="Direktorat Teknologi Informasi">Direktorat Teknologi Informasi</option>
+                              <option value="Direktorat ITB Kampus Jakarta">Direktorat ITB Kampus Jakarta</option>
                             </select>
                           </div>
                         </div>
@@ -39,7 +59,7 @@
                     <div class="col-lg-3 col-sm-6 pr-0">
                       <div class="input-box">
                         <span class="la la-building form-icon"></span>
-                        <label class="label-text">Ruangan</label>
+                        <label class="label-text">Nama Ruangan</label>
                         <div class="form-group">
                           <input class="form-control" type="text" id="keyword" name="keyword"
                             placeholder="Nama Ruangan" />
@@ -64,7 +84,7 @@
                         </div>
                       </div>
                     </div><!-- end col-lg-3 -->
-                    <div class="col-lg-2 col-sm-6">
+                    <div class="col-lg-1 col-sm-6">
                       <div class="input-box">
                         <label class="label-text"></label>
                         <div class="form-group pt-2">
@@ -143,6 +163,12 @@
       infinteLoadMore(page);
     });
 
+    $('#unit_pengelola').on('change', function() {
+      page = 1;
+      $("#data-wrapper").empty();
+      infinteLoadMore(page);
+    });
+
     $('#cari').on('click', function() {
       page = 1;
       $("#data-wrapper").empty();
@@ -161,12 +187,13 @@
     --------------------------------------------*/
     function infinteLoadMore(page) {
       var location = $('#location').val();
+      var unit_pengelola = $('#unit_pengelola').val();
       var keyword = $('#keyword').val();
       var start_date = $('#start_date').val();
       var end_date = $('#end_date').val();
 
       $.ajax({
-          url: ENDPOINT + "?page=" + page + "&location=" + location + "&start_date=" +
+          url: ENDPOINT + "?page=" + page + "&location=" + location + "&unit_pengelola=" + unit_pengelola + "&start_date=" +
             start_date + "&keyword=" + keyword,
           datatype: "html",
           type: "get",

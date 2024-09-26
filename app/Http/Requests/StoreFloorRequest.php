@@ -24,13 +24,19 @@ class StoreFloorRequest extends FormRequest
     public function rules()
     {
         return [
-            'building_id' => 'required',
-            'number' => 'nullable',
+            'building_id' => 'nullable',
+            'number' => 'required',
+            'kode_ruang' => 'required',
+            'unit_itb' => 'required',
             'floor_classification' => 'nullable',
             'room_classification' => 'nullable',
+            'kategori_ruangan' => 'required',
+            'gedung' => 'required',
             'room_description' => 'nullable',
             'large' => 'nullable|numeric',
             'capacity' => 'nullable|numeric',
+            'tgl_singkronisasi' => 'nullable',
+            'flag_tambah' => 'nullable',
         ];
     }
 }

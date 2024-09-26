@@ -199,6 +199,8 @@
               <li><a href="{{ route('website.status') }}#my-laporan">Lihat Pengajuan Lainnya</a></li>
             </ul>
           </div><!-- end submit-box -->
+          <br>
+          <div id="pengajuan-success" class="alert alert-success" role="alert" style="display: none"></div>
         </div><!-- end col-lg-10 -->
       </div><!-- end row -->
     </div><!-- end container -->
@@ -211,4 +213,28 @@
 @section('scripts')
   <script src="{{ asset('demo1/plugins/custom/datatables/datatables.bundle.js') }}"></script>
   @include('website.repair._scripts-edit')
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  <script>
+  $('#submitAjukanButton').click(function() {
+      if ($('#pengajuan-message').is(":hidden")) {
+          Swal.fire({
+              icon: 'success',
+              html: '<b>Form pengajuan telah berhasil disubmit, <br> Mohon tunggu sedang diproses.</b>',
+              timer: 5000,
+              showConfirmButton: false
+          });
+      }
+  });
+
+  $('#submitDraftButton').click(function() {
+    if ($('#pengajuan-message').is(":hidden")) {
+        Swal.fire({
+            icon: 'success',
+            html: '<b>Draft pengajuan telah berhasil disimpan, <br> Mohon tunggu sedang diproses.</b>',
+            timer: 5000,
+            showConfirmButton: false
+        });
+      }
+  });
+  </script>
 @endsection

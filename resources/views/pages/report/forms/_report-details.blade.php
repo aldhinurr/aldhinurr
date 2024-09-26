@@ -316,7 +316,7 @@
               </div>
             </div>
             <!--end::Dropzone-->
-            <span class="fs-7 fw-semibold text-gray-400">Max Upload 10 gambar, Ukuran per gambar max 10MB </span>
+            <span class="fs-7 fw-semibold text-gray-400">Max Upload 10 gambar, Ukuran per gambar max 2MB </span>
           </div>
         </div>
         <!--end::Input group-->

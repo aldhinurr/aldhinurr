@@ -24,12 +24,12 @@
                           <div class="select-contain select-contain-shadow w-auto">
                             <select id="location" class="select-contain-select">
                               <option value="">Pilih Lokasi</option>
-                              <option value="GANESHA">Ganesha</option>
-                              <option value="SARAGA">Saraga</option>
-                              <option value="JATINANGOR">Jatinangor</option>
-                              <option value="CIREBON">Cirebon</option>
-                              <option value="SBM JAKARTA">SBM Jakarta</option>
-                              <option value="BOSSCHA">Bosscha</option>
+                              <!-- <option value="GANESHA">Ganesha</option> -->
+                              <!-- <option value="SARAGA">Saraga</option> -->
+                              <!-- <option value="JATINANGOR">Jatinangor</option> -->
+                              <option value="CIREBON">Kampus ITB Cirebon</option>
+                              <!-- <option value="SBM JAKARTA">SBM Jakarta</option> -->
+                              <!-- <option value="BOSSCHA">Bosscha</option> -->
                             </select>
                           </div>
                         </div>

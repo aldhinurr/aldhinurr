@@ -61,7 +61,7 @@ Route::get('/confirm-password', [ConfirmablePasswordController::class, 'show'])
 Route::post('/confirm-password', [ConfirmablePasswordController::class, 'store'])
   ->middleware('auth');
 
-Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
+Route::get('/logout', [AuthenticatedSessionController::class, 'destroy'])
   ->middleware('auth')
   ->name('logout');
 
@@ -82,3 +82,19 @@ Route::get('/logout/azure', [SSOLoginController::class, 'logoutAzure'])->name('l
 Route::get('/auth/redirect/{provider}', [SocialiteLoginController::class, 'redirect'])->name('login-google');
 
 //-----------------------------------------------------------------
+
+Route::get('private/upload/{folder}/{filename}', function ($folder, $filename) {
+  $path = storage_path('app/private/upload/' . $folder . '/' . $filename);
+  if (!file_exists($path)) {
+      abort(404);
+  }
+  return response()->file($path);
+})->middleware('auth');
+
+Route::get('private/pengelola/{filename}', function ($filename) {
+  $path = storage_path('app/private/pengelola/' . $filename);
+  if (!file_exists($path)) {
+      abort(404);
+  }
+  return response()->file($path);
+})->middleware('auth');

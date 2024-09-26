@@ -28,6 +28,8 @@ class StoreReservationRequest extends FormRequest
             'start_date' => 'required',
             'end_date' => 'required',
             'catatan' => 'nullable|string|max:200',
+            'unit' => 'nullable|string|max:200',
+            'kode_sewa' => 'nullable|string|max:100',
             'fee' => 'required|numeric|min:0',
             'fee_for' => 'required',
             'extra_fee' => 'required|numeric|min:0',
