@@ -63,16 +63,26 @@ class LayananController extends Controller
                 // save Fasilitas Layanan
                 $facility = json_decode($validated['facility']);
                 foreach ($facility->facility as $key => $facility) {
+                    // Tambahkan kondisi untuk memeriksa apakah facility_id ada
+                    if (!isset($facility->facility_id)) {
+                        continue; // Skip iterasi jika facility_id tidak ada
+                    }
+
+                    if (empty($facility->type)) {
+                        throw new \Exception('Mohon pilih Jenis Fasilitas.');
+                    }
+                    
                     if ($facility->quantity < 1) {
                         throw new \Exception('Jumlah Fasilitas minimal 1');
                     } elseif ($facility->type == 'TAMBAHAN' && $facility->fee <= 0) {
                         throw new \Exception('Biaya minimal Rp. 1 untuk fasilitas tambahan.');
                     }
-
+            
                     ServiceFacility::create([
                         'layanan_id' => $layanan->id,
                         'facility_id' => $facility->facility_id,
                         'type' => $facility->type,
+                        'unit_pengelola' => auth()->user()->itb_unit,
                         'fee' => $facility->fee,
                         'quantity' => $facility->quantity,
                         'status' => 'AKTIF',
@@ -175,18 +185,30 @@ class LayananController extends Controller
             ServiceFacility::whereBelongsTo($layanan)->delete();
 
             // update facilities
-            if (count($facilities->facility) > 0) {
-                foreach ($facilities->facility as $key => $facility) {
+            if ($layanan) {
+                // save Fasilitas Layanan
+                $facility = json_decode($validated['facility']);
+                foreach ($facility->facility as $key => $facility) {
+                    // Tambahkan kondisi untuk memeriksa apakah facility_id ada
+                    if (!isset($facility->facility_id)) {
+                        continue; // Skip iterasi jika facility_id tidak ada
+                    }
+
+                    if (empty($facility->type)) {
+                        throw new \Exception('Mohon pilih Jenis Fasilitas.');
+                    }
+            
                     if ($facility->quantity < 1) {
                         throw new \Exception('Jumlah Fasilitas minimal 1');
                     } elseif ($facility->type == 'TAMBAHAN' && $facility->fee <= 0) {
                         throw new \Exception('Biaya minimal Rp. 1 untuk fasilitas tambahan.');
                     }
-
+                    
                     ServiceFacility::create([
                         'layanan_id' => $layanan->id,
                         'facility_id' => $facility->facility_id,
                         'type' => $facility->type,
+                        'unit_pengelola' => auth()->user()->itb_unit,
                         'fee' => $facility->fee,
                         'quantity' => $facility->quantity,
                         'status' => 'AKTIF',
@@ -309,6 +331,7 @@ class LayananController extends Controller
                 "price" => $layanan->price,
                 "address" => $layanan->address,
                 "location" => $layanan->location,
+                "unit_pengelola" => $layanan->unit_pengelola,
                 "large" => $layanan->large,
                 "capacity" => $layanan->capacity,
                 "images" => $picture

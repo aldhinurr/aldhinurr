@@ -23,7 +23,7 @@
               </div><!-- end product-info -->
               <div class="product-info line-height-30">
                 <span class="product-info-label title">Unit Kerja :</span>
-                <span class="product-info-value" id="itb_unit">Admin</span>
+                <span class="product-info-value" id="unit">Admin</span>
               </div><!-- end product-info -->
               <div class="product-info line-height-30">
                 <span class="product-info-label title">Sewa :</span>

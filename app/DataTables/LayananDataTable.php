@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\Layanan;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
@@ -22,7 +23,7 @@ class LayananDataTable extends DataTable
         return datatables()
             ->eloquent(
                 $query->where('status', '!=', 'DIHAPUS')
-                    ->where('location', '=', auth()->user()->location)
+                    // ->where('location', '=', auth()->user()->location)
             )
             ->editColumn('price', function (layanan $model) {
                 return number_format($model->price, 2);
@@ -41,7 +42,9 @@ class LayananDataTable extends DataTable
      */
     public function query(Layanan $model)
     {
-        return $model->newQuery();
+        $userUnit = Auth::user()->itb_unit;
+    
+        return $model->newQuery()->where('unit_pengelola', $userUnit);
     }
 
     /**
@@ -74,7 +77,8 @@ class LayananDataTable extends DataTable
             Column::make('type')->title("Jenis"),
             Column::make('name')->title("Nama"),
             Column::make('address')->title("Alamat"),
-            Column::make('location')->title("Lokasi"),
+            Column::make('location')->title("Lokasi")->hidden(),
+            Column::make('unit_pengelola')->title("Unit")->hidden(),
             Column::make('price')->title("Harga"),
             Column::make('price_for')->title("Per"),
             Column::make('status')->title("Status"),

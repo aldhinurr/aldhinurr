@@ -53,7 +53,7 @@
                               <span class="product-info-label">Unit Kerja:</span>
                               <span class="product-info-value">
                                 <span
-                                  class="product-check-in">{{ $reservation->user->itb_unit }}</span>
+                                  class="product-check-in">{{ $reservation->unit }}</span>
                               </span>
                             </div>
                             <div class="product-info line-height-24">
@@ -116,6 +116,8 @@
                     <td class="text-center" width="60px">
                       @if ($reservation->status == 'MENUNGGU UPLOAD')
                         {{ __('Menunggu upload bukti pembayaran / pengalihan anggaran') }}
+                      @elseif ($reservation->status == 'MENUNGGU REVIEW')
+                        {{ __('Menunggu review oleh pihak pengelola') }}
                       @else
                         {{ $reservation->status }}
                       @endif
@@ -124,18 +126,23 @@
                 </tbody>
               </table>
             </div>
-            <div class="section-block"></div>
             <div class="row">
               <div class="col-md-6"><br>
+              @if ($reservation->total == 0)
+              <button type="button" id="cancelButton" class="btn btn-outline-danger">Batalkan Reservasi</button>
+              @else
+              @if ($reservation->status != 'DIBATALKAN' && $reservation->status != 'MENUNGGU REVIEW' && $reservation->status != 'DISETUJUI')
                   <p>Silahkan transfer total pembayaran ke <strong>BNI Virtual Account </strong> di bawah:</p>
                   <h6>9880031157000800 (Bank Negara Indonesia Cabang ITB)</h6>
+              @endif
                 @if ($reservation->status == 'MENUNGGU UPLOAD')
                   <br>Batas waktu pembayaran: <span style="display: inline-block;"><h6 id="countdown-expired">0</h6></span>
                 @endif
+                @if (!auth()->user()->hasRole(['superadmin']))
+                @if (auth()->user()->email == $reservation->created_by && $reservation->status != 'WAKTU HABIS' && $reservation->status != 'DIBATALKAN' && $reservation->status != 'DISETUJUI')
+                  <hr><button type="button" id="cancelButton" class="btn btn-outline-danger">Batalkan Reservasi</button>
             </div>
             <div class="col-md-6">
-            @if (!auth()->user()->hasRole(['superadmin']))
-              @if (auth()->user()->email == $reservation->created_by && $reservation->status != 'WAKTU HABIS')
                 <div class="cart-actions d-flex justify-content-end align-items-center pt-4 pb-5">
                   <div id="form-upload" class="contact-form-action">
                    <!--  <form method="post" enctype="multipart/form-data" id="sumber-dana">
@@ -149,6 +156,14 @@
                           </select><br>
                           <button type="button" class="btn btn-primary" style="float: right;" id=submitDana>Submit</button>
                       </div> -->   
+                    <strong>Nomor E-Office</strong>
+                    <div class="d-flex">
+                        <meta name="csrf-token" content="{{ csrf_token() }}">
+                        <input type="text" class="form-control form-control-lg" id="eoffice" name="eoffice" value="{{ $reservation->no_eoffice }}">
+                        <button class="btn btn-primary ml-2" type="button" id="eoffice-button">Kirim</button>
+                    </div>
+                    @if ($reservation->status != 'MENUNGGU REVIEW')
+                    <br>
                     <form method="post" enctype="multipart/form-data" id="upload-receipt">  
                       @csrf
                       <strong>Upload Bukti Pembayaran</strong>
@@ -169,6 +184,8 @@
                         <button class="btn btn-primary" type="button" id="uploadButton">Upload</button>
                       </div>
                     </form>
+                    @endif
+                    <!--
                     <br>
                     <strong>Upload Surat Permohonan</strong>
                     <form method="post" enctype="multipart/form-data" id="surat_permohonan">  
@@ -189,11 +206,12 @@
                       @endif
                         <button class="btn btn-primary" type="button" id="uploadButton2">Upload</button>
                       </div>
-                    </form>
+                    </form> -->
                   </div>
                   <!-- end contact-form-action -->
                 </div>
               @endif
+             @endif
             @endif
           </div>
           </div><!-- end cart-wrap -->
@@ -206,9 +224,89 @@
                                                                                                                                                                                                                                                                                                                                                                                                                                     ================================= -->
 @endsection
 
-
 @section('scripts')
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script>
+      var cancelButton = document.getElementById('cancelButton');
+
+      cancelButton.addEventListener('click', function(e) {
+          e.preventDefault();
+
+          (async () => {
+              const { value: text } = await Swal.fire({
+                  input: 'textarea',
+                  inputLabel: 'Yakin akan membatalkan reservasi ini?',
+                  inputPlaceholder: 'Isi alasan pembatalan..',
+                  inputAttributes: {
+                      'aria-label': 'Isi alasan pembatalan..'
+                  },
+                  icon: "warning",
+                  showCancelButton: true,
+                  buttonsStyling: false,
+                  confirmButtonText: "Ok",
+                  cancelButtonText: "Tutup",
+                  reverseButtons: true,
+                  customClass: {
+                      cancelButton: "btn fw-bold btn-primary mr-2", 
+                      confirmButton: "btn fw-bold btn-danger",
+                  },
+                  inputValidator: (value) => {
+                      if (!value) {
+                          return 'Silahkan isi alasan pembatalan.'
+                      }
+                  }
+              });
+
+              if (text) {
+                  var url = "{{ route('reservation.cancel', $reservation->id) }}";
+                  var data = {
+                      'description': text
+                  };
+
+                  // Send ajax request
+                  axios.post(url, data)
+                      .then(function(response) {
+                          // Show message popup
+                          Swal.fire({
+                              icon: "success",
+                              text: response.data.message,
+                              buttonsStyling: false,
+                              confirmButtonText: "Ok",
+                              customClass: {
+                                  confirmButton: "btn btn-primary"
+                              }
+                          }).then(function(result) {
+                              if (result.isConfirmed) {
+                                  window.location = "/"
+                              }
+                          });
+                      })
+                      .catch(function(error) {
+                          let dataMessage = error.response.data.message;
+                          let dataErrors = error.response.data.errors;
+
+                          for (const errorsKey in dataErrors) {
+                              if (!dataErrors.hasOwnProperty(errorsKey)) continue;
+                              dataMessage += "\r\n" + dataErrors[errorsKey];
+                          }
+
+                          if (error.response) {
+                              Swal.fire({
+                                  text: dataMessage,
+                                  icon: "error",
+                                  buttonsStyling: false,
+                                  confirmButtonText: "Ok, got it!",
+                                  customClass: {
+                                      confirmButton: "btn btn-primary"
+                                  }
+                              });
+                          }
+                      });
+              }
+          })();
+      });
+
     function hide(elements) {
       elements = elements.length ? elements : [elements];
       for (var index = 0; index < elements.length; index++) {
@@ -333,22 +431,60 @@
       }
     });
 
+  document.getElementById('eoffice-button').addEventListener('click', function () {
+      // Get the eoffice input value
+      var eofficeValue = document.getElementById('eoffice').value;
+      
+      // Get the reservation ID, assuming it's available in your view
+      var reservationId = '{{ $reservation->id }}';
+      
+      // Prepare the AJAX request
+      fetch(`/reservation/${reservationId}/store-eoffice`, {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+              'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+          },
+          body: JSON.stringify({
+              eoffice: eofficeValue
+          })
+      })
+      .then(response => response.json())
+      .then(data => {
+          if (data.message) {
+              // Display success message using SweetAlert
+              Swal.fire({
+                  icon: 'success',
+                  title: 'Success',
+                  text: data.message,
+                  confirmButtonColor: '#3085d6',
+                  confirmButtonText: 'OK'
+              }).then((result) => {
+                  if (result.isConfirmed) {
+                      window.location.reload();
+                  }
+              });
+          }
+      })
+      .catch(error => console.error('Error:', error));
+  });
+
     //SELECTED BOX SUMBER DANA ----------------------------------------------
-    document.addEventListener("DOMContentLoaded", function () {
-            const submitButton = document.getElementById("submitDana");
-            const sumberDanaComboBox = document.getElementById("sumberDana");
+    // document.addEventListener("DOMContentLoaded", function () {
+    //         const submitButton = document.getElementById("submitDana");
+    //         const sumberDanaComboBox = document.getElementById("sumberDana");
 
-            submitButton.addEventListener("click", function () {
-                const selectedValue = sumberDanaComboBox.value;
+    //         submitButton.addEventListener("click", function () {
+    //             const selectedValue = sumberDanaComboBox.value;
 
-                if (selectedValue === "pendanaanITB") {
-                    alert("Pendanaan ITB masih dalam pengembangan.");
-                } else if (selectedValue === "pendanaanNonITB") {
-                    alert("Pendanaan Non-ITB masih dalam pengembangan.");
-                } else {
-                    alert("Silakan pilih sumber dana terlebih dahulu.");
-                }
-            });
-        });
+    //             if (selectedValue === "pendanaanITB") {
+    //                 alert("Pendanaan ITB masih dalam pengembangan.");
+    //             } else if (selectedValue === "pendanaanNonITB") {
+    //                 alert("Pendanaan Non-ITB masih dalam pengembangan.");
+    //             } else {
+    //                 alert("Silakan pilih sumber dana terlebih dahulu.");
+    //             }
+    //         });
+    //     });
   </script>
 @endsection

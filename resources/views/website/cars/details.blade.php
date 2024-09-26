@@ -9,6 +9,7 @@
       <div class="row justify-content-between">
         <div class="single-content-item pb-4">
           <h3 class="title font-size-26">{{ $data->name }}</h3>
+          <small> Unit Pengelola: {{ $data->unit_pengelola }}</small>
           <p class="pt-2">
             <span class="la la-map-marker font-size-48"></span>
             {{ $data->address }}
@@ -18,8 +19,9 @@
         </div><!-- end single-content-item -->
         <div class="single-content-item pb-4 pt-4 text-right">
           <h3 class="title font-size-26 pb-2">Rp. {{ number_format($data->price, 0) }} / {{ $data->price_for }}</h3>
-          <a href="{{ route('website.rooms') }}" class="theme-btn theme-btn-small"><i class="la la-arrow-left"></i>
-            Kembali</a>
+          <a href="{{ $data->price == 0 ? route('resource.page') : route('sewa.page') }}" class="theme-btn theme-btn-small">
+              <i class="la la-arrow-left"></i> Kembali
+          </a>
         </div><!-- end single-content-item -->
       </div>
       <div class="section-block"></div>
@@ -154,6 +156,7 @@
                     <h3 class="card-title">
                       <a href="{{ route('website.car.show', $car->id) }}" id="link-detail">{{ $car->name }}</a>
                     </h3>
+                    <small> Unit Pengelola: {{ $car->unit_pengelola }}</small>
                     <div class="card-attributes">
                       <ul class="d-flex align-items-center">
                         <li class="d-flex align-items-center" data-toggle="tooltip" data-placement="top"
@@ -167,12 +170,14 @@
                       <p>
                         <span class="price__num">
                           @if ($car->price == 0)
-                            Gratis
+                            <!--Gratis-->
                           @else
                             Rp. {{ number_format($car->price, 0) }}
                           @endif
                         </span>
+                        @if ($car->price != 0)
                         <span class="price__text">Per {{ $car->price_for }}</span>
+                        @endif
                       </p>
                       <a href="{{ route('website.car.show', $car->id) }}" id="link-detail" class="btn-text">
                         Lihat<i class="la la-angle-right"></i>

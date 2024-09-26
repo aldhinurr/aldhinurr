@@ -1,55 +1,71 @@
-<html>
+<html lang="en">
+
 <head>
-<title>e-Facility ITB | Page not found</title>
-<style>
-    h1 {
-        font-size: 100px;
-        font-weight: 500;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>e-Facility ITB - Page Not Found</title>
+    <style>
+    body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
         text-align: center;
-        font-family: 'Comic Sans MS', cursive;
-        font-weight: bold;
-    }
-
-    h1 span {
-        color: #1a38f2;
-    }
-
-    h2 {
-        font-size: 25px;
-        text-align: center;
-        font-family: 'Comic Sans MS', cursive;
-        margin-top: -90px;
-    }
-
-    p {
-        font-family: 'Roboto', sans-serif;
+        font-family: 'Arial', sans-serif;
+        background-color: #F5F7FC;
+        margin: 0;
+        padding: 0;
+        flex-direction: column; /* Menambahkan flex-direction agar konten berada di tengah secara vertical */
     }
 
     .container {
-        width: 80%;
-        max-width: 400px;
-        margin: 0 auto;
-        margin-top: 15vh;
-        text-align: center;
-        position: relative;
+        max-width: 600px;
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
     img {
-        width: 100%; /* Menggunakan lebar 100% agar gambar sesuai dengan lebar layar */
-        max-width: 350px; /* Batasi lebar gambar maksimum ke 500px */
-        position: fixed;
-        right: 0;
-        bottom: 0;
+        width: 500px;
+        height: 500px;
+    }
+
+    p {
+        font-size: 18px;
+        color: #333;
+    }
+
+    a {
+        text-decoration: none;
+        color: #0066cc;
+        font-weight: bold;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    /* Media queries untuk perangkat dengan lebar maksimal 600px */
+    @media (max-width: 720px) {
+        .container {
+            padding: 10px;
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+        }
     }
 </style>
 </head>
+
 <body>
-<div class="container">
-    <h1>4<span>0</span>4</h1>
-    <h2>Page Not Found</h2>
-    <p>Halaman yang coba anda akses tidak dapat ditemukan, silahkan kembali ke 
-        <a href="http://e-facility.itb.ac.id/">Halaman Utama.</a></p>
-</div>
-<img src="{{ asset('storage/images/404.jpg') }}">
+    <div class="container">
+        <br>
+        <p><b>Halaman yang coba Anda akses tidak dapat ditemukan.
+            <br>Silahkan kembali ke <a href="http://e-facility.itb.ac.id/">Halaman Utama</a></b>.
+        </p>
+        <img src="{{ asset('media/images/error/404.jpg') }}" alt="Error 404" />
+    </div>
 </body>
-</html>

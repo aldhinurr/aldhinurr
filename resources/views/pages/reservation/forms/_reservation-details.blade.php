@@ -57,9 +57,13 @@
               <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
                 <!--begin::Number-->
                 <div class="d-flex align-items-center">
-                  <div class="fs-2 fw-bolder" data-kt-countup="true"
+                  <!-- <div class="fs-2 fw-bolder" data-kt-countup="true"
                     data-kt-countup-value="{{ $reservation->layanan->price }}" data-kt-countup-prefix="Rp. "
-                    data-kt-countup-suffix=" / {{ $reservation->layanan->price_for }}">0</div>
+                    data-kt-countup-suffix=" / {{ $reservation->layanan->price_for }}">0
+                  </div> -->
+                  <div class="fs-2 fw-bolder">
+                    Rp. {{ number_format($reservation->layanan->price, 0, ',', '.') }} / {{ $reservation->layanan->price_for }}
+                  </div>
                 </div>
                 <!--end::Number-->
 
@@ -96,24 +100,26 @@
     <div class="d-flex my-4">
       {{-- <a href="#" id="approveButton" class="btn btn-sm btn-success align-self-center me-2">{{ __('Setuju') }}</a>
         <a href="#" id="rejectButton" class="btn btn-sm btn-danger align-self-center">{{ __('Tolak') }}</a> --}}
-      
+    
       @if ($reservation->status === 'DISETUJUI')
         <a href="#" id="cancelButton"
-          class="btn btn-sm btn-white btn-active-light-danger align-self-center me-2">
+          class="btn btn-sm btn-outline-danger align-self-center me-2">
           {{ __('Batalkan') }}
         </a>
       @endif
       
-      <a href="{{ route('reservation.index') }}"
-        class="btn btn-sm btn-white btn-active-light-primary align-self-center me-2">{{ __('Kembali') }}
-      </a>
+    @if($reservation->total > 0)
+        <a href="{{ route('reservation.indexSewa') }}" class="btn btn-sm btn-outline-primary align-self-center me-2">{{ __('Kembali') }}</a>
+    @else
+        <a href="{{ route('reservation.indexResource') }}" class="btn btn-sm btn-outline-primary align-self-center me-2">{{ __('Kembali') }}</a>
+    @endif
 
-      @if (in_array($reservation->status, ['MENUNGGU UPLOAD', 'MENUNGGU VERIFIKASI']))
+     @if (in_array($reservation->status, ['MENUNGGU REVIEW', 'MENUNGGU UPLOAD', 'MENUNGGU VERIFIKASI']))
         <!--begin::Menu-->
         <div class="me-0 pt-1">
           <button class="btn btn-sm btn-bg-primary text-white" data-kt-menu-trigger="click"
             data-kt-menu-placement="bottom-end">
-            Ubah Status
+            Update Status
           </button>
 
           <!--begin::Menu 3-->
@@ -123,18 +129,25 @@
 
             <!--begin::Menu item-->
             <div class="menu-item px-3">
-              <a href="#" id="approveButton" class="menu-link px-3">
-                Setuju
-              </a>
+                <a href="#" id="reviewButton" class="menu-link px-3">
+                    Setujui Review
+                </a>
+            </div>
+            <!--end::Menu item-->
+            <!--begin::Menu item-->
+            <div class="menu-item px-3">
+                <a href="#" id="approveButton" class="menu-link px-3">
+                    Setujui Peminjaman
+                </a>
             </div>
             <!--end::Menu item-->
 
             <!--begin::Menu item-->
-            <div class="menu-item px-3">
+            <!-- <div class="menu-item px-3">
               <a class="menu-link px-3" data-bs-toggle="modal" data-bs-target="#alihkan_layanan">
                 Setuju dan Alihkan
               </a>
-            </div>
+            </div> -->
             <!--end::Menu item-->
 
             <!--begin::Menu item-->
@@ -169,18 +182,6 @@
     <!--begin::Row-->
     <div class="row">
       <div class="col-lg-6">
-      <div class="row mb-4">
-          <!--begin::Label-->
-          <label class="col-lg-4 fw-bold text-muted">{{ __('Kode Sewa') }}</label>
-          <!--end::Label-->
-
-          <!--begin::Col-->
-          <div class="col-lg-4">
-            <span class="fw-bolder fs-6 text-dark">{{ $reservation->kode_sewa }}</span>
-          </div>
-          <!--end::Col-->
-        </div>
-
         <div class="row mb-4">
           <!--begin::Label-->
           <label class="col-lg-4 fw-bold text-muted">{{ __('Penyewa') }}</label>
@@ -190,6 +191,20 @@
           <div class="col-lg-4">
             <span class="fw-bolder fs-6 text-dark">{{ $reservation->user->first_name }}
               {{ $reservation->user->last_name }}</span>
+          </div>
+          <!--end::Col-->
+        </div>
+
+        <div class="row mb-4">
+          <!--begin::Label-->
+          <label class="col-lg-4 fw-bold text-muted">{{ __('Unit Kerja') }}</label>
+          <!--end::Label-->
+
+          <!--begin::Col-->
+          <div class="col-lg-8">
+            <span class="fw-bolder fs-6 text-dark">
+            {{ $reservation->unit }}
+            </span>
           </div>
           <!--end::Col-->
         </div>
@@ -229,9 +244,12 @@
 
           <!--begin::Col-->
           <div class="col-lg-8">
-            <div class="fs-6 fw-bolder text-dark" data-kt-countup="true"
+            <!-- <div class="fs-6 fw-bolder text-dark" data-kt-countup="true"
               data-kt-countup-value="{{ $reservation->fee }}" data-kt-countup-prefix="Rp. ">
               0
+            </div> -->
+            <div class="fs-6 fw-bolder text-dark">
+              Rp. {{ number_format($reservation->fee, 0, ',', '.') }}
             </div>
           </div>
           <!--end::Col-->
@@ -244,9 +262,12 @@
 
           <!--begin::Col-->
           <div class="col-lg-8">
-            <div class="fs-6 fw-bolder text-dark" data-kt-countup="true"
+            <!-- <div class="fs-6 fw-bolder text-dark" data-kt-countup="true"
               data-kt-countup-value="{{ $reservation->extra_fee }}" data-kt-countup-prefix="Rp. ">
               0
+            </div> -->
+            <div class="fs-6 fw-bolder text-dark">
+              Rp. {{ number_format($reservation->extra_fee, 0, ',', '.') }}
             </div>
           </div>
           <!--end::Col-->
@@ -259,9 +280,12 @@
 
           <!--begin::Col-->
           <div class="col-lg-8">
-            <div class="fs-6 fw-bolder text-dark" data-kt-countup="true"
+            <!-- <div class="fs-6 fw-bolder text-dark" data-kt-countup="true"
               data-kt-countup-value="{{ $reservation->total }}" data-kt-countup-prefix="Rp. ">
               0
+            </div> -->
+            <div class="fs-6 fw-bolder text-dark">
+              Rp. {{ number_format($reservation->total, 0, ',', '.') }}
             </div>
           </div>
           <!--end::Col-->
@@ -286,7 +310,7 @@
 
           <!--begin::Col-->
           <div class="col-lg-8">
-            <span class="fw-bolder fs-6 text-dark">{{ $reservation->catatan }}</span>
+            <span class="fw-bolder fs-6 text-dark">{{ $reservation->catatan ?: '-'}}</span>
           </div>
           <!--end::Col-->
         </div>
@@ -298,7 +322,7 @@
 
           <!--begin::Col-->
           <div class="col-lg-8">
-            <span class="fw-bolder fs-6 text-dark">{{ $reservation->description }}</span>
+            <span class="fw-bolder fs-6 text-dark">{{ $reservation->description ?: '-'}}</span> 
           </div>
           <!--end::Col-->
         </div>
@@ -311,43 +335,98 @@
           <!--begin::Col-->
           <div class="col-lg-8">
             @if (strlen($reservation->receipt) > 0)
-              <a href="{{ asset($reservation->receipt) }}" target="_blank" class="btn btn-sm btn-success"><i
-                  class="fas fa-envelope-open-text fs-4 me-2"></i> Download</a>
+            <div style="display: flex; align-items: center;">
+                @if($reservation->verif_receipt == '1')
+                    <a class="btn btn-sm btn-success" href="{{ asset($reservation->receipt) }}" target="_blank">
+                    <i class="fas fa-envelope-open-text fs-4 me-2"></i> Pembayaran Terverifikasi</a>
+                @else
+                    <button class="btn btn-sm btn-danger" id="statusButton" onclick="konfirmasiVerifikasi('{{ $reservation->id }}')">
+                    <i class="fas fa-exclamation-triangle"></i> Verifikasi Pembayaran
+                    </button>
+                @endif
+            </div>
+            <!-- Tambahkan script Axios di bagian head atau sebelum menggunakan konfirmasiVerifikasi -->
+            <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+            <!-- Update your JavaScript code -->
+            <script>
+                function konfirmasiVerifikasi(reservationId) {
+                    Swal.fire({
+                        title: 'Verifikasi Bukti Pembayaran',
+                        html:
+                            '<div style="display: flex; align-items: center; justify-content: center; margin-top: -10px;">' +
+                            '<a href="{{ asset($reservation->receipt) }}" target="_blank" class="btn btn-sm btn-success">' +
+                            '<i class="fas fa-envelope-open-text fs-4 me-2"></i> Lihat Bukti Pembayaran</a></div>' +
+                            '<br><hr>' +
+                            '<div style="text-align: center;">Apakah Anda yakin ingin memverifikasi pembayaran ?</div>',
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonText: 'Ya, Verifikasi!',
+                        cancelButtonText: 'Batal'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            axios.get('{{ route('reservation.verifikasi', ['id' => $reservation->id]) }}')
+                                .then((response) => {
+                                    var statusButton = document.getElementById('statusButton');
+                                    statusButton.innerHTML = 'Pembayaran Terverifikasi';
+
+                                    Swal.fire({
+                                        title: 'Pembayaran Terverifikasi',
+                                        icon: 'success'
+                                    }).then(() => {
+                                        // Reload the page after successful verification
+                                        location.reload();
+                                    });
+                                })
+                                .catch((error) => {
+                                    console.error('Error updating verification status:', error);
+                                });
+                        }
+                    });
+                }
+            </script>
             @else
               <span class="fw-bolder fs-6 text-dark">{{ __('Belum ada file yang diupload.') }}</span>
             @endif
           </div>
           <!--end::Col-->
         </div>
+        @if (strlen($reservation->surat_permohonan) > 0)
+        <!-- Hide No E-Offie section if surat_permohonan is not empty -->
+        <div class="row mb-4">
+          <!--begin::Label-->
+          <label class="col-lg-4 fw-bold text-muted">{{ __('Surat Permohonan') }}</label>
+          <!--end::Label-->
+
+          <!--begin::Col-->
+          <div class="col-lg-8">
+            <a href="{{ asset($reservation->surat_permohonan) }}" target="_blank" class="btn btn-sm btn-success">
+              <i class="fas fa-envelope-open-text fs-4 me-2"></i> Download
+            </a>
+          </div>
+          <!--end::Col-->
+        </div>
+      @else
+        <!-- Hide Surat Permohonan section if surat_permohonan is empty -->
+        <div class="row mb-4">
+          <!--begin::Label-->
+          <label class="col-lg-4 fw-bold text-muted">{{ __('Nomor E-Offie') }}</label>
+          <!--end::Label-->
+
+          <!--begin::Col-->
+          <div class="col-lg-8">
+            <span class="fw-bolder fs-6 text-dark">
+              {{ $reservation->no_eoffice ?: '-' }}
+            </span>
+          </div>
+          <!--end::Col-->
+        </div>
+      @endif
       </div>
 
       <div class="col-lg-4">
         <h3 class="card-title align-items-start flex-column">
           <span class="card-label fw-bolder text-dark">Fasilitas Tambahan</span>
         </h3>
-
-
-        <div style="padding-top: 12px;">
-        <div class="row mb-4">
-          <!--begin::Label-->
-          <label class="col-lg-4 fw-bold text-muted">{{ __('Diskon') }}</label>
-          <!--end::Label-->
-
-          <!--begin::Col-->
-          <div class="col-lg-8">
-          @if ($reservation->diskon > 0)
-            <div class="fs-6 fw-bolder text-dark" data-kt-countup="true"
-              data-kt-countup-value="{{ $reservation->diskon }}" data-kt-countup-prefix="Rp. ">
-              0
-            </div>
-          @else
-            <input type="text" id="diskon" class="form-control form-control-lg form-control-solid" value="0">
-          @endif
-          </div>
-          <!--end::Col-->
-        </div>
-        </div>
-
         @if (count($extraFacilities) > 0)
           @foreach ($extraFacilities as $extraFacility)
             <!--begin::Section-->
@@ -370,25 +449,27 @@
         @else
           <span class="fw-bolder fs-6 text-dark">Tidak Ada.</span>
         @endif
-
-
+        <!--Start:: Input Bayar-->
+        <br><br>
         <div style="padding-top: 12px;">
         <div class="row mb-4">
           <!--begin::Label-->
-          <label class="col-lg-4 fw-bold text-muted">{{ __('Bayar') }}</label>
+          <label class="fw-bold text-muted">{{ __('Bayar:') }}</label>
           <!--end::Label-->
-
           <!--begin::Col-->
           <div class="col-lg-8">
+          @if ($reservation->bayar > 0 || $reservation->status == 'DISETUJUI' || $reservation->status == 'WAKTU HABIS' || $reservation->status == 'DIBATALKAN')
             <div class="fs-6 fw-bolder text-dark" data-kt-countup="true"
-              data-kt-countup-value="{{ $reservation->total - $reservation->diskon }}" data-kt-countup-prefix="Rp. ">
+              data-kt-countup-value="{{ $reservation->bayar }}" data-kt-countup-prefix="Rp. ">
               0
             </div>
+          @else
+            <input type="text" id="bayar" class="form-control form-control-lg form-control-solid" value="{{ $reservation->total }}">
+          @endif
           </div>
           <!--end::Col-->
         </div>
-        </div>
-
+        <!--end::Input Bayar-->
       </div>
     </div>
     <!--end::Row-->

@@ -36,7 +36,7 @@ class AnggaranTest extends TestCase
     public function testNotLoginAccessAnggaran()
     {
         $this->get('/anggaran')
-            ->assertRedirect('/login')
+            ->assertRedirect('/login-page')
             ->assertStatus(302);
     }
 
@@ -59,7 +59,7 @@ class AnggaranTest extends TestCase
     public function testNotLoginCreateAnggaran()
     {
         $this->get('/anggaran/create')
-            ->assertRedirect('/login')
+            ->assertRedirect('/login-page')
             ->assertStatus(302);
     }
 }

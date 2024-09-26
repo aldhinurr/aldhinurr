@@ -45,33 +45,34 @@ class ReportServiceController extends Controller
         DB::beginTransaction();
         try {
             $now = new DateTime("now", new DateTimeZone('Asia/Jakarta'));
-
+    
             $validated = $request->validate($request->rules());
             $validated['status'] = "MENUNGGU";
             $validated['created_by'] = auth()->user()->email;
             $validated['created_at'] = $now;
             $validated['updated_by'] = auth()->user()->email;
             $validated['updated_at'] = $now;
-
-            // create report
+    
+            // Create report
             $report_service = ReportService::create($validated);
-
+    
             if ($report_service) {
-                // upload dan simpan gambar report
+                // Upload and save report images
                 foreach ($validated['files'] as $img => $image) {
-                    // do upload and save to db
                     $imageName = time() . strtolower(Str::random(10)) . '.' . $image->extension();
-                    $image->move(public_path('media/images/report'), $imageName);
-
+                    
+                    // Store the image in the private directory
+                    $path = $image->storeAs('private/upload/report', $imageName, 'local');
+    
                     ReportServiceImage::create([
                         'report_service_id' => $report_service->id,
-                        'image' => 'media/images/report/' . $imageName,
+                        'image' => $path,
                         'status' => 'SEBELUM',
                         'created_by' => auth()->user()->email,
                     ]);
                 }
             }
-
+    
             DB::commit();
             return response()->json([
                 'status' => 0,

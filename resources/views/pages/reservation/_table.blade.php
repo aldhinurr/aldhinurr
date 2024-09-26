@@ -4,10 +4,13 @@
     <div class="form-group" style="display: inline-block; margin-right: 10px;">
         <select id="tipe_layanan" class="form-control form-control-solid w-250px">
             <option value=""> ~ PILIH TIPE LAYANAN ~</option>
-            <option value="RUANG">RUANG</option>
             <option value="KENDARAAN">KENDARAAN</option>
-            <option value="SELASAR">SELASAR</option>
             <option value="LAPANGAN">LAPANGAN</option>
+            <option value="RKU">RUANG KULIAH UMUM</option>
+            <option value="RUANG">RUANG</option>
+            <option value="RUMAH SUSUN">RUMAH SUSUN / TRANSIT</option>
+            <option value="SELASAR">SELASAR</option>
+            <option value="PERALATAN">PERALATAN</option>
         </select>
     </div>
     <!--end::filter type-->

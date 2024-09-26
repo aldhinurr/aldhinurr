@@ -23,7 +23,7 @@
         <div class="row mb-6">
           <!--begin::Label-->
           <label class="col-lg-3 col-form-label fw-bold fs-6">
-            <span class="required">{{ __('Jenis Layanan') }}</span>
+            <span>{{ __('Jenis Layanan') }}</span>
           </label>
           <!--end::Label-->
 
@@ -31,7 +31,7 @@
           <div class="col-lg-3 fv-row">
             <select id="type" name="type" aria-label="{{ __('Pilih Jenis Layanan') }}"
               data-placeholder="{{ __('Pilih Jenis...') }}"
-              class="form-select form-select-solid form-select-lg fw-bold">
+              class="form-select form-select form-select-lg fw-bold">
               <option value="">{{ __('Pilih Jenis...') }}</option>
             </select>
           </div>
@@ -42,12 +42,12 @@
         <!--begin::Input group-->
         <div class="row mb-6">
           <!--begin::Label-->
-          <label class="col-lg-3 col-form-label required fw-bold fs-6">{{ __('Nama Layanan') }}</label>
+          <label class="col-lg-3 col-form-label fw-bold fs-6">{{ __('Nama Layanan') }}</label>
           <!--end::Label-->
 
           <!--begin::Col-->
           <div class="col-lg-8 fv-row">
-            <input type="text" name="name" class="form-control form-control-lg form-control-solid" />
+            <input type="text" name="name" class="form-control form-control-lg" />
           </div>
           <!--end::Col-->
         </div>
@@ -57,13 +57,13 @@
         <div class="row mb-6">
           <!--begin::Label-->
           <label class="col-lg-3 col-form-label fw-bold fs-6">
-            <span class="required">{{ __('Alamat') }}</span>
+            <span>{{ __('Alamat') }}</span>
           </label>
           <!--end::Label-->
 
           <!--begin::Col-->
           <div class="col-lg-8 fv-row">
-            <textarea id="address" name="address" class="form-control form-control-lg form-control-solid"></textarea>
+            <textarea id="address" name="address" class="form-control form-control-lg"></textarea>
           </div>
           <!--end::Col-->
         </div>
@@ -73,14 +73,17 @@
         <div class="row mb-6">
           <!--begin::Label-->
           <label class="col-lg-3 col-form-label fw-bold fs-6">
-            <span class="required">{{ __('Lokasi') }}</span>
+            <span>{{ __('Lokasi') }}</span>
           </label>
           <!--end::Label-->
 
           <!--begin::Col-->
-          <div class="col-lg-8 fv-row">
-            <input type="text" value="{{ auth()->user()->location }}" disabled="disabled" class="form-control form-control-lg form-control-solid" />
-            <input type="hidden" name="location" value="{{ auth()->user()->location }}">
+          <div class="col-lg-3 fv-row">
+            <select id="location" name="location" aria-label="{{ __('Pilih Lokasi') }}"
+              data-placeholder="{{ __('Pilih Lokasi...') }}"
+              class="form-select form-select form-select-lg fw-bold">
+              <option value="">{{ __('Pilih Lokasi...') }}</option>
+            </select>
           </div>
           <!--end::Col-->
 
@@ -120,7 +123,24 @@
         <div class="row mb-6">
           <!--begin::Label-->
           <label class="col-lg-3 col-form-label fw-bold fs-6">
-            <span class="required">{{ __('Kapasitas') }}</span>
+            <span>{{ __('Unit Pengelola') }}</span>
+          </label>
+          <!--end::Label-->
+
+          <!--begin::Col-->
+          <div class="col-lg-8 fv-row">
+            <input type="text" value="{{ auth()->user()->itb_unit }}" disabled="disabled" class="form-control form-control-lg" />
+            <input type="hidden" name="unit_pengelola" id="unit_pengelola" value="{{ auth()->user()->itb_unit }}">
+          </div>
+          <!--end::Col-->
+        </div>
+        <!--end::Input group-->
+
+        <!--begin::Input group-->
+        <div class="row mb-6">
+          <!--begin::Label-->
+          <label class="col-lg-3 col-form-label fw-bold fs-6">
+            <span>{{ __('Kapasitas') }}</span>
           </label>
           <!--end::Label-->
 
@@ -130,9 +150,9 @@
             <div class="row">
               <!--begin::Col-->
               <div class="col-lg-4 fv-row mb-2">
-                <div class="input-group input-group-solid">
+                <div class="input-group input-group">
                   <input type="number" min="1" id="capacity" name="capacity"
-                    class="form-control form-control-lg form-control-solid mb-lg-0 mb-3" value="1" />
+                    class="form-control form-control-lg mb-lg-0 mb-3" value="0" />
                   <span class="input-group-text" id="basic-addon2">Orang</span>
                 </div>
               </div>
@@ -140,15 +160,15 @@
 
               <!--begin::Label-->
               <label class="col-lg-2 col-form-label fw-bold fs-6">
-                <span class="required" id="label-large">{{ __('Luas') }}</span>
+                <span id="label-large">{{ __('Luas') }}</span>
               </label>
               <!--end::Label-->
 
               <!--begin::Col-->
               <div class="col-lg-4">
-                <div class="input-group input-group-solid fv-row mb-2" id="div-large">
+                <div class="input-group input-group fv-row mb-2" id="div-large">
                   <input type="number" min="1" id="large" name="large"
-                    class="form-control form-control-lg form-control-solid mb-lg-0 mb-3" value="1" />
+                    class="form-control form-control-lg mb-lg-0 mb-3" value="0" />
                   <span class="input-group-text" id="basic-addon2">m<sup>2</sup></span>
                 </div>
               </div>
@@ -159,12 +179,37 @@
           <!--end::Col-->
         </div>
         <!--end::Input group-->
+        
+        <!--begin::Input group-->
+        <div class="row mb-6">
+          <!--begin::Label-->
+          <label class="col-lg-3 col-form-label fw-bold fs-6">
+            <span>{{ __('Tipe') }}</span>
+          </label>
+          <!--end::Label-->
+          <!--begin::Col-->
+          <div class="col-lg-4 fv-row">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="service_type" id="layanan_radio" value="Layanan" checked>
+              <label class="form-check-label" for="layanan_radio">
+                Layanan
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="service_type" id="resource_sharing_radio" value="Resource Sharing">
+              <label class="form-check-label" for="resource_sharing_radio">
+              <i>Resource Sharing</i>
+              </label>
+            </div>
+          </div>
+        </div>
+        <!--end::Input group-->
 
         <!--begin::Input group-->
         <div class="row mb-6">
           <!--begin::Label-->
           <label class="col-lg-3 col-form-label fw-bold fs-6">
-            <span class="required">{{ __('Harga') }}</span>
+            <span>{{ __('Harga') }}</span>
           </label>
           <!--end::Label-->
 
@@ -175,7 +220,7 @@
               <!--begin::Col-->
               <div class="col-lg-4 fv-row">
                 <input type="text" id="price" name="price"
-                  class="form-control form-control-lg form-control-solid mb-lg-0 mb-3" />
+                  class="form-control form-control-lg mb-lg-0 mb-3" />
               </div>
               <!--end::Col-->
 
@@ -189,11 +234,10 @@
               <div class="col-lg-4 fv-row">
                 <select name="price_for" aria-label="{{ __('Pilih Harga Per') }}" data-control="select2"
                   data-placeholder="{{ __('Pilih Harga Per...') }}"
-                  class="form-select form-select-solid form-select-lg fw-bold">
-                  {{-- <option value="JAM">{{ __('Jam') }}</option> --}}
-                  <option value="HARI" selected>
-                    {{ __('Hari') }}
-                  </option>
+                  class="form-select form-select form-select-lg fw-bold">
+                  <option value=""></option>
+                  <option value="HARI">{{ __('Hari') }}</option>
+                  <option value="JAM">{{ __('Jam') }}</option>
                 </select>
               </div>
               <!--end::Col-->
@@ -213,7 +257,7 @@
           <!--begin::Col-->
           <div class="col-lg-8 fv-row">
             <input type="hidden" name="description" id="description">
-            <textarea id="editor_description" name="editor_description" class="form-control form-control-lg form-control-solid"></textarea>
+            <textarea id="editor_description" name="editor_description" class="form-control form-control-lg"></textarea>
           </div>
           <!--end::Col-->
         </div>
@@ -230,7 +274,7 @@
             <!--begin::Options-->
             <div class="d-flex align-items-center mt-3">
               <!--begin::Option-->
-              <label class="form-check form-check-inline form-check-solid me-5">
+              <label class="form-check form-check-inline form-check me-5">
                 <input class="form-check-input" name="status" type="radio" value="AKTIF" checked />
                 <span class="fw-bold fs-6 ps-2">
                   {{ __('AKTIF') }}
@@ -239,7 +283,50 @@
               <!--end::Option-->
 
               <!--begin::Option-->
-              <label class="form-check form-check-inline form-check-solid">
+              <label class="form-check form-check-inline form-check me-5">
+                <input class="form-check-input" name="status" type="radio" value="PILIH" id="pilihRadio" />
+                <span class="fw-bold fs-6 ps-2">
+                  {{ __('TIDAK AKTIF') }}
+                </span>
+              </label>
+              <!--end::Option-->
+
+              <!--begin::Select-->
+              <select name="status" class="form-select ms-5" id="statusSelect" style="display:none; width: 200px;">
+                <option value="AKTIF" hidden>{{ __('PILIH ALASAN') }}</option>
+                <option value="RUSAK">{{ __('RUSAK') }}</option>
+                <option value="TIDAK BISA DISEWA">{{ __('TIDAK BISA DISEWA') }}</option>
+              </select>
+              <!--end::Select-->
+            </div>
+            <!--end::Options-->
+          </div>
+          <!--end::Col-->
+        </div>
+        <!--end::Input group-->
+
+{{--
+        <!--begin::Input group-->
+        <div class="row mb-6">
+          <!--begin::Label-->
+          <label class="col-lg-3 col-form-label fw-bold fs-6">{{ __('Status') }}</label>
+          <!--end::Label-->
+
+          <!--begin::Col-->
+          <div class="col-lg-8 fv-row">
+            <!--begin::Options-->
+            <div class="d-flex align-items-center mt-3">
+              <!--begin::Option-->
+              <label class="form-check form-check-inline form-check me-5">
+                <input class="form-check-input" name="status" type="radio" value="AKTIF" checked />
+                <span class="fw-bold fs-6 ps-2">
+                  {{ __('AKTIF') }}
+                </span>
+              </label>
+              <!--end::Option-->
+
+              <!--begin::Option-->
+              <label class="form-check form-check-inline form-check">
                 <input class="form-check-input" name="status" type="radio" value="TIDAK AKTIF" />
                 <span class="fw-bold fs-6 ps-2">
                   {{ __('TIDAK AKTIF') }}
@@ -248,7 +335,7 @@
               <!--end::Option-->
 
               <!--begin::Option-->
-              <label class="form-check form-check-inline form-check-solid">
+              <label class="form-check form-check-inline form-check">
                 <input class="form-check-input" name="status" type="radio" value="RUSAK" />
                 <span class="fw-bold fs-6 ps-2">
                   {{ __('RUSAK') }}
@@ -257,7 +344,7 @@
               <!--end::Option-->
 
               <!--begin::Option-->
-              <label class="form-check form-check-inline form-check-solid">
+              <label class="form-check form-check-inline form-check">
                 <input class="form-check-input" name="status" type="radio" value="TIDAK BISA DISEWA" />
                 <span class="fw-bold fs-6 ps-2">
                   {{ __('TIDAK DISEWA') }}
@@ -270,6 +357,7 @@
           <!--end::Col-->
         </div>
         <!--end::Input group-->
+--}}
 
         <div class="separator my-10"></div>
 
@@ -277,7 +365,7 @@
         <div class="row mb-6">
           <!--begin::Label-->
           <label class="col-lg-3 col-form-label fw-bold fs-6">
-            <span class="required">{{ __('Gambar') }}</span>
+            <span>{{ __('Gambar') }}</span>
           </label>
           <!--end::Label-->
 
@@ -294,7 +382,7 @@
               </div>
             </div>
             <!--end::Dropzone-->
-            <span class="fs-7 fw-semibold text-gray-400">Max Upload 10 gambar, Ukuran per gambar max 10MB </span>
+            <span class="fs-7 fw-semibold text-gray-400">Max Upload 10 gambar, Ukuran per gambar max 2MB </span>
           </div>
         </div>
         <!--end::Input group-->
@@ -305,7 +393,7 @@
         <div class="row mb-6">
           <!--begin::Label-->
           <label class="col-lg-3 col-form-label fw-bold fs-6">
-            <span class="required">{{ __('Fasilitas') }}</span>
+            <span>{{ __('Fasilitas') }}</span>
           </label>
           <!--end::Label-->
 
@@ -320,14 +408,14 @@
                     <div class="form-group row mb-5">
                       <div class="col-md-4">
                         <label class="form-label">Fasilitas:</label>
-                        <select class="form-select  form-select-solid" name="facility_id"
+                        <select class="form-select" name="facility_id"
                           data-kt-repeater="select2-facility" data-placeholder="Pilih Fasilitas">
                         </select>
                       </div>
                       <div class="col-md-2">
                         <label class="form-label">Jenis:</label>
                         <select name="type" aria-label="{{ __('Pilih Jenis') }}" data-kt-repeater="select2"
-                          data-placeholder="Jenis" class="form-select form-select-solid ">
+                          data-placeholder="Pilih" class="form-select form-select">
                           <option value="UTAMA">{{ __('Utama') }}</option>
                           <option value="TAMBAHAN">{{ __('Tambahan') }}</option>
                         </select>
@@ -335,11 +423,11 @@
                       <div class="col-md-2">
                         <label class="form-label">Qty:</label>
                         <input type="text" min="1" name="quantity" value=1
-                          class="form-control form-control-solid mb-2 mb-md-0" />
+                          class="form-control mb-2 mb-md-0" />
                       </div>
                       <div class="col-md-3">
                         <label class="form-label">Biaya:</label>
-                        <input type="text" name="fee" class="form-control form-control-solid mb-2 mb-md-0"
+                        <input type="text" name="fee" class="form-control mb-2 mb-md-0"
                           value=0 />
                       </div>
                       <div class="col-md-1">
@@ -361,6 +449,8 @@
                 </a>
               </div>
               <!--end::Form group-->
+              <br>
+              <span class="fs-7 fw-semibold text-gray-400">Abaikan "Pilih Fasilitas" jika layanan tidak ada fasilitas.</span>
             </div>
             <!--end::Repeater-->
           </div>
@@ -388,3 +478,63 @@
   <!--end::Content-->
 </div>
 <!--end::Basic info-->
+
+<!-- begin::Script -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+  $(document).ready(function () {
+    // Sembunyikan semua tombol delete pada awalnya
+    $('#facility [data-repeater-delete]').hide();
+
+    // Tambahkan event listener untuk setiap tombol "Tambah"
+    $('#facility [data-repeater-create]').on('click', function () {
+      // Sembunyikan tombol delete pada elemen yang baru ditambahkan
+      $(this).closest('#facility').find('[data-repeater-delete]').show();
+
+      // Sembunyikan tombol delete pada elemen pertama
+      $(this).closest('#facility').find('[data-repeater-item]:first-child [data-repeater-delete]').hide();
+    });
+  });
+  
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // Ketika pilihan diubah
+    document.querySelectorAll('input[name="service_type"]').forEach(function(radio) {
+      radio.addEventListener('change', function() {
+        var priceInput = document.getElementById('price');
+        if (this.value === 'Resource Sharing') {
+          priceInput.value = '0'; // Set nilai 0
+          priceInput.disabled = true; // Nonaktifkan input
+          priceInput.style.backgroundColor = '#f0f0f0'; // Warna abu-abu
+        } else {
+          priceInput.value = ''; // Hapus nilai
+          priceInput.disabled = false; // Aktifkan input
+          priceInput.style.backgroundColor = '#fff'; // Warna normal
+        }
+      });
+    });
+  });
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const pilihRadio = document.getElementById('pilihRadio');
+    const statusSelect = document.getElementById('statusSelect');
+
+    pilihRadio.addEventListener('change', function() {
+      if (this.checked) {
+        statusSelect.style.display = 'block';
+      }
+    });
+
+    // Hide select dropdown if another radio is selected
+    const otherRadios = document.querySelectorAll('input[name="status"]:not(#pilihRadio)');
+    otherRadios.forEach(radio => {
+      radio.addEventListener('change', function() {
+        if (this.checked) {
+          statusSelect.style.display = 'none';
+        }
+      });
+    });
+  });
+</script>
+<!--end::Script-->

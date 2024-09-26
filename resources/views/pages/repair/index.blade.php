@@ -11,7 +11,7 @@
       <!--end::Card title-->
 
       <!--begin::Action-->
-      {{-- <a href="{{ theme()->getPageUrl('building/create') }}" class="btn btn-primary btn-sm align-self-center">{{ __('Tambah Baru') }}</a> --}}
+      {{-- <a href="{{ theme()->getPageUrl('building/create') }}" class="btn btn-primary btn-sm align-self-center"><i class="bi bi-plus"></i>{{ __('Tambah Baru') }}</a> --}}
       <!--end::Action-->
     </div>
     <!--begin::Card header-->

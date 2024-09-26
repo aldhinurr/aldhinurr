@@ -98,6 +98,14 @@
           `
       }
 
+      if (type == "RKU") {
+        titleInput = "Lantai";
+        htmlInput = `
+        <input type="number" min="1" id="large" name="large"
+          class="form-control form-control-lg form-control-solid mb-lg-0 mb-3" value="1" />
+          `
+      }
+
       $('#label-large').text(titleInput);
       $('#div-large').empty();
       $('#div-large').append(htmlInput);
@@ -132,21 +140,34 @@
 
     var handleForm = function() {
       $('[id="type"]').select2({
-        data: [{
-            id: "RUANG",
-            text: 'Ruangan'
-          },
+        data: [          
           {
             id: "KENDARAAN",
             text: 'Kendaraan'
+          },
+          {
+            id: "LAPANGAN",
+            text: 'Lapangan'
+          },
+          {
+            id: "RKU",
+            text: 'Ruang Kuliah Umum'
+          },
+          {
+            id: "RUANG",
+            text: 'Ruang'
+          },
+          {
+            id: "RUMAH SUSUN",
+            text: 'Rumah Susun / Transit'
           },
           {
             id: "SELASAR",
             text: 'Selasar'
           },
           {
-            id: "LAPANGAN",
-            text: 'Lapangan'
+            id: "PERALATAN",
+            text: 'Peralatan'
           },
         ]
       });
@@ -242,7 +263,9 @@
         initEmpty: false,
 
         defaultValues: {
-          'quantity': '1'
+          'type': 'UTAMA',
+          'quantity': '1',
+          'fee': '0'
         },
 
         show: function() {
@@ -441,4 +464,29 @@
   KTUtil.onDOMContentLoaded(function() {
     KTALayananForms.init();
   });
+
+
+  // Script Location
+  document.addEventListener('DOMContentLoaded', function() {
+    // Define the locations
+    const locations = ['CIREBON', 'GANESHA', 'JAKARTA', 'JATINANGOR'];
+    
+    // Get the layanan's current location
+    const layananLocation = "{{ $layanan->location }}";
+    
+    // Get the select element
+    const selectElement = document.getElementById('location');
+    
+    // Populate the select element with options
+    locations.forEach(location => {
+      const option = document.createElement('option');
+      option.value = location;
+      option.text = location;
+      if (location === layananLocation) {
+        option.selected = true;
+      }
+      selectElement.appendChild(option);
+    });
+  });
+
 </script>

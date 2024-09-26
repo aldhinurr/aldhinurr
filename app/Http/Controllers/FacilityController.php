@@ -64,6 +64,7 @@ class FacilityController extends Controller
             $validated = $request->validate($request->rules());
             $validated['created_by'] = auth()->user()->email;
             $validated['location'] = auth()->user()->location;
+            $validated['itb_unit'] = auth()->user()->itb_unit;
 
             // create layanan
             Facility::create($validated);
@@ -182,9 +183,18 @@ class FacilityController extends Controller
         $search = $request->search;
 
         if ($search == '') {
-            $facilities = Facility::orderby('name', 'asc')->select('id', 'name')->where('status', 'AKTIF')->where('location', auth()->user()->location)->limit(5)->get();
+            $facilities = Facility::orderby('name', 'asc')->select('id', 'name')
+            ->where('status', 'AKTIF')
+            ->where('itb_unit', auth()->user()->itb_unit)
+            ->where('location', auth()->user()->location)
+            ->get();
         } else {
-            $facilities = Facility::orderby('name', 'asc')->select('id', 'name')->where('status', 'AKTIF')->where('name', 'like', '%' . $search . '%')->where('location', auth()->user()->location)->limit(5)->get();
+            $facilities = Facility::orderby('name', 'asc')->select('id', 'name')
+            ->where('status', 'AKTIF')
+            ->where('name', 'like', '%' . $search . '%')
+            ->where('itb_unit', auth()->user()->itb_unit)
+            ->where('location', auth()->user()->location)
+            ->get();
         }
 
         $response = array();

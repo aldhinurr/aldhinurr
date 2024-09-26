@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\Reservation;
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use DateTime;
 use DateTimeZone;
@@ -14,6 +15,7 @@ use Yajra\DataTables\Services\DataTable;
 
 class ReservationDataTable extends DataTable
 {
+    protected $totalCondition = '=';
     /**
      * Build DataTable class.
      *
@@ -36,8 +38,9 @@ class ReservationDataTable extends DataTable
             ->editColumn('end_date', function (Reservation $model) {
                 return Carbon::createFromFormat('Y-m-d H:i:s', $model->end_date)->format('d-m-Y H:i:s');
             })
-
-
+            ->editColumn('layanans.unit_pengelola', function (Reservation $model) {
+                return $model->layanan->unit_pengelola;
+            })
             ->editColumn('created_at', function (Reservation $model) {
                 return Carbon::createFromFormat('Y-m-d H:i:s', $model->created_at)->format('d-m-Y H:i:s');
             })
@@ -59,9 +62,9 @@ class ReservationDataTable extends DataTable
             ->editColumn('total', function (Reservation $model) {
                 return number_format($model->total, 2);
             })
-            ->editColumn('diskon', function (Reservation $model) {
-                return number_format($model->diskon, 2);
-            })
+            // ->editColumn('diskon', function (Reservation $model) {
+            //     return number_format($model->diskon, 2);
+            // })
             ->editColumn('bayar', function (Reservation $model) {
                 return number_format($model->bayar, 2);
             })
@@ -90,6 +93,12 @@ class ReservationDataTable extends DataTable
             ->skipTotalRecords();
     }
 
+    public function setTotalCondition($condition)
+    {
+        $this->totalCondition = $condition;
+        return $this;
+    }
+
     /**
      * Get query source of dataTable.
      *
@@ -98,17 +107,23 @@ class ReservationDataTable extends DataTable
      */
     public function query(Reservation $model)
     {
-        return $model->newQuery()
+        $userUnit = Auth::user()->itb_unit;
+    
+        $query = $model->newQuery()
             ->join('layanans', 'reservations.layanan_id', '=', 'layanans.id')
-            ->select('reservations.*', \DB::raw('reservations.total - reservations.diskon AS bayar'))
-            ->where('layanans.location', auth()->user()->location);
-
-            if ($tipeLayanan) {
-                $query->where('layanans.type', $tipeLayanan);
-            }
-        
-            return $query;
-    }
+            ->select('reservations.*', \DB::raw('reservations.total - reservations.bayar'))
+            ->where('layanans.location', auth()->user()->location)
+            ->where('layanans.unit_pengelola', $userUnit);
+    
+        // Sesuaikan kondisi berdasarkan nilai properti totalCondition
+        if ($this->totalCondition === '=') {
+            $query->where('reservations.total', '=', 0);
+        } else {
+            $query->where('reservations.total', '!=', 0);
+        }
+    
+        return $query;
+    }   
 
     /**
      * Optional method if you want to use html builder.
@@ -139,17 +154,19 @@ class ReservationDataTable extends DataTable
             Column::make('created_at')->title('#Dibuat')->hidden(),
             Column::make('kode_sewa')->title("Kode Sewa"),
             Column::make('layanan_id')->title('Layanan')->data('layanans.name')->name('layanans.name'),
-            Column::make('layanan_id')->title('Layanan')->data('layanans.type')->name('layanans.type')->hidden(),
+            Column::make('layanan_id')->title('Tipe')->data('layanans.type')->name('layanans.type')->hidden(),
+            Column::make('layanan_id')->title('Unit')->data('layanans.unit_pengelola')->name('layanans.unit_pengelola')->hidden(),
             Column::make('start_date')->title("Tgl. Mulai"),
             Column::make('end_date')->title("Tgl. Selesai"),
             Column::make('fee')->title("#Harga")->hidden(),
             Column::make('fee_for')->title("Per"),
             Column::make('extra_fee')->title("#Biaya")->hidden(),
-            Column::make('total')->title("Total"),
-            Column::make('diskon')->title("Diskon"),
-            Column::make('bayar')->title("Bayar")->searchable(false),
+            Column::make('total')->title("Total")->hidden(),
+            // Column::make('diskon')->title("Diskon"),
+            Column::make('bayar')->title("Bayar"),
             Column::make('created_at')->title("Dibuat"),
             Column::make('jml_upload')->title("Upload")->searchable(false),
+            Column::make('verif_receipt')->title("Status Bayar")->hidden(),
             Column::make('status')->title("Status"),
             Column::computed('action')->title("Kelola")
                 ->exportable(false)

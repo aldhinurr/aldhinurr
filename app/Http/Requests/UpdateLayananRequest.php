@@ -24,11 +24,12 @@ class UpdateLayananRequest extends FormRequest
     public function rules()
     {
         return [
-            "type" => "required|in:RUANG,KENDARAAN",
+            "type" => "required|in:RUANG,RKU,KENDARAAN,RUMAH SUSUN,SELASAR,LAPANGAN,PERALATAN",
+            "unit_pengelola" => "required|string|max:255",
             "name" => "required|string",
             "description" => "nullable|string",
             "address" => "required|string|max:255",
-            "location" => "required|in:GANESHA,SARAGA,JATINANGOR,CIREBON",
+            "location" => "required|in:GANESHA,SARAGA,JATINANGOR,CIREBON,JAKARTA",
             "large" => "required|numeric|min:1",
             "capacity" => "required|numeric|min:1",
             "price" => "required|numeric",

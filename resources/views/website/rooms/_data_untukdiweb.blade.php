@@ -14,13 +14,14 @@
           <h3 class="card-title">
             <a href="{{ route('website.room.show', $room->id) }}" id="link-detail" target="_blank">{{ $room->name }}</a>
           </h3>
+          <small> Unit Pengelola: {{ $eoom->unit_pengelola }}</small>
           <div class="card-attributes">
             <ul class="d-flex align-items-center">
               <li class="d-flex align-items-center" data-toggle="tooltip" data-placement="top" title="Kapasitas">
-                <i class="la la-users"></i><span>{{ $room->capacity }} Orang</span>
+                <i class="la la-users"></i><span>{{ number_format($room->capacity) }} Orang</span>
               </li>
               <li class="d-flex align-items-center" data-toggle="tooltip" data-placement="top" title="Luas">
-                <i class="la la-expand"></i><span>{{ $room->large }} m<sup>2</sup></span>
+                <i class="la la-expand"></i><span>{{ number_format($room->large) }} m<sup>2</sup></span>
               </li>
             </ul>
           </div>
@@ -29,12 +30,14 @@
             <p>
               <span class="price__num">
                 @if ($room->price == 0)
-                  Gratis
+                  <!--Gratis-->
                 @else
                   Rp. {{ number_format($room->price, 0) }}
                 @endif
               </span>
+              @if ($room->price != 0)
               <span class="price__text">Per {{ $room->price_for }}</span>
+              @endif
             </p>
             @if (in_array($room->id, $is_sewa))
               <span class="price__text">Sedang Disewa</span>

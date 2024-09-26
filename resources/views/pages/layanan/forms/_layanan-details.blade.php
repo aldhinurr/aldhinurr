@@ -92,6 +92,20 @@ $status_color = [
             <!--end::Col-->
           </div>
           <!--end::Input group-->
+
+          <!--begin::Input group-->
+          <div class="row mb-6">
+            <!--begin::Label-->
+            <label class="col-lg-4 fw-bold text-muted">{{ __('Unit') }}</label>
+            <!--end::Label-->
+
+            <!--begin::Col-->
+            <div class="col-lg-8 fv-row">
+              <span class="fw-bolder fs-6 text-dark">{{ $layanan->unit_pengelola }}</span>
+            </div>
+            <!--end::Col-->
+          </div>
+          <!--end::Input group-->
         </div>
         <div class="col-lg-6">
           <!--begin::Input group-->
@@ -99,6 +113,8 @@ $status_color = [
             <!--begin::Label-->
             @if ($layanan->type == 'KENDARAAN')
               <label class="col-lg-4 fw-bold text-muted">{{ __('Jenis') }}</label>
+            @elseif ($layanan->type == 'RKU')
+              <label class="col-lg-4 fw-bold text-muted">{{ __('Lantai') }}</label>
             @else
               <label class="col-lg-4 fw-bold text-muted">{{ __('Luas') }}</label>
             @endif
@@ -111,6 +127,8 @@ $status_color = [
                   $jenis = [1 => 'Mobil', 2 => 'Motor', 3 => 'Shuttle', 4 => 'Bis', 5 => 'Truk'];
                 @endphp
                 <span class="fw-bolder fs-6 text-dark">{{ $jenis[$layanan->large] }}</span>
+              @elseif ($layanan->type == 'RKU')
+                <span class="fw-bolder fs-6 text-dark">{{ $layanan->large }}</span>
               @else
                 <span class="fw-bolder fs-6 text-dark">{{ $layanan->large }} m<sup>2</sup></span>
               @endif
@@ -141,10 +159,13 @@ $status_color = [
 
             <!--begin::Col-->
             <div class="col-lg-8 fv-row">
-              <div class="fs-6 fw-bolder text-dark" data-kt-countup="true"
+              <!-- <div class="fs-6 fw-bolder text-dark" data-kt-countup="true"
                 data-kt-countup-value="{{ $layanan->price }}" data-kt-countup-prefix="Rp. "
                 data-kt-countup-suffix=" / {{ $layanan->price_for }}">
                 0
+              </div> -->
+              <div class="fs-6 fw-bolder text-dark">
+                Rp. {{ number_format($layanan->price, 0, ',', '.') }} / {{ $layanan->price_for }}
               </div>
             </div>
             <!--end::Col-->

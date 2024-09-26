@@ -27,28 +27,28 @@ class SSOLoginController extends Controller
     public function handleAzureCallback()
     {
         $user = Socialite::driver('azure')->user();
-
     //----------------------ALLOW ACCESS------------------------------
-        $userEmail = $user->email;
-        $allowedEmails = [
-            'dummysp1@itb.ac.id',
-            'bambang.heryanto@itb.ac.id',
-            'regiherdian95@itb.ac.id',
-            'adit@itb.ac.id',
-            'aldhinurr@itb.ac.id',
-        ];
-        if (!in_array($userEmail, $allowedEmails)) {
-            return redirect('/')
-            ->with('alert', 'Login Gagal, masih dalam pengembangan ');
-        }
+        // $userEmail = $user->email;
+        // $allowedEmails = [
+        //     'dummysp1@itb.ac.id',
+        //     'bambang.heryanto@itb.ac.id',
+        //     'regiherdian95@itb.ac.id',
+        //     'adit@itb.ac.id',
+        //     'aldhinurr@itb.ac.id',
+        // ];
+        // if (!in_array($userEmail, $allowedEmails)) {
+        //     return redirect('/')
+        //     ->with('alert', 'Login Gagal, masih dalam pengembangan ');
+        // }
     //-----------------------------------------------------------------
 
-        // tolak jika mahasiswa login
-        if (strpos($user->email, '@mahasiswa.itb.ac.id') !== false) {
+         if (strpos($user->email, '@mahasiswa.itb.ac.id') !== false
+            || strpos($user->email, '@std.stei.itb.ac.id') !== false
+            || strpos($user->email, '@students.itb.ac.id') !== false) {
             return redirect(RouteServiceProvider::HOME)
                 ->with('alert', '<strong style="color:red;">Login Gagal 
                 (Login ITB Account di website e-Facility tidak diperuntukkan untuk Mahasiswa).</strong> ');
-        }else{
+        } else {
 
         // Cek apakah email sudah ada di tabel users
         $authUser = User::where('email', $user->email)->first();
@@ -56,10 +56,10 @@ class SSOLoginController extends Controller
         if (!$authUser) {
             $authUser = new User;
             $authUser->email = $user->email;
-            $authUser->itb_unit = $user->department;
-            $authUser->itb_status = $user->JenisPegawai;
-            $authUser->no_telp = $user->mobilePhone;
-        
+            $authUser->itb_unit = $user->attributes['unit'];
+            $authUser->itb_status = $user->attributes['status'];
+            $authUser->no_telp = $user->attributes['telp'];
+
             // Memeriksa apakah ada spasi dalam nama pengguna
             if (strpos($user->name, ' ') !== false) {
                 // Jika ada spasi, pisahkan nama pertama dan terakhir
@@ -71,9 +71,39 @@ class SSOLoginController extends Controller
                 $authUser->first_name = $user->name;
                 $authUser->last_name = ''; // Kosongkan last_name
             }
-        
+
+            if ($authUser->itb_unit == "Direktorat ITB Kampus Jatinangor") {
+                $authUser->location = "JATINANGOR";
+            } elseif ($authUser->itb_unit == "Direktorat ITB Kampus Cirebon") {
+                $authUser->location = "CIREBON";
+            } elseif ($authUser->itb_unit == "Direktorat ITB Kampus Jakarta") {
+                $authUser->location = "JAKARTA";
+            } else {
+                $authUser->location = "GANESHA";
+            }
+
             // Anda juga dapat menambahkan logika lain untuk mengisi kolom lain yang diperlukan
             $authUser->save();
+        } else {
+            // Jika pengguna sudah ada, update kolom jika perlu
+            $updated = false;
+
+            if (is_null($authUser->itb_unit)) {
+                $authUser->itb_unit = $user->attributes['unit'];
+                $updated = true;
+            }
+            if (is_null($authUser->itb_status)) {
+                $authUser->itb_status = $user->attributes['status'];
+                $updated = true;
+            }
+            if ($authUser->no_telp != $user->attributes['telp']) {
+                $authUser->no_telp = $user->attributes['telp'];
+                $updated = true;
+            }
+
+            if ($updated) {
+                $authUser->save();
+            }
         }
     }
         Auth::login($authUser, true);
@@ -135,6 +165,7 @@ class SSOLoginController extends Controller
             }
 
             Auth::loginUsingId($existingUser->id);
+            session(['last_activity' => time()]);
             return redirect(RouteServiceProvider::HOME);
         }
     }

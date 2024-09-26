@@ -253,6 +253,7 @@
                     <h3 class="card-title">
                       <a href="{{ route('website.room.show', $room->id) }}">{{ $room->name }}</a>
                     </h3>
+                    <small> Unit Pengelola: {{ $room->unit_pengelola }}</small>
                     <div class="card-attributes">
                       <ul class="d-flex align-items-center">
                         <li class="d-flex align-items-center" data-toggle="tooltip" data-placement="top"
@@ -270,12 +271,14 @@
                       <p>
                         <span class="price__num">
                           @if ($room->price == 0)
-                            Gratis
+                            <!--Gratis-->
                           @else
                             Rp. {{ number_format($room->price, 0) }}
                           @endif
                         </span>
+                        @if ($room->price != 0)
                         <span class="price__text">Per {{ $room->price_for }}</span>
+                        @endif
                       </p>
                       @if ($room->is_sewa == 1)
                         <span class="price__text">Sedang Disewa</span>
@@ -329,7 +332,7 @@
             @foreach ($cars as $car)
               <div class="card-item car-card mb-0 border">
                 <div class="card-img-top overflow-hidden" style="height: 247px; width: auto;">
-                  <a href="#" class="d-block">
+                  <a href="{{ route('website.car.show', $car->id) }}" class="d-block">
                     <img src="https://source.unsplash.com/600x400?cars" alt="car-img" />
                   </a>
                 </div>
@@ -338,6 +341,7 @@
                   <h3 class="card-title">
                     <a href="{{ route('website.car.show', $car->id) }}">{{ $car->name }}</a>
                   </h3>
+                  <small> Unit Pengelola: {{ $car->unit_pengelola }}</small>
                   <div class="card-attributes">
                     <ul class="d-flex align-items-center">
                       <li class="d-flex align-items-center" data-toggle="tooltip" data-placement="top"
@@ -351,12 +355,14 @@
                     <p>
                       <span class="price__num">
                         @if ($car->price == 0)
-                          Gratis
+                          <!--Gratis-->
                         @else
                           Rp. {{ number_format($car->price, 0) }}
                         @endif
                       </span>
+                      @if ($car->price != 0)
                       <span class="price__text">Per {{ $car->price_for }}</span>
+                      @endif
                     </p>
                     @if ($car->is_sewa == 1)
                       <span class="price__text">Sedang Disewa</span>

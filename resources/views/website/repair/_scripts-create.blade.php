@@ -134,8 +134,10 @@
           number,
           gedung['text'],
           lantai['number'],
+          lantai['unit_itb'],
           lantai['floor_classification'] + " " + lantai['room_classification'],
           lantai['room_description'],
+          lantai['kategori_ruangan'],
           cost.replaceAll(",", ""),
           `<span onclick="javascript:deleteRow('${floor_id}')"><i class="la la-trash text-danger"></i></span>`
         ]).draw(false)

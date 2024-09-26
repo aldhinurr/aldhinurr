@@ -4000,7 +4000,7 @@ body {
     transform: perspective(0) rotateX(0);
     display: none;
     width: 100%;
-    height: 210px;
+    height: auto;
     overflow-x: auto;
     overflow-y: auto;
     border-radius: 0;
@@ -4033,7 +4033,6 @@ body {
     transform: perspective(0) rotateX(0);
     display: none;
     width: 100%;
-    height: 210px;
     overflow-x: auto;
     overflow-y: auto;
     border-radius: 0;
@@ -4066,7 +4065,6 @@ body {
     transform: perspective(0) rotateX(0);
     display: none;
     width: 100%;
-    height: 210px;
     overflow-x: auto;
     overflow-y: auto;
     border-radius: 0;
@@ -4123,6 +4121,11 @@ body {
 }
 .main-menu-content ul li .dropdown-menu-item li a .la-plus {
   transition: all 0.3s;
+}
+@media only screen and (max-width: 767px) {
+  .main-menu-content ul li .dropdown-menu-item li a {
+    color: #d7d7d7; 
+  }
 }
 @media only screen and (min-width: 768px) and (max-width: 991px) {
   .main-menu-content ul li .dropdown-menu-item li a .la-plus {
@@ -9258,7 +9261,7 @@ body {
   box-shadow: 0 0 40px rgba(82, 85, 90, 0.1);
   border-radius: 8px;
   padding: 20px 20px 24px 20px;
-  margin-bottom: 60px;
+  margin-bottom: 30px;
 }
 .icon-layout-4 .info-icon {
   background-color: #287dfa;
@@ -10158,4 +10161,104 @@ body {
     justify-content: center !important;
     text-align: center !important;
   }
+}
+
+/* ======= Set Padding Homepage ======== */
+.about-area {
+  padding: 30px; 
+}
+  @media only screen and (max-width: 767px) {
+  .about-area {
+      padding: 0; 
+  }
+}
+
+/* ======= Modal Notification ======== */
+.notification-modal {
+  display: none;
+  position: absolute;
+  top: 100px; 
+  left: 85%; 
+  transform: translateX(-50%); 
+  z-index: 1000;
+  width: 600px;
+  max-width: 100%;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.modal-content {
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 30px;
+  cursor: pointer;
+  color: #333;
+}
+
+.status-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.status-entry {
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.btn-link {
+  text-decoration: none;
+  color: #007bff;
+  cursor: pointer;
+  display: block;
+}
+
+.updated-time {
+  display: block;
+  margin-top: 5px;
+  color: #888;
+}
+
+.notification-btn {
+  position: relative;
+  width: 35px;
+  height: 35px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.badge_notif {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(50%, -40%);
+  width: 24px;
+  height: 24px;
+  border-radius: 70%;
+  background-color: red;
+  color: white;
+  font-size: 12px;
+}
+
+@media only screen and (max-width: 600px) {
+  .notification-modal {
+      width: 90%; /* Mengurangi lebar modal pada layar kecil */
+      left: 50%;
+  }
+}
+
+/* CSS untuk mengubah warna teks menjadi hitam */
+.select2-selection__rendered {
+   color: black !important;
 }

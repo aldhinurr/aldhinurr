@@ -237,6 +237,22 @@ return array(
                 ),
             ),
         ),
-    )
 
+        "barang"  => array(
+            "*" => array(
+                "title"  => "Barang",
+                "view"   => "barang",
+                "assets" => array(
+                    "custom" => array(
+                        "css" => array(
+                            "plugins/custom/datatables/datatables.bundle.css",
+                        ),
+                        "js"  => array(
+                            "plugins/custom/datatables/datatables.bundle.js",
+                        ),
+                    ),
+                ),
+            ),
+        ),
+    )
 );

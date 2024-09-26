@@ -20,46 +20,71 @@
         opens: "right",
         // startDate: moment().add(3, "day"),
         // minDate: moment().add(3, "day"),
-        startDate: moment('2024-01-01', 'YYYY-MM-DD'),
-        minDate: moment('2024-01-01', 'YYYY-MM-DD'),
+        // startDate: moment('2024-01-01', 'YYYY-MM-DD'),
+        // minDate: moment('2024-01-01', 'YYYY-MM-DD'),
+        startDate: moment(),
         locale: {
           format: "DD/MM/YYYY HH:mm",
         },
       });
 
       $('#start_date').on('apply.daterangepicker', (e, picker) => {
-        var start = moment(picker.startDate.format('YYYY-MM-DD'));
-        var end = moment($('#end_date').val(), 'DD/MM/YYYY');
-        var duration = moment.duration(end.diff(start));
-        var days = duration.asDays() + 1;
+    var start = moment(picker.startDate.format('YYYY-MM-DD HH:mm'));
+    var end = moment($('#end_date').val(), 'DD/MM/YYYY HH:mm');
+    var duration = moment.duration(end.diff(start));
+    var unit = "{{ $data->price_for }}"; // Ambil nilai price_for dari objek data
 
-        if (days <= 0) {
-          $('.alert').html('Tanggal Mulai lebih dari Tanggal Akhir!').fadeIn().delay(3000).fadeOut();
-          is_sewa = 1;
-          return
-        }
+    // Menentukan unit waktu yang digunakan berdasarkan price_for
+    var timeUnit = (unit === 'HARI') ? 'days' : 'hours';
 
-        $('#duration').val(days);
-        sumFeeReservation();
-        checkReservation();
-      });
+    var durationValue = (unit === 'HARI') ? Math.floor(duration.asDays()) + 1 : Math.floor(duration.asHours());
 
-      $('#end_date').on('apply.daterangepicker', (e, picker) => {
-        var start = moment($('#start_date').val(), 'DD/MM/YYYY');
-        var end = moment(picker.endDate.format('YYYY-MM-DD'));
-        var duration = moment.duration(end.diff(start));
-        var days = duration.asDays() + 1;
+    if (durationValue <= 0) {
+        $('.alert').html('Tanggal Mulai lebih dari Tanggal Akhir!').fadeIn().delay(3000).fadeOut();
+        is_sewa = 1;
+        return;
+    }
 
-        if (days <= 0) {
-          $('.alert').html('Tanggal Akhir kurang dari Tanggal Mulai!').fadeIn().delay(3000).fadeOut();
-          is_sewa = 1;
-          return
-        }
+    // Check if start time is greater than end time
+    if (start.isSameOrAfter(end)) {
+        $('.alert').html('Waktu Mulai tidak boleh lebih besar dari Waktu Akhir!').fadeIn().delay(3000).fadeOut();
+        is_sewa = 1;
+        return;
+    }
 
-        $('#duration').val(days);
-        sumFeeReservation();
-        checkReservation();
-      });
+    $('#duration').val(durationValue);
+    sumFeeReservation();
+    checkReservation();
+});
+
+$('#end_date').on('apply.daterangepicker', (e, picker) => {
+    var start = moment($('#start_date').val(), 'DD/MM/YYYY HH:mm');
+    var end = moment(picker.endDate.format('YYYY-MM-DD HH:mm'));
+    var duration = moment.duration(end.diff(start));
+    var unit = "{{ $data->price_for }}"; // Ambil nilai price_for dari objek data
+
+    // Menentukan unit waktu yang digunakan berdasarkan price_for
+    var timeUnit = (unit === 'HARI') ? 'days' : 'hours';
+
+    var durationValue = (unit === 'HARI') ? Math.floor(duration.asDays()) + 1 : Math.floor(duration.asHours());
+
+    if (durationValue <= 0) {
+        $('.alert').html('Tanggal Akhir kurang dari Tanggal Mulai!').fadeIn().delay(3000).fadeOut();
+        is_sewa = 1;
+        return;
+    }
+
+    // Check if end time is greater than start time
+    if (end.isSameOrBefore(start)) {
+        $('.alert').html('Waktu Akhir tidak boleh lebih kecil dari Waktu Mulai!').fadeIn().delay(3000).fadeOut();
+        is_sewa = 1;
+        return;
+    }
+
+    $('#duration').val(durationValue);
+    sumFeeReservation();
+    checkReservation();
+});
 
       $('#fasilitas').select2({
         theme: 'bootstrap',
@@ -136,6 +161,7 @@
         data["start_date"] = $("#start_date").val();
         data["end_date"] = $("#end_date").val();
         data["catatan"] = $("#catatan").val();
+        data["unit"] = $("#unit").val();
         data["fee"] = $("#fee").val().replace(/[^0-9\.-]+/g, "");
         data["fee_for"] = $("#duration").val();
         data["total"] = $("#total").val().replace(/[^0-9\.-]+/g, "");
@@ -209,8 +235,8 @@
   function checkReservation() {
     var endpoint = "{{ route('website.reservation.check') }}"
     var layanan = "{{ $data->id }}"
-    var start_date = $('#start_date').val();
-    var end_date = $('#end_date').val();
+    var start_date = moment($('#start_date').val(), 'DD/MM/YYYY HH:mm').add(7, 'hours').toISOString();
+    var end_date = moment($('#end_date').val(), 'DD/MM/YYYY HH:mm').add(7, 'hours').toISOString();
     var availableInfo = $('#is_available');
 
     // Send ajax request

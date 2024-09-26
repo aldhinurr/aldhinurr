@@ -4,12 +4,19 @@
   var KTAReservationDetail = function() {
     // Private variables
     var approveButton;
+    var reviewButton;
     var rejectButton;
 
     var handleButton = function() {
 
+      Inputmask("Rp. 999.999.999", {
+        "numericInput": true
+      }).mask("#bayar");
+
       approveButton.addEventListener('click', function(e) {
         e.preventDefault();
+
+        var bayar = document.getElementById('bayar').inputmask.unmaskedvalue();
 
         (async () => {
           const {
@@ -25,7 +32,7 @@
             showCancelButton: true,
             buttonsStyling: false,
             confirmButtonText: "Ok",
-            cancelButtonText: "Batal",
+            cancelButtonText: "Tutup",
             reverseButtons: true,
             customClass: {
               cancelButton: "btn fw-bold btn-danger",
@@ -40,6 +47,86 @@
 
           if (text) {
             var url = "{{ route('reservation.approve', $reservation->id) }}"
+            var data = {
+              'description': text,
+              'bayar': bayar
+            }
+
+            // Send ajax request
+            axios.post(url, data)
+              .then(function(response) {
+                // Show message popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
+                Swal.fire({
+                  icon: "success",
+                  text: response.data.message,
+                  buttonsStyling: false,
+                  confirmButtonText: "Ok",
+                  customClass: {
+                    confirmButton: "btn btn-primary"
+                  }
+                }).then(function(result) {
+                  if (result.isConfirmed) {
+                    window.location = "{{ route('reservation.show', $reservation->id) }}"
+                  }
+                });
+              })
+              .catch(function(error) {
+                let dataMessage = error.response.data.message;
+                let dataErrors = error.response.data.errors;
+
+                for (const errorsKey in dataErrors) {
+                  if (!dataErrors.hasOwnProperty(errorsKey)) continue;
+                  dataMessage += "\r\n" + dataErrors[errorsKey];
+                }
+
+                if (error.response) {
+                  Swal.fire({
+                    text: dataMessage,
+                    icon: "error",
+                    buttonsStyling: false,
+                    confirmButtonText: "Ok, got it!",
+                    customClass: {
+                      confirmButton: "btn btn-primary"
+                    }
+                  });
+                }
+              });
+          }
+        })();
+      });
+
+      reviewButton.addEventListener('click', function(e) {
+        e.preventDefault();
+
+        (async () => {
+          const {
+            value: text
+          } = await Swal.fire({
+            input: 'textarea',
+            inputLabel: 'Yakin akan mereview peminjaman ini?',
+            inputPlaceholder: 'Isi informasi persetujuan..',
+            inputAttributes: {
+              'aria-label': 'Isi informasi persetujuan..'
+            },
+            icon: "info",
+            showCancelButton: true,
+            buttonsStyling: false,
+            confirmButtonText: "Ok",
+            cancelButtonText: "Tutup",
+            reverseButtons: true,
+            customClass: {
+              cancelButton: "btn fw-bold btn-danger",
+              confirmButton: "btn fw-bold btn-primary",
+            },
+            inputValidator: (value) => {
+              if (!value) {
+                return 'Silahkan isi informasi persetujuan.'
+              }
+            }
+          })
+
+          if (text) {
+            var url = "{{ route('reservation.review', $reservation->id) }}"
             var data = {
               'description': text
             }
@@ -104,7 +191,7 @@
             showCancelButton: true,
             buttonsStyling: false,
             confirmButtonText: "Ok",
-            cancelButtonText: "Batal",
+            cancelButtonText: "Tutup",
             reverseButtons: true,
             customClass: {
               cancelButton: "btn fw-bold btn-primary",
@@ -167,10 +254,20 @@
       });
     }
 
+    document.addEventListener('DOMContentLoaded', function () {
+      var status = "{{ $reservation->status }}";
+      if (status === 'MENUNGGU REVIEW') {
+          document.getElementById('approveButton').style.display = 'none';
+      } else if (status === 'MENUNGGU UPLOAD') {
+          document.getElementById('reviewButton').style.display = 'none';
+      }
+      });
+
     // Public methods
     return {
       init: function() {
         approveButton = document.getElementById('approveButton');
+        reviewButton = document.getElementById('reviewButton');
         rejectButton = document.getElementById('rejectButton');
 
         handleButton();
@@ -193,7 +290,7 @@ cancelButton.addEventListener('click', function(e) {
     (async () => {
         const { value: text } = await Swal.fire({
             input: 'textarea',
-            inputLabel: 'Yakin akan membatalkan sewa ini???',
+            inputLabel: 'Yakin akan membatalkan sewa ini?',
             inputPlaceholder: 'Isi informasi pembatalan..',
             inputAttributes: {
                 'aria-label': 'Isi informasi pembatalan..'
@@ -202,7 +299,7 @@ cancelButton.addEventListener('click', function(e) {
             showCancelButton: true,
             buttonsStyling: false,
             confirmButtonText: "Ok",
-            cancelButtonText: "Batal",
+            cancelButtonText: "Tutup",
             reverseButtons: true,
             customClass: {
                 cancelButton: "btn fw-bold btn-primary",

@@ -2,13 +2,22 @@
     @foreach ($sewa as $data)
       <tr>
         <th scope="row">
-          @if ($data->layanan->type == 'RUANG')
+        {{ $data->layanan->type }}
+          <!-- @if ($data->layanan->type == 'RUANG')
             <i class="la la-building mr-1 font-size-18"></i>
-          @else
+          @elseif ($data->layanan->type == 'KENDARAAN')
             <i class="la la-car mr-1 font-size-18"></i>
-          @endif
-          {{ $data->layanan->type }}
+          @elsif ($data->layanan->type == 'SELASAR')
+            <i class="la la-map-signs mr-1 font-size-18"></i>
+          @elsif ($data->layanan->type == 'LAPANGAN')
+            <i class="la la-road mr-1 font-size-18"></i>
+          @endif -->
         </th>
+	<td>
+          <div class="table-content">
+            <h3 class="title">{{ $data->kode_sewa }}</h3>
+          </div>
+        </td>
         <td>
           <div class="table-content">
             <h3 class="title">{{ $data->layanan->name }}</h3>
@@ -17,7 +26,8 @@
         <td>{{ $data->layanan->location }}</td>
         <td>{{ $data->start_date }}</td>
         <td>{{ $data->end_date }}</td>
-        <td>{{ $data->user->first_name }} {{ $data->user->last_name }}</td>
+        <td>{{ $data->unit }} </td>
+        <!-- <td>{{ $data->user->first_name }} {{ $data->user->last_name }}</td> -->
         <td>{{ $data->status }}</td>
         <td>
           <div class="table-content">

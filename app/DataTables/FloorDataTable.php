@@ -79,8 +79,10 @@ class FloorDataTable extends DataTable
             Column::make('id')->title('#ID')->hidden(),
             Column::make('created_at')->title('#Dibuat')->hidden(),
             Column::make('number')->title('Lantai'),
+            Column::make('unit_itb')->title('Unit'),
             Column::make('room_classification')->title('Klasifikasi Ruangan'),
-            Column::make('room_description')->title('Uraian Ruangan'),
+            Column::make('room_description')->title('Uraian Ruangan')->hidden(),
+            Column::make('kategori_ruangan')->title('Uraian Ruangan'),
             Column::make('large')->title('Luas'),
             Column::make('capacity')->title('Kapasitas'),
             Column::computed('action')->title('Kelola')

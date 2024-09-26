@@ -24,7 +24,7 @@
         <a href="{{ route('floor.building') }}"
           class="btn btn-sm btn-white btn-active-light-primary align-self-center me-2">{{ __('Kembali') }}</a>
         <a href="{{ route('floor.create', $building->id) }}"
-          class="btn btn-primary btn-sm align-self-center">{{ __('Tambah Baru') }}</a>
+          class="btn btn-primary btn-sm align-self-center"><i class="bi bi-plus"></i>{{ __('Tambah Baru') }}</a>
       </div>
       <!--end::Action-->
     </div>

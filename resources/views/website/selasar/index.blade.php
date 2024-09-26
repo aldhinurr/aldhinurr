@@ -25,11 +25,11 @@
                             <select id="location" class="select-contain-select">
                               <option value="">Pilih Lokasi</option>
                               <option value="GANESHA">ITB Kampus Ganesha</option>
-                              <!-- <option value="SARAGA">Saraga</option> -->
+                              <!-- <option value="SARAGA">Saraga</option>
                               <option value="JATINANGOR">ITB Kampus Jatinangor</option>
                               <option value="CIREBON">ITB Kampus Cirebon</option>
                               <option value="SBM JAKARTA">ITB Kampus Jakarta</option>
-                              <option value="BOSSCHA">Bosscha</option>
+                              <option value="BOSSCHA">Bosscha</option> -->
                             </select>
                           </div>
                         </div>
@@ -37,7 +37,7 @@
                     </div><!-- end col-lg-3 -->
                     <div class="col-lg-3 col-sm-6 pr-0">
                       <div class="input-box">
-                        <span class="la la-building form-icon"></span>
+                        <span class="la la-map-signs form-icon"></span>
                         <label class="label-text">Selasar</label>
                         <div class="form-group">
                           <input class="form-control" type="text" id="keyword" name="keyword"
@@ -48,7 +48,7 @@
                     <div class="col-lg-2 col-sm-6 pr-0">
                       <div class="input-box">
                         <span class="la la-calendar form-icon"></span>
-                        <label class="label-text">Mulai!</label>
+                        <label class="label-text">Mulai</label>
                         <div class="form-group">
                           <input class="date-range form-control" type="text" name="daterange-single" id="start_date" />
                         </div>

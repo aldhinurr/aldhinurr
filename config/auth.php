@@ -77,6 +77,12 @@ return [
         // ],
     ],
 
+    'logout' => [
+        'web' => [
+            'redirect_to' => 'https://e-facility.itb.ac.id/logout',
+        ],
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Resetting Passwords
