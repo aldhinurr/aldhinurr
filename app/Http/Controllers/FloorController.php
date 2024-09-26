@@ -216,7 +216,7 @@ class FloorController extends Controller
         // Mendapatkan user yang sedang login
         $user = Auth::user();
 
-        // Mendapatkan data floors sesuai dengan unit_itb dari user yang sedang login
+        // Mendapatkan data floors sesuai dengan unit_itb dari user yang sedang loginz
         $floorsData = DB::table('floors')
                         ->selectRaw("CASE WHEN kategori_ruangan IN ('-') THEN 'Belum Kategori' ELSE kategori_ruangan END AS kategori_ruangan")
                         ->selectRaw("COUNT(kategori_ruangan) AS jumlah, SUM(large) AS luas")
